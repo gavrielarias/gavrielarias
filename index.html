@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gavriel Arias — Creative Signal Sprint</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Bricolage+Grotesque:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ─── TOKENS ─── */
+:root {
+  --white: #ffffff;
+  --off: #f7f6f3;
+  --dark: #0f0f0f;
+  --dark2: #1a1a1a;
+  --ink: #1a1814;
+  --ink-mid: #5c574f;
+  --ink-dim: #9c968e;
+  --accent: #b8f241;        /* lime — inspired by Carty's neon CTA */
+  --accent2: #ff6b35;       /* warm orange for gradient blobs */
+  --accent3: #c084fc;       /* violet for blobs */
+  --accent4: #38bdf8;       /* sky */
+  --border: rgba(26,24,20,0.09);
+  --border-dark: rgba(255,255,255,0.1);
+  --r: 16px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  background: var(--white);
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+/* ─── SCROLLBAR ─── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--off); }
+::-webkit-scrollbar-thumb { background: var(--ink-dim); border-radius: 2px; }
+
+/* ═══════════════════════════════════════
+   NAV
+═══════════════════════════════════════ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px; height: 64px;
+  background: rgba(15,15,15,0.85);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid var(--border-dark);
+}
+.nav-logo {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-weight: 700; font-size: 1rem;
+  letter-spacing: -0.02em; color: var(--white);
+  display: flex; align-items: center; gap: 8px;
+}
+.nav-logo-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent);
+}
+.nav-links {
+  display: flex; gap: 32px; list-style: none;
+}
+.nav-links a {
+  font-size: 0.82rem; color: rgba(255,255,255,0.5);
+  text-decoration: none; letter-spacing: 0.01em;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--white); }
+.nav-cta {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 0.8rem; font-weight: 600;
+  background: var(--accent); color: var(--dark);
+  padding: 9px 22px; border-radius: 100px;
+  text-decoration: none; letter-spacing: -0.01em;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.nav-cta:hover { transform: translateY(-1px); box-shadow: 0 6px 24px rgba(184,242,65,0.35); }
+
+/* ═══════════════════════════════════════
+   HERO — DARK
+═══════════════════════════════════════ */
+.hero {
+  background: var(--dark);
+  min-height: 100vh;
+  padding: 64px 40px 0;
+  display: flex; flex-direction: column;
+  align-items: center;
+  position: relative; overflow: hidden;
+}
+
+/* Mesh gradient blobs — like Enblox / CourseSite */
+.blob {
+  position: absolute; border-radius: 50%;
+  filter: blur(80px); pointer-events: none;
+}
+.blob-1 {
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(184,242,65,0.18) 0%, transparent 70%);
+  top: -100px; left: -100px;
+  animation: blobFloat 8s ease-in-out infinite;
+}
+.blob-2 {
+  width: 700px; height: 700px;
+  background: radial-gradient(circle, rgba(192,132,252,0.15) 0%, transparent 70%);
+  top: 0; right: -150px;
+  animation: blobFloat 10s ease-in-out infinite reverse;
+}
+.blob-3 {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(255,107,53,0.12) 0%, transparent 70%);
+  bottom: 100px; left: 30%;
+  animation: blobFloat 12s ease-in-out infinite 2s;
+}
+@keyframes blobFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -20px) scale(1.05); }
+  66% { transform: translate(-20px, 15px) scale(0.97); }
+}
+
+/* Noise texture overlay */
+.hero::before {
+  content: '';
+  position: absolute; inset: 0; z-index: 1;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
+  opacity: 0.5; pointer-events: none;
+}
+
+.hero-content {
+  position: relative; z-index: 2;
+  text-align: center;
+  padding-top: 80px;
+  max-width: 780px;
+}
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 100px; padding: 6px 16px 6px 8px;
+  margin-bottom: 32px;
+}
+.badge-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.6;transform:scale(0.85)} }
+.hero-badge span {
+  font-size: 0.72rem; font-weight: 500;
+  color: rgba(255,255,255,0.65); letter-spacing: 0.04em;
+}
+
+.hero-title {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-weight: 800;
+  font-size: clamp(3.2rem, 7vw, 6.2rem);
+  line-height: 1.0;
+  letter-spacing: -0.04em;
+  color: var(--white);
+  margin-bottom: 12px;
+}
+.hero-title .italic-line {
+  font-family: 'Instrument Serif', serif;
+  font-weight: 400; font-style: italic;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+}
+
+.hero-sub {
+  font-size: 1.05rem;
+  color: rgba(255,255,255,0.48);
+  line-height: 1.75; max-width: 500px;
+  margin: 20px auto 36px;
+}
+
+.hero-actions {
+  display: flex; justify-content: center;
+  align-items: center; gap: 14px; margin-bottom: 64px;
+  flex-wrap: wrap;
+}
+.btn-lime {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 0.88rem; font-weight: 700;
+  background: var(--accent); color: var(--dark);
+  padding: 14px 32px; border-radius: 100px;
+  text-decoration: none; letter-spacing: -0.01em;
+  display: inline-flex; align-items: center; gap: 8px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.btn-lime:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(184,242,65,0.3); }
+.btn-outline {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 0.88rem; font-weight: 500;
+  color: rgba(255,255,255,0.6);
+  border: 1px solid rgba(255,255,255,0.18);
+  padding: 14px 28px; border-radius: 100px;
+  text-decoration: none;
+  transition: border-color 0.2s, color 0.2s;
+}
+.btn-outline:hover { border-color: rgba(255,255,255,0.4); color: var(--white); }
+
+/* ── HERO VISUAL PLACEHOLDER — like Enblox / Carty ── */
+.hero-visual {
+  position: relative; z-index: 2;
+  width: 100%; max-width: 820px;
+  margin: 0 auto;
+}
+
+/* Glow under the visual */
+.hero-visual::before {
+  content: '';
+  position: absolute;
+  bottom: -40px; left: 50%; transform: translateX(-50%);
+  width: 80%; height: 120px;
+  background: radial-gradient(ellipse, rgba(184,242,65,0.2) 0%, transparent 70%);
+  filter: blur(30px);
+}
+
+.placeholder-hero {
+  width: 100%;
+  aspect-ratio: 16/8;
+  background: linear-gradient(135deg,
+    rgba(255,255,255,0.04) 0%,
+    rgba(255,255,255,0.02) 100%);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px 20px 0 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 12px;
+  position: relative; overflow: hidden;
+}
+.placeholder-hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent, transparent 20px,
+    rgba(255,255,255,0.01) 20px, rgba(255,255,255,0.01) 21px
+  );
+}
+.ph-icon {
+  width: 56px; height: 56px; border-radius: 14px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem;
+}
+.ph-label {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 0.75rem; font-weight: 600;
+  color: rgba(255,255,255,0.25); letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.ph-sub { font-size: 0.68rem; color: rgba(255,255,255,0.15); }
+
+/* ═══════════════════════════════════════
+   STATS BAR
+═══════════════════════════════════════ */
+.stats-bar {
+  background: var(--off);
+  border-bottom: 1px solid var(--border);
+  display: grid; grid-template-columns: repeat(3, 1fr);
+}
+.stat {
+  padding: 40px 32px;
+  text-align: center;
+  border-right: 1px solid var(--border);
+  transition: background 0.2s;
+}
+.stat:last-child { border-right: none; }
+.stat:hover { background: var(--white); }
+.stat-num {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-weight: 800; font-size: 2.8rem;
+  letter-spacing: -0.04em; color: var(--ink);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.stat-num span { color: var(--accent2); }
+.stat-label {
+  font-size: 0.72rem; font-weight: 500;
+  color: var(--ink-dim); letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ═══════════════════════════════════════
+   SECTION: PROBLEM — light bg, Enblox-style
+═══════════════════════════════════════ */
+.section { padding: 100px 40px; max-width: 1160px; margin: 0 auto; }
+.section-full { padding: 100px 40px; }
+
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 0.7rem; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ink-dim); margin-bottom: 20px;
+}
+.eyebrow::before {
+  content: '';
+  width: 20px; height: 1.5px;
+  background: var(--accent2);
+  display: block;
+}
+
+.section-title {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-weight: 800; letter-spacing: -0.04em;
+  line-height: 1.05; color: var(--ink);
+}
+.section-title .serif {
+  font-family: 'Instrument Serif', serif;
+  font-weight: 400; font-style: italic;
+  letter-spacing: -0.02em;
+}
+
+/* Asym layout like Enblox features section */
+.problem-layout {
+  display: grid; grid-template-columns: 1.1fr 1fr;
+  gap: 80px; align-items: center;
+  margin-top: 60px;
+}
+.problem-title { font-size: clamp(2.8rem, 4.5vw, 4.2rem); }
+.problem-desc {
+  font-size: 1.05rem; color: var(--ink-mid);
+  line-height: 1.8; margin-top: 24px;
+}
+
+.problem-cards { display: flex; flex-direction: column; gap: 2px; }
+.problem-card {
+  background: var(--off);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px 28px;
+  display: flex; gap: 18px; align-items: flex-start;
+  transition: background 0.25s, transform 0.25s, box-shadow 0.25s;
+  cursor: default;
+}
+.problem-card:hover {
+  background: var(--white);
+  transform: translateX(4px);
+  box-shadow: 0 4px 24px rgba(26,24,20,0.06);
+}
+.pc-num {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-weight: 800; font-size: 1.3rem;
+  color: rgba(26,24,20,0.1); flex-shrink: 0;
+  min-width: 28px; line-height: 1.4;
+}
+.pc-text strong {
+  display: block; font-weight: 600; font-size: 0.9rem;
+  color: var(--ink); margin-bottom: 4px;
+}
+.pc-text p { font-size: 0.82rem; color: var(--ink-dim); line-height: 1.6; }
+
+/* ═══════════════════════════════════════
+   WHAT I DO — Asymmetric list
+═══════════════════════════════════════ */
+.whatido-bg { background: var(--dark); }
+.whatido-inner {
+  max-width: 1160px; margin: 0 auto;
+  padding: 100px 40px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px; align-items: start;
+}
+.whatido-left .section-title {
+  font-size: clamp(2.8rem, 4vw, 4rem);
+  color: var(--white);
+}
+.whatido-left .section-title .serif { color: var(--accent); }
+
+.principle-box {
+  margin-top: 32px;
+  background: rgba(184,242,65,0.08);
+  border: 1px solid rgba(184,242,65,0.2);
+  border-radius: 14px;
+  padding: 24px 28px;
+}
+.principle-box .pb-label {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 0.65rem; font-weight: 700;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 8px;
+}
+.principle-box p {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.15rem; font-style: italic;
+  color: rgba(255,255,255,0.75); line-height: 1.5;
+}
+
+.do-list { display: flex; flex-direction: column; }
+.do-row {
+  display: flex; gap: 20px; padding: 28px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+.do-row:first-child { border-top: 1px solid rgba(255,255,255,0.07); }
+.do-arrow {
+  font-size: 1.2rem; color: var(--accent);
+  flex-shrink: 0; margin-top: 1px;
+  font-family: 'Bricolage Grotesque', sans-serif;
+}
+.do-row strong {
+  display: block; font-weight: 600; font-size: 0.92rem;
+  color: var(--white); margin-bottom: 5px;
+}
+.do-row p { font-size: 0.82rem; color: rgba(255,255,255,0.4); line-height: 1.65; }
+
+/* ═══════════════════════════════════════
+   SPRINT SECTION — cards like CourseSite
+═══════════════════════════════════════ */
+.sprint-section { background: var(--off); }
+.sprint-inner { max-width: 1160px; margin: 0 auto; padding: 100px 40px; }
+
+.sprint-header {
+  display: flex; justify-content: space-between;
+  align-items: flex-end; margin-bottom: 56px;
+  flex-wrap: wrap; gap: 24px;
+}
+.sprint-header .section-title {
+  font-size: clamp(2.6rem, 4vw, 4rem);
+}
+.sprint-price-badge {
+  display: flex; flex-direction: column; align-items: flex-end; gap: 4px;
+}
+.price-num {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-weight: 800; font-size: 3rem;
+  letter-spacing: -0.04em; color: var(--ink); line-height: 1;
+}
+.price-detail {
+  font-size: 0.72rem; color: var(--ink-dim);
+  letter-spacing: 0.06em; text-transform: uppercase;
+}
+
+.sprint-not-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 10px; margin-bottom: 48px;
+}
+.sng-item {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px 22px;
+  display: flex; gap: 12px; align-items: center;
+}
+.sng-badge {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 0.6rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 3px 8px; border-radius: 6px; flex-shrink: 0;
+}
+.badge-no { background: rgba(239,68,68,0.1); color: #ef4444; }
+.badge-yes { background: rgba(34,197,94,0.12); color: #16a34a; }
+.sng-text { font-size: 0.85rem; color: var(--ink-mid); }
+
+/* Deliverable cards — CourseSite style */
+.deliverables-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+.del-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 36px 32px;
+  position: relative; overflow: hidden;
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.del-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 48px rgba(26,24,20,0.08);
+}
+.del-card::after {
+  content: '';
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--accent3));
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.del-card:hover::after { opacity: 1; }
+
+/* ── PLACEHOLDER for deliverable icon / illustration ── */
+.del-icon-placeholder {
+  width: 52px; height: 52px; border-radius: 14px;
+  background: linear-gradient(135deg, var(--off), rgba(184,242,65,0.08));
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; margin-bottom: 20px;
+}
+
+.del-num {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 0.65rem; font-weight: 700;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--ink-dim); margin-bottom: 8px;
+}
+.del-title {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 1.05rem; font-weight: 700;
+  letter-spacing: -0.02em; color: var(--ink);
+  margin-bottom: 10px;
+}
+.del-desc { font-size: 0.83rem; color: var(--ink-mid); line-height: 1.65; }
+
+.del-optional {
+  grid-column: 1 / -1;
+  background: var(--white);
+  border: 1px dashed var(--border);
+  border-radius: 12px; padding: 20px 28px;
+  display: flex; gap: 12px; align-items: center;
+}
+.del-optional .opt-tag {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 0.65rem; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ink-dim); background: var(--off);
+  padding: 4px 10px; border-radius: 6px; flex-shrink: 0;
+}
+.del-optional p { font-size: 0.83rem; color: var(--ink-dim); font-style: italic; }
+
+/* ═══════════════════════════════════════
+   OUTCOME
+═══════════════════════════════════════ */
+.outcome-section { background: var(--white); }
+.outcome-inner {
+  max-width: 1160px; margin: 0 auto; padding: 100px 40px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px; align-items: center;
+}
+.outcome-left .section-title { font-size: clamp(2.4rem, 4vw, 4rem); }
+.outcome-left .outcome-p {
+  font-size: 0.95rem; color: var(--ink-mid); line-height: 1.8;
+  margin-top: 20px;
+}
+.outcome-quote {
+  margin-top: 36px;
+  background: var(--off);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 12px 12px 0;
+  padding: 28px 28px;
+}
+.outcome-quote blockquote {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.15rem; font-style: italic;
+  color: var(--ink); line-height: 1.6;
+}
+.outcome-quote cite {
+  display: block; margin-top: 12px;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 0.65rem; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ink-dim); font-style: normal;
+}
+
+.outcome-list { display: flex; flex-direction: column; gap: 10px; }
+.outcome-item {
+  background: var(--off);
+  border: 1px solid var(--border);
+  border-radius: 12px; padding: 22px 24px;
+  display: flex; align-items: center; gap: 16px;
+  transition: background 0.2s, transform 0.2s, border-color 0.2s;
+}
+.outcome-item:hover {
+  background: var(--white);
+  border-color: rgba(184,242,65,0.4);
+  transform: translateX(4px);
+}
+.oi-check {
+  width: 28px; height: 28px; border-radius: 8px;
+  background: rgba(184,242,65,0.15);
+  border: 1px solid rgba(184,242,65,0.3);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; font-size: 0.9rem;
+}
+.oi-text { font-size: 0.88rem; color: var(--ink); line-height: 1.4; }
+
+/* ═══════════════════════════════════════
+   VISUAL PLACEHOLDER SECTION — for photo/video of Gavriel
+═══════════════════════════════════════ */
+.photo-section {
+  background: var(--dark);
+  min-height: 480px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+  position: relative;
+}
+/* left: placeholder for photo */
+.photo-left {
+  position: relative;
+  background: var(--dark2);
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 12px;
+  border-right: 1px solid rgba(255,255,255,0.06);
+  min-height: 420px;
+  overflow: hidden;
+}
+/* gradient accent behind photo */
+.photo-left::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 80% at 50% 50%,
+    rgba(184,242,65,0.07) 0%, transparent 70%);
+}
+.photo-placeholder {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 12px;
+}
+.photo-placeholder .ph-ring {
+  width: 120px; height: 120px; border-radius: 50%;
+  border: 2px dashed rgba(255,255,255,0.15);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.5rem;
+}
+.photo-placeholder .ph-tag {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 0.68rem; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: rgba(255,255,255,0.2);
+}
+.photo-placeholder .ph-sub {
+  font-size: 0.65rem; color: rgba(255,255,255,0.12);
+}
+
+/* right: text */
+.photo-right {
+  padding: 60px 56px;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.photo-right .eyebrow { color: rgba(255,255,255,0.4); }
+.photo-right .eyebrow::before { background: var(--accent); }
+.photo-right h2 {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-weight: 800; font-size: clamp(2rem, 3vw, 3rem);
+  letter-spacing: -0.04em; color: var(--white);
+  line-height: 1.1; margin-bottom: 20px;
+}
+.photo-right h2 .serif {
+  font-family: 'Instrument Serif', serif;
+  font-weight: 400; font-style: italic;
+  color: var(--accent);
+}
+.photo-right p {
+  font-size: 0.92rem; color: rgba(255,255,255,0.45);
+  line-height: 1.8; max-width: 380px;
+}
+
+/* ═══════════════════════════════════════
+   CTA SECTION — Carty-style dark with lime
+═══════════════════════════════════════ */
+.cta-section {
+  background: var(--dark);
+  padding: 120px 40px;
+  text-align: center;
+  position: relative; overflow: hidden;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.cta-blob-1 {
+  position: absolute; border-radius: 50%;
+  width: 600px; height: 400px;
+  background: radial-gradient(ellipse, rgba(184,242,65,0.1) 0%, transparent 70%);
+  filter: blur(60px);
+  top: 50%; left: 50%; transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+.cta-section .eyebrow { color: rgba(255,255,255,0.3); justify-content: center; }
+.cta-section .eyebrow::before { background: var(--accent); }
+.cta-title {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-weight: 800;
+  font-size: clamp(3rem, 7vw, 7rem);
+  letter-spacing: -0.04em; color: var(--white);
+  line-height: 1.0; margin: 16px 0 24px;
+  position: relative; z-index: 1;
+}
+.cta-title .accent-word { color: var(--accent); }
+.cta-title .serif-word {
+  font-family: 'Instrument Serif', serif;
+  font-weight: 400; font-style: italic;
+  color: rgba(255,255,255,0.6); font-size: 0.85em;
+}
+.cta-sub {
+  font-size: 1rem; color: rgba(255,255,255,0.4);
+  max-width: 420px; margin: 0 auto 48px;
+  line-height: 1.75; position: relative; z-index: 1;
+}
+.cta-price {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 1rem; font-weight: 600;
+  color: rgba(255,255,255,0.3); margin-bottom: 32px;
+  position: relative; z-index: 1;
+}
+.cta-price strong { color: var(--accent); }
+.cta-actions {
+  display: flex; justify-content: center;
+  gap: 14px; flex-wrap: wrap;
+  position: relative; z-index: 1;
+}
+.avail-note {
+  margin-top: 20px;
+  font-size: 0.7rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: rgba(255,255,255,0.2);
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  position: relative; z-index: 1;
+}
+.avail-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--accent); animation: pulse 2s infinite;
+}
+
+/* ═══════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════ */
+footer {
+  background: #080808;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 28px 40px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.footer-logo {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-weight: 700; font-size: 0.88rem;
+  letter-spacing: -0.01em; color: rgba(255,255,255,0.4);
+}
+.footer-link {
+  font-size: 0.72rem; color: rgba(255,255,255,0.2);
+  text-decoration: none; letter-spacing: 0.06em;
+  transition: color 0.2s;
+}
+.footer-link:hover { color: var(--accent); }
+
+/* ─── REVEAL ANIMATIONS ─── */
+.fade-up {
+  opacity: 0; transform: translateY(32px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 900px) {
+  nav { padding: 0 20px; }
+  .nav-links { display: none; }
+  .hero { padding: 64px 24px 0; }
+  .hero-content { padding-top: 60px; }
+  .section, .sprint-inner, .outcome-inner, .whatido-inner { padding: 72px 24px; }
+  .section-full { padding: 72px 24px; }
+  .problem-layout, .whatido-inner, .outcome-inner { grid-template-columns: 1fr; gap: 48px; }
+  .deliverables-grid { grid-template-columns: 1fr; }
+  .sprint-not-grid { grid-template-columns: 1fr; }
+  .stats-bar { grid-template-columns: 1fr; }
+  .stat { border-right: none; border-bottom: 1px solid var(--border); }
+  .photo-section { grid-template-columns: 1fr; }
+  .photo-left { min-height: 280px; }
+  .photo-right { padding: 40px 24px; }
+  .cta-section { padding: 80px 24px; }
+  footer { padding: 24px; flex-direction: column; gap: 12px; }
+  .sprint-header { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="nav-logo">
+    <div class="nav-logo-dot"></div>
+    Gavriel Arias
+  </div>
+  <ul class="nav-links">
+    <li><a href="#sprint">The Sprint</a></li>
+    <li><a href="#outcome">Outcome</a></li>
+    <li><a href="#cta">Pricing</a></li>
+  </ul>
+  <a href="https://cal.com/gavrielarias/15min" target="_blank" class="nav-cta">Book a Call ↗</a>
+</nav>
+
+<!-- ══════════════════════════════════════
+     HERO — Dark, full-bleed gradient
+══════════════════════════════════════ -->
+<section class="hero">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge">
+      <div class="badge-dot"></div>
+      <span>Creative Signal Sprint · 30 Days · $2,500 USD</span>
+    </div>
+    <h1 class="hero-title">
+      From Creative Chaos<br>
+      <span class="italic-line">to Strategic Clarity</span>
+    </h1>
+    <p class="hero-sub">
+      I help founders and creative brands reframe how they see their brand, so the right decisions become obvious.
+    </p>
+    <div class="hero-actions">
+      <a href="https://cal.com/gavrielarias/15min" target="_blank" class="btn-lime">
+        Schedule a Clarity Call →
+      </a>
+      <a href="#sprint" class="btn-outline">See What's Included</a>
+    </div>
+  </div>
+
+  <!-- ── HERO VISUAL — Replace with your image/video/mockup ── -->
+  <div class="hero-visual">
+    <div class="placeholder-hero">
+      <div class="ph-icon">🎬</div>
+      <div class="ph-label">📐 Replace with your hero image or video</div>
+      <div class="ph-sub">Recommended: 1600×700px · MP4 autoplay or PNG with transparent bg</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     STATS
+══════════════════════════════════════ -->
+<div class="stats-bar">
+  <div class="stat fade-up">
+    <div class="stat-num">30<span>d</span></div>
+    <div class="stat-label">Sprint Duration</div>
+  </div>
+  <div class="stat fade-up" style="transition-delay:0.1s">
+    <div class="stat-num">4<span>→</span></div>
+    <div class="stat-label">Core Deliverables</div>
+  </div>
+  <div class="stat fade-up" style="transition-delay:0.2s">
+    <div class="stat-num">1<span>×</span></div>
+    <div class="stat-label">Focused Engagement</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     THE PROBLEM — Enblox asym layout
+══════════════════════════════════════ -->
+<div style="border-bottom: 1px solid var(--border)">
+  <div class="section">
+    <div class="eyebrow fade-up">The Problem</div>
+    <div class="problem-layout">
+      <div class="fade-up">
+        <h2 class="section-title problem-title">
+          Most brands don't lack ideas.<br>
+          They lack <span class="serif">clarity.</span>
+        </h2>
+        <p class="problem-desc">
+          They do too much. They try everything. And progress feels slow because decisions aren't clear. Creative chaos looks productive — until nothing really moves forward.
+        </p>
+      </div>
+      <div class="problem-cards fade-up" style="transition-delay:0.15s">
+        <div class="problem-card">
+          <div class="pc-num">01</div>
+          <div class="pc-text">
+            <strong>Too many ideas, no filter</strong>
+            <p>Every option feels equally valid. Without a strategic lens, nothing gets prioritized — and everything stalls.</p>
+          </div>
+        </div>
+        <div class="problem-card">
+          <div class="pc-num">02</div>
+          <div class="pc-text">
+            <strong>Effort without direction</strong>
+            <p>The team is working hard. The calendar is full. But without alignment, motion ≠ progress.</p>
+          </div>
+        </div>
+        <div class="problem-card">
+          <div class="pc-num">03</div>
+          <div class="pc-text">
+            <strong>Decisions that never close</strong>
+            <p>The same questions resurface every week. Brand direction stays abstract. Execution keeps getting delayed.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     WHAT I DO — dark section
+══════════════════════════════════════ -->
+<div class="whatido-bg">
+  <div class="whatido-inner">
+    <div class="fade-up">
+      <h2 class="section-title" style="color:var(--white)">
+        I work with founders to<br>
+        <span class="serif">remove the bottleneck</span>
+      </h2>
+      <div class="principle-box">
+        <div class="pb-label">The Principle</div>
+        <p>Strategy first. Execution only when it accelerates clarity.</p>
+      </div>
+    </div>
+    <div class="do-list fade-up" style="transition-delay:0.15s">
+      <div class="do-row">
+        <div class="do-arrow">→</div>
+        <div>
+          <strong>Detect where focus is being lost</strong>
+          <p>Pinpoint exactly where coherence, direction, or signal is breaking down — before prescribing anything.</p>
+        </div>
+      </div>
+      <div class="do-row">
+        <div class="do-arrow">→</div>
+        <div>
+          <strong>Reframe the core problem</strong>
+          <p>Most brands are solving the wrong problem, beautifully. Changing the lens changes everything downstream.</p>
+        </div>
+      </div>
+      <div class="do-row">
+        <div class="do-arrow">→</div>
+        <div>
+          <strong>Shape a clear, executable direction</strong>
+          <p>Not more noise. A decision framework: what to focus on, what to eliminate, what to stop doing entirely.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     SPRINT — CourseSite card grid style
+══════════════════════════════════════ -->
+<div class="sprint-section" id="sprint">
+  <div class="sprint-inner">
+    <div class="sprint-header fade-up">
+      <div>
+        <div class="eyebrow">The Engagement</div>
+        <h2 class="section-title">
+          Creative Signal<br>
+          <span class="serif">Sprint</span>
+        </h2>
+      </div>
+      <div class="sprint-price-badge">
+        <div class="price-num">$2,500</div>
+        <div class="price-detail">USD · 30 days · Strategy + independent work</div>
+      </div>
+    </div>
+
+    <!-- NOT / IS -->
+    <div class="sprint-not-grid fade-up">
+      <div class="sng-item">
+        <span class="sng-badge badge-no">Not</span>
+        <span class="sng-text">Branding or visual identity</span>
+      </div>
+      <div class="sng-item">
+        <span class="sng-badge badge-yes">Is</span>
+        <span class="sng-text">Decision-making and strategic clarity</span>
+      </div>
+      <div class="sng-item">
+        <span class="sng-badge badge-no">Not</span>
+        <span class="sng-text">Production for production's sake</span>
+      </div>
+      <div class="sng-item">
+        <span class="sng-badge badge-yes">Is</span>
+        <span class="sng-text">Structure, alignment, and direction</span>
+      </div>
+    </div>
+
+    <!-- Deliverable cards -->
+    <div class="eyebrow fade-up" style="margin-bottom:24px">What's Included</div>
+    <div class="deliverables-grid fade-up">
+      <div class="del-card">
+        <!-- 📐 Replace emoji with your icon asset (48×48px SVG or PNG) -->
+        <div class="del-icon-placeholder">🔍</div>
+        <div class="del-num">Deliverable 01</div>
+        <div class="del-title">Strategic Diagnosis</div>
+        <p class="del-desc">Brand, narrative, digital presence, and positioning — audited to find exactly where the signal is getting lost.</p>
+      </div>
+      <div class="del-card">
+        <div class="del-icon-placeholder">🔄</div>
+        <div class="del-num">Deliverable 02</div>
+        <div class="del-title">Core Problem Reframing</div>
+        <p class="del-desc">A new perspective that changes how you see priorities, decisions, and the path forward. The real shift.</p>
+      </div>
+      <div class="del-card">
+        <div class="del-icon-placeholder">✦</div>
+        <div class="del-num">Deliverable 03</div>
+        <div class="del-title">Clear Decisions</div>
+        <p class="del-desc">Explicit answers: what to focus on, what to eliminate, and what to stop doing — zero ambiguity.</p>
+      </div>
+      <div class="del-card">
+        <div class="del-icon-placeholder">🗺</div>
+        <div class="del-num">Deliverable 04</div>
+        <div class="del-title">Structured Roadmap</div>
+        <p class="del-desc">So execution becomes simple and intentional. A foundation your team can build from without constant hand-holding.</p>
+      </div>
+      <div class="del-optional">
+        <span class="opt-tag">Optional</span>
+        <p>Minimal assets or systems, only if they directly accelerate the strategy — never for production's sake.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PHOTO / VIDEO OF GAVRIEL
+══════════════════════════════════════ -->
+<div class="photo-section">
+  <!-- ── LEFT: Replace with your photo or video ── -->
+  <div class="photo-left">
+    <div class="photo-placeholder">
+      <div class="ph-ring">👤</div>
+      <div class="ph-tag">📸 Your photo or short video here</div>
+      <div class="ph-sub">Recommended: Portrait · 800×900px · JPG or MP4</div>
+    </div>
+  </div>
+  <!-- RIGHT: Quote / about -->
+  <div class="photo-right">
+    <div class="eyebrow">The Work</div>
+    <h2>That shift in perception<br><span class="serif">is the work.</span></h2>
+    <p>
+      Not a deliverable, not a deck. A fundamental change in how you see your brand — that makes every decision after it feel obvious. Clients often say: "I never saw it this way before. Now everything makes sense."
+    </p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     OUTCOME
+══════════════════════════════════════ -->
+<div class="outcome-section" id="outcome">
+  <div class="outcome-inner">
+    <div class="outcome-left fade-up">
+      <div class="eyebrow">After the Sprint</div>
+      <h2 class="section-title">What changes<br><span class="serif">after 30 days</span></h2>
+      <p class="outcome-p">Not just a document — a new operating clarity. The kind that changes what you do the morning after the sprint ends.</p>
+      <div class="outcome-quote">
+        <blockquote>"I never saw it this way before — now everything makes sense."</blockquote>
+        <cite>— What clients say, consistently</cite>
+      </div>
+    </div>
+    <div class="outcome-list fade-up" style="transition-delay:0.15s">
+      <div class="outcome-item">
+        <div class="oi-check">✓</div>
+        <div class="oi-text">You know exactly what your brand stands for — and what it doesn't</div>
+      </div>
+      <div class="outcome-item">
+        <div class="oi-check">✓</div>
+        <div class="oi-text">Priorities are clear. The to-do list stops growing in every direction</div>
+      </div>
+      <div class="outcome-item">
+        <div class="oi-check">✓</div>
+        <div class="oi-text">Your team can execute without constant guidance or hand-holding</div>
+      </div>
+      <div class="outcome-item">
+        <div class="oi-check">✓</div>
+        <div class="oi-text">Decisions that took weeks now take minutes</div>
+      </div>
+      <div class="outcome-item">
+        <div class="oi-check">✓</div>
+        <div class="oi-text">A roadmap simple enough to actually follow through</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     CTA
+══════════════════════════════════════ -->
+<section class="cta-section" id="cta">
+  <div class="cta-blob-1"></div>
+  <div class="eyebrow">If this resonates</div>
+  <h2 class="cta-title">
+    Ready to move<br>
+    <span class="serif-word">forward</span>
+    <span class="accent-word"> clearly?</span>
+  </h2>
+  <p class="cta-sub">
+    Reply to the message that brought you here — or book a 15-minute clarity call directly.
+  </p>
+  <div class="cta-price">
+    <strong>$2,500 USD</strong> · 30-Day Sprint · Strategy sessions + independent work
+  </div>
+  <div class="cta-actions">
+    <a href="https://cal.com/gavrielarias/15min" target="_blank" class="btn-lime">
+      Schedule Clarity Call →
+    </a>
+    <a href="https://gavrielarias.com" target="_blank" class="btn-outline">gavrielarias.com</a>
+  </div>
+  <div class="avail-note">
+    <div class="avail-dot"></div>
+    Limited spots available
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Gavriel Arias</div>
+  <a href="https://gavrielarias.com" class="footer-link" target="_blank">gavrielarias.com</a>
+</footer>
+
+<script>
+// Scroll reveal
+const io = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), 60);
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
