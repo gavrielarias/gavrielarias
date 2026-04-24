@@ -1,1 +1,698 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WiFi Finder Costa Rica</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        :root {
+            --primary: #6C63FF;
+            --secondary: #FF6584;
+            --success: #00D9A5;
+            --warning: #FFB946;
+            --dark: #1A1A2E;
+            --light: #F8F9FA;
+            --card-bg: #FFFFFF;
+            --shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 12px 32px rgba(0, 0, 0, 0.12);
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: var(--dark);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInDown 0.6s ease;
+        }
+
+        .header h1 {
+            font-family: 'Space Mono', monospace;
+            font-size: 3.5rem;
+            color: white;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1rem;
+        }
+
+        .search-container {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            animation: fadeInUp 0.6s ease 0.2s both;
+        }
+
+        .search-bar {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 18px 24px 18px 56px;
+            border: 2px solid #E0E0E0;
+            border-radius: 16px;
+            font-size: 1.1rem;
+            font-family: 'DM Sans', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(108, 99, 255, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+            font-size: 1.2rem;
+        }
+
+        .filter-section {
+            margin-bottom: 16px;
+        }
+
+        .filter-label {
+            font-weight: 600;
+            color: #666;
+            margin-bottom: 8px;
+            display: block;
+            font-size: 0.9rem;
+        }
+
+        .filters {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            border: 2px solid #E0E0E0;
+            background: white;
+            border-radius: 12px;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .top-speeds {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            color: white;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            animation: fadeInLeft 0.6s ease 0.3s both;
+        }
+
+        .speed-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .speed-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: var(--shadow);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            animation: fadeInUp 0.6s ease both;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .speed-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        .speed-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .speed-card:nth-child(1) { animation-delay: 0.4s; }
+        .speed-card:nth-child(2) { animation-delay: 0.5s; }
+        .speed-card:nth-child(3) { animation-delay: 0.6s; }
+        .speed-card:nth-child(4) { animation-delay: 0.7s; }
+        .speed-card:nth-child(5) { animation-delay: 0.8s; }
+        .speed-card:nth-child(6) { animation-delay: 0.9s; }
+
+        .speed-rank {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .location-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 8px;
+            padding-right: 50px;
+        }
+
+        .location-area {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .province-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            background: #f0f0f0;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #666;
+            margin-left: 6px;
+        }
+
+        .speed-display {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .speed-value {
+            font-family: 'Space Mono', monospace;
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .speed-unit {
+            font-weight: 600;
+            color: #999;
+        }
+
+        .speed-details {
+            display: flex;
+            gap: 20px;
+            padding-top: 16px;
+            border-top: 1px solid #E0E0E0;
+        }
+
+        .speed-metric {
+            flex: 1;
+        }
+
+        .speed-metric-label {
+            font-size: 0.8rem;
+            color: #999;
+            margin-bottom: 4px;
+        }
+
+        .speed-metric-value {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .map-container {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            animation: fadeInUp 0.6s ease 1s both;
+        }
+
+        .map-wrapper {
+            position: relative;
+            height: 700px;
+            background: #C8E6C9;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        #costaRicaSvg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .map-pin {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: var(--primary);
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(-45deg);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(108, 99, 255, 0.4);
+            z-index: 100;
+        }
+
+        .map-pin::after {
+            content: '';
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: white;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .map-pin:hover {
+            transform: rotate(-45deg) scale(1.3);
+            z-index: 1000;
+        }
+
+        .map-label {
+            position: absolute;
+            bottom: -35px;
+            left: 50%;
+            transform: translateX(-50%) rotate(45deg);
+            background: rgba(0, 0, 0, 0.85);
+            color: white;
+            padding: 6px 10px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            font-weight: 500;
+        }
+
+        .map-pin:hover .map-label {
+            opacity: 1;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: white;
+        }
+
+        .no-results h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+
+            .speed-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .map-wrapper {
+                height: 500px;
+            }
+
+            .filters {
+                gap: 8px;
+            }
+
+            .filter-btn {
+                font-size: 0.85rem;
+                padding: 8px 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚡ WiFi Finder</h1>
+            <p>Encuentra el mejor WiFi en Costa Rica</p>
+        </div>
+
+        <div class="search-container">
+            <div class="search-bar">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="searchInput" placeholder="Buscar por nombre, área o velocidad...">
+            </div>
+            
+            <div class="filter-section">
+                <span class="filter-label">🗺️ Filtrar por Provincia:</span>
+                <div class="filters" id="provinceFilters">
+                    <button class="filter-btn active" data-province="all">Todas</button>
+                    <button class="filter-btn" data-province="San José">San José</button>
+                    <button class="filter-btn" data-province="Cartago">Cartago</button>
+                    <button class="filter-btn" data-province="Heredia">Heredia</button>
+                    <button class="filter-btn" data-province="Guanacaste">Guanacaste</button>
+                    <button class="filter-btn" data-province="Alajuela">Alajuela</button>
+                    <button class="filter-btn" data-province="Puntarenas">Puntarenas</button>
+                    <button class="filter-btn" data-province="Limón">Limón</button>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <span class="filter-label">⚡ Filtrar por Velocidad:</span>
+                <div class="filters" id="speedFilters">
+                    <button class="filter-btn active" data-speed="all">Todas</button>
+                    <button class="filter-btn" data-speed="ultra">Ultra Rápido (200+ Mbps)</button>
+                    <button class="filter-btn" data-speed="fast">Rápido (100-200 Mbps)</button>
+                    <button class="filter-btn" data-speed="medium">Medio (50-100 Mbps)</button>
+                    <button class="filter-btn" data-speed="slow">Básico (<50 Mbps)</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="top-speeds">
+            <h2 class="section-title">🏆 Top Velocidades</h2>
+            <div class="speed-grid" id="speedGrid"></div>
+            <div class="no-results" id="noResults" style="display: none;">
+                <h3>😔 No se encontraron resultados</h3>
+                <p>Intenta con otra búsqueda o filtro</p>
+            </div>
+        </div>
+
+        <div class="map-container">
+            <h2 class="section-title" style="color: var(--dark); margin-bottom: 20px;">🗺️ Mapa de Costa Rica</h2>
+            <div class="map-wrapper" id="mapWrapper">
+                <svg id="costaRicaSvg" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Costa Rica Outline -->
+                    <path d="M 50,200 L 150,180 L 250,190 L 350,170 L 450,185 L 550,175 L 620,190 L 680,220 L 720,280 L 700,350 L 650,400 L 580,430 L 500,450 L 400,460 L 300,450 L 200,420 L 120,380 L 80,320 L 60,260 Z" 
+                          fill="#81C784" 
+                          stroke="#4CAF50" 
+                          stroke-width="3"/>
+                    
+                    <!-- Province Labels (invisible but for reference) -->
+                    <text x="200" y="280" font-size="14" fill="#2E7D32" opacity="0.7">Guanacaste</text>
+                    <text x="400" y="300" font-size="14" fill="#2E7D32" opacity="0.7">Alajuela</text>
+                    <text x="450" y="350" font-size="14" fill="#2E7D32" opacity="0.7">San José</text>
+                    <text x="520" y="360" font-size="14" fill="#2E7D32" opacity="0.7">Cartago</text>
+                    <text x="420" y="280" font-size="14" fill="#2E7D32" opacity="0.7">Heredia</text>
+                    <text x="250" y="380" font-size="14" fill="#2E7D32" opacity="0.7">Puntarenas</text>
+                    <text x="600" y="380" font-size="14" fill="#2E7D32" opacity="0.7">Limón</text>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // WiFi data with provinces
+        const wifiData = [
+            { name: "Santa Rita Café", area: "Tamarindo", province: "Guanacaste", speed: 350, upload: 380, latency: 7, location: { x: 25, y: 35 } },
+            { name: "Arbyss", area: "Curridabat", province: "San José", speed: 340, upload: 150, latency: 12, location: { x: 58, y: 58 } },
+            { name: "Casona de Mi Tierra", area: "Santo Domingo", province: "Heredia", speed: 330, upload: 290, latency: 4, location: { x: 54, y: 53 } },
+            { name: "Café Rivera", area: "Multiplaza Escazú", province: "San José", speed: 290, upload: 310, latency: 11, location: { x: 52, y: 57 } },
+            { name: "Utilas Burgers", area: "Playa Langosta", province: "Guanacaste", speed: 260, upload: 28, latency: 16, location: { x: 27, y: 36 } },
+            { name: "DayBreak", area: "Ciudad del Este", province: "San José", speed: 250, upload: 210, latency: 9, location: { x: 53, y: 56 } },
+            { name: "Johnny Rockets", area: "Lindora", province: "San José", speed: 240, upload: 28, latency: 15, location: { x: 51, y: 57 } },
+            { name: "Melatte Café", area: "Cartago", province: "Cartago", speed: 230, upload: 150, latency: 8, location: { x: 65, y: 60 } },
+            { name: "Café MistCity", area: "Cartago", province: "Cartago", speed: 230, upload: 190, latency: 5, location: { x: 66, y: 61 } },
+            { name: "Bulali", area: "Avenida Escazú", province: "San José", speed: 220, upload: 300, latency: 4, location: { x: 52, y: 58 } },
+            { name: "Na Morada", area: "Curridabat", province: "San José", speed: 200, upload: 18, latency: 13, location: { x: 58, y: 59 } },
+            { name: "Café Local", area: "Cartago", province: "Cartago", speed: 170, upload: 200, latency: 9, location: { x: 65, y: 59 } },
+            { name: "Giacomin Plaza Bratsi", area: "Heredia", province: "Heredia", speed: 150, upload: 24, latency: 10, location: { x: 55, y: 54 } },
+            { name: "Starbucks", area: "Tamarindo", province: "Guanacaste", speed: 150, upload: 140, latency: 10, location: { x: 26, y: 36 } },
+            { name: "Cafe El Jardín", area: "Cartago", province: "Cartago", speed: 130, upload: 53, latency: 4, location: { x: 66, y: 59 } },
+            { name: "Ke Dulce", area: "Cartago", province: "Cartago", speed: 120, upload: 130, latency: 7, location: { x: 67, y: 60 } },
+            { name: "Starbucks", area: "Cartago", province: "Cartago", speed: 120, upload: 27, latency: 14, location: { x: 65, y: 60 } },
+            { name: "WeWork Escazú Village", area: "Escazú", province: "San José", speed: 110, upload: 110, latency: 4, location: { x: 52, y: 57 } },
+            { name: "Café Amari", area: "Curridabat", province: "San José", speed: 110, upload: 53, latency: 46, location: { x: 58, y: 58 } },
+            { name: "Cakes and Bakes", area: "Curridabat", province: "San José", speed: 100, upload: 70, latency: 4, location: { x: 57, y: 58 } },
+            { name: "Casa Vieja", area: "Cartago", province: "Cartago", speed: 92, upload: 81, latency: 4, location: { x: 65, y: 60 } },
+            { name: "Fulcro", area: "Cartago", province: "Cartago", speed: 86, upload: 82, latency: 5, location: { x: 66, y: 60 } },
+            { name: "Café Blue Bottle", area: "Cartago", province: "Cartago", speed: 79, upload: 38, latency: 5, location: { x: 65, y: 59 } },
+            { name: "Rostipollos Mall Oxígeno", area: "San José", province: "San José", speed: 74, upload: 150, latency: 3, location: { x: 55, y: 57 } },
+            { name: "Chopsticks", area: "Curridabat", province: "San José", speed: 64, upload: 19, latency: 6, location: { x: 57, y: 58 } },
+            { name: "Café Posada de la Luna", area: "Cartago", province: "Cartago", speed: 62, upload: 90, latency: 6, location: { x: 66, y: 60 } },
+            { name: "Mocapan", area: "Escalante", province: "San José", speed: 49, upload: 320, latency: 14, location: { x: 56, y: 57 } },
+            { name: "Rostipollos - Terramall", area: "San José", province: "San José", speed: 47, upload: 46, latency: 5, location: { x: 56, y: 58 } },
+            { name: "Cafetería Automercado", area: "Heredia", province: "Heredia", speed: 44, upload: 9.3, latency: 4, location: { x: 54, y: 54 } },
+            { name: "Starbucks", area: "Pinares", province: "San José", speed: 43, upload: 48, latency: 41, location: { x: 56, y: 57 } },
+            { name: "Teatro Espressivo", area: "Pinares", province: "San José", speed: 42, upload: 25, latency: 5, location: { x: 56, y: 57 } },
+            { name: "La Oveja Negra", area: "Tamarindo", province: "Guanacaste", speed: 38, upload: 15, latency: 22, location: { x: 26, y: 35 } },
+            { name: "Casa Brava", area: "Cartago", province: "Cartago", speed: 38, upload: 62, latency: 3, location: { x: 66, y: 60 } },
+            { name: "Santería", area: "Curridabat", province: "San José", speed: 36, upload: 42, latency: 6, location: { x: 58, y: 58 } },
+            { name: "Melatte Café 2", area: "Cartago", province: "Cartago", speed: 30, upload: 21, latency: 10, location: { x: 65, y: 61 } },
+            { name: "Tacontento", area: "Escazú", province: "San José", speed: 28, upload: 29, latency: 8, location: { x: 52, y: 57 } },
+            { name: "Cha Café", area: "Tamarindo", province: "Guanacaste", speed: 2.8, upload: 17, latency: 12, location: { x: 26, y: 36 } },
+            { name: "Pandeli", area: "Tamarindo", province: "Guanacaste", speed: 20, upload: 77, latency: 12, location: { x: 27, y: 36 } },
+            { name: "Rostipollos", area: "Multiplaza Escazú", province: "San José", speed: 17, upload: 18, latency: 5, location: { x: 52, y: 57 } },
+            { name: "BurgerKing", area: "Tibas", province: "San José", speed: 15, upload: 13, latency: 3, location: { x: 55, y: 56 } },
+            { name: "Café Mosaico", area: "Cartago", province: "Cartago", speed: 14, upload: 80, latency: 10, location: { x: 66, y: 60 } },
+            { name: "Aroma y Sabor", area: "U Latina", province: "San José", speed: 11, upload: 6.9, latency: 6, location: { x: 56, y: 57 } },
+            { name: "Mall Oxígeno Wifi", area: "San José", province: "San José", speed: 10, upload: 78, latency: 6, location: { x: 55, y: 57 } },
+            { name: "Riu Guanacaste", area: "Guanacaste", province: "Guanacaste", speed: 9.7, upload: 6.2, latency: 25, location: { x: 30, y: 40 } },
+            { name: "Spoon Paseo Metropoli", area: "Heredia", province: "Heredia", speed: 9.4, upload: 7.5, latency: 6, location: { x: 54, y: 54 } },
+            { name: "Café Blue", area: "Cartago", province: "Cartago", speed: 8.7, upload: 3.4, latency: 5, location: { x: 66, y: 60 } },
+            { name: "Nobleza del Coris", area: "Pinares", province: "San José", speed: 6.1, upload: 7.2, latency: 10, location: { x: 56, y: 57 } },
+            { name: "Gambas", area: "Escalante", province: "San José", speed: 5.5, upload: 5.4, latency: 12, location: { x: 56, y: 57 } },
+            { name: "Mercado Gastronómico", area: "Cartago", province: "Cartago", speed: 4.4, upload: 1.6, latency: 16, location: { x: 66, y: 60 } },
+            { name: "Filippo", area: "Avenida Escazú", province: "San José", speed: 3.0, upload: 2.5, latency: 16, location: { x: 52, y: 58 } },
+            { name: "Entre Nous", area: "Barrio Escalante", province: "San José", speed: 2.2, upload: 2.1, latency: 9, location: { x: 56, y: 57 } }
+        ];
+
+        let filteredData = [...wifiData];
+        let currentProvinceFilter = 'all';
+        let currentSpeedFilter = 'all';
+
+        function renderSpeedCards(data) {
+            const gridElement = document.getElementById('speedGrid');
+            const noResults = document.getElementById('noResults');
+            
+            if (data.length === 0) {
+                gridElement.style.display = 'none';
+                noResults.style.display = 'block';
+                return;
+            }
+
+            gridElement.style.display = 'grid';
+            noResults.style.display = 'none';
+            
+            gridElement.innerHTML = data.map((location, index) => `
+                <div class="speed-card" onclick="highlightLocation('${location.name.replace(/'/g, "\\'")}')">
+                    <div class="speed-rank">#${index + 1}</div>
+                    <div class="location-name">${location.name}</div>
+                    <div class="location-area">
+                        📍 ${location.area}
+                        <span class="province-badge">${location.province}</span>
+                    </div>
+                    <div class="speed-display">
+                        <div class="speed-value">${location.speed}</div>
+                        <div class="speed-unit">Mbps</div>
+                    </div>
+                    <div class="speed-details">
+                        <div class="speed-metric">
+                            <div class="speed-metric-label">Upload</div>
+                            <div class="speed-metric-value">${location.upload} Mbps</div>
+                        </div>
+                        <div class="speed-metric">
+                            <div class="speed-metric-label">Latency</div>
+                            <div class="speed-metric-value">${location.latency} ms</div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderMap() {
+            const mapWrapper = document.getElementById('mapWrapper');
+            const svg = document.getElementById('costaRicaSvg');
+            
+            // Remove old pins
+            const oldPins = mapWrapper.querySelectorAll('.map-pin');
+            oldPins.forEach(pin => pin.remove());
+            
+            // Add new pins
+            filteredData.forEach(location => {
+                const pin = document.createElement('div');
+                pin.className = 'map-pin';
+                pin.style.left = `${location.location.x}%`;
+                pin.style.top = `${location.location.y}%`;
+                pin.onclick = () => showLocationCard(location.name);
+                
+                const label = document.createElement('div');
+                label.className = 'map-label';
+                label.textContent = `${location.name} - ${location.speed} Mbps`;
+                
+                pin.appendChild(label);
+                mapWrapper.appendChild(pin);
+            });
+        }
+
+        function filterData(searchTerm, provinceFilter, speedFilter) {
+            let data = [...wifiData];
+            
+            // Apply search filter
+            if (searchTerm) {
+                const term = searchTerm.toLowerCase();
+                data = data.filter(location => 
+                    location.name.toLowerCase().includes(term) ||
+                    location.area.toLowerCase().includes(term) ||
+                    location.province.toLowerCase().includes(term) ||
+                    location.speed.toString().includes(term)
+                );
+            }
+            
+            // Apply province filter
+            if (provinceFilter !== 'all') {
+                data = data.filter(location => location.province === provinceFilter);
+            }
+            
+            // Apply speed filter
+            if (speedFilter === 'ultra') {
+                data = data.filter(location => location.speed >= 200);
+            } else if (speedFilter === 'fast') {
+                data = data.filter(location => location.speed >= 100 && location.speed < 200);
+            } else if (speedFilter === 'medium') {
+                data = data.filter(location => location.speed >= 50 && location.speed < 100);
+            } else if (speedFilter === 'slow') {
+                data = data.filter(location => location.speed < 50);
+            }
+            
+            filteredData = data;
+            renderSpeedCards(filteredData);
+            renderMap();
+        }
+
+        function highlightLocation(name) {
+            const cards = document.querySelectorAll('.speed-card');
+            cards.forEach(card => {
+                if (card.querySelector('.location-name').textContent === name) {
+                    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    card.style.transform = 'scale(1.05)';
+                    setTimeout(() => {
+                        card.style.transform = '';
+                    }, 500);
+                }
+            });
+        }
+
+        function showLocationCard(name) {
+            highlightLocation(name);
+        }
+
+        // Event listeners
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            filterData(e.target.value, currentProvinceFilter, currentSpeedFilter);
+        });
+
+        document.querySelectorAll('#provinceFilters .filter-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('#provinceFilters .filter-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentProvinceFilter = e.target.dataset.province;
+                const searchTerm = document.getElementById('searchInput').value;
+                filterData(searchTerm, currentProvinceFilter, currentSpeedFilter);
+            });
+        });
+
+        document.querySelectorAll('#speedFilters .filter-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('#speedFilters .filter-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentSpeedFilter = e.target.dataset.speed;
+                const searchTerm = document.getElementById('searchInput').value;
+                filterData(searchTerm, currentProvinceFilter, currentSpeedFilter);
+            });
+        });
+
+        // Initial render
+        renderSpeedCards(wifiData);
+        renderMap();
+    </script>
+</body>
+</html>
