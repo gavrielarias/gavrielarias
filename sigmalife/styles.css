@@ -1,0 +1,829 @@
+/* ═══════════════════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #1E1E1E;
+  --bg-card: #2A2A2A;
+  --bg-card-light: #323232;
+  --purple: #7C3AED;
+  --purple-light: #A78BFA;
+  --green: #10D9A0;
+  --red: #EF4444;
+  --orange: #FB923C;
+  --text: #FFFFFF;
+  --text-muted: #9CA3AF;
+  --text-sub: #D1D5DB;
+  --radius: 20px;
+  --header-h: 64px;
+  --nav-h: 72px;
+  --font: 'Lexend Deca', sans-serif;
+}
+
+html, body {
+  height: 100%;
+  background: #000;
+  font-family: var(--font);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+button { cursor: pointer; border: none; background: none; font-family: var(--font); color: inherit; }
+ul { list-style: none; }
+img { display: block; }
+
+/* ═══════════════════════════════════════════════════
+   APP SHELL — mobile-first, max 430px centrado
+═══════════════════════════════════════════════════ */
+#app-shell {
+  position: relative;
+  width: 100%;
+  max-width: 430px;
+  min-height: 100dvh;
+  margin: 0 auto;
+  background: var(--bg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ═══════════════════════════════════════════════════
+   HEADER
+═══════════════════════════════════════════════════ */
+#app-header {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 430px;
+  height: var(--header-h);
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  z-index: 100;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.header-title {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+
+.counter-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-card);
+  border: 1.5px solid rgba(255,255,255,0.12);
+  border-radius: 14px;
+  padding: 6px 12px;
+}
+
+.counter-icon { width: 24px; height: 24px; object-fit: contain; }
+.skull-icon { margin-left: 4px; }
+
+#header-coins, #header-deudas {
+  font-size: 16px;
+  font-weight: 700;
+  min-width: 16px;
+  text-align: center;
+}
+
+/* ═══════════════════════════════════════════════════
+   SCREENS
+═══════════════════════════════════════════════════ */
+.screen {
+  flex: 1;
+  padding-top: calc(var(--header-h) + 12px);
+  padding-bottom: calc(var(--nav-h) + 12px);
+  padding-left: 16px;
+  padding-right: 16px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  opacity: 1;
+  transition: opacity 200ms ease;
+}
+
+.screen.hidden {
+  display: none;
+  opacity: 0;
+}
+
+.screen.active { display: block; opacity: 1; }
+.screen.fade-in { animation: fadeIn 200ms ease forwards; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ═══════════════════════════════════════════════════
+   CARDS
+═══════════════════════════════════════════════════ */
+.card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  margin-bottom: 14px;
+}
+
+/* ═══════════════════════════════════════════════════
+   TAREAS — Week Nav
+═══════════════════════════════════════════════════ */
+.week-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.week-arrow {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 120ms ease, background 120ms ease;
+}
+.week-arrow:hover { background: rgba(124,58,237,0.15); }
+.week-arrow:active { transform: scale(0.9); }
+
+.week-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-muted);
+  min-width: 120px;
+  text-align: center;
+}
+
+/* ═══════════════════════════════════════════════════
+   TAREAS — Days Row
+═══════════════════════════════════════════════════ */
+.days-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 4px;
+  margin-bottom: 14px;
+}
+
+.day-pill {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  background: var(--bg-card);
+  border-radius: 12px;
+  padding: 8px 2px;
+  border: 2px solid transparent;
+  transition: border-color 150ms;
+}
+
+.day-pill.day-active {
+  border-color: var(--purple);
+  background: rgba(124,58,237,0.18);
+}
+
+.day-name {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+}
+
+.day-active .day-name { color: var(--purple-light); }
+
+.day-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+.dot-red    { background: var(--red); }
+.dot-purple { background: var(--purple); }
+.dot-blue   { background: #60A5FA; }
+.dot-green  { background: var(--green); }
+
+/* ═══════════════════════════════════════════════════
+   TAREAS — Points Card
+═══════════════════════════════════════════════════ */
+.points-card {
+  background: var(--purple);
+  padding: 16px 20px;
+}
+
+.points-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.points-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.85);
+}
+
+.points-value {
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.progress-bar-track {
+  height: 10px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 100px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #A78BFA, #ffffff);
+  border-radius: 100px;
+  transition: width 600ms ease-out;
+  min-width: 4px;
+}
+
+.points-footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.75);
+}
+
+/* ═══════════════════════════════════════════════════
+   TAREAS — Papa Banner
+═══════════════════════════════════════════════════ */
+.papa-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--red);
+  border-radius: 14px;
+  padding: 12px 16px;
+  margin-bottom: 14px;
+  font-size: 13px;
+  font-weight: 500;
+}
+.papa-banner.hidden { display: none; }
+.banner-icon { width: 28px; height: 28px; object-fit: contain; }
+
+/* ═══════════════════════════════════════════════════
+   TAREAS — Section Header
+═══════════════════════════════════════════════════ */
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  padding-top: 4px;
+}
+
+.section-icon { width: 36px; height: 36px; object-fit: contain; }
+
+.section-title {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+/* ═══════════════════════════════════════════════════
+   TAREAS — Missions List
+═══════════════════════════════════════════════════ */
+.missions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mission-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--bg-card);
+  border-radius: 16px;
+  padding: 12px 14px;
+  transition: box-shadow 200ms;
+}
+
+.mission-row:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
+
+.mission-emoji-wrap {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  border-radius: 12px;
+  background: var(--bg-card-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  transition: transform 200ms ease;
+}
+
+.mission-emoji-wrap.pop {
+  animation: emojiPop 250ms ease;
+}
+
+@keyframes emojiPop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.35); }
+  70%  { transform: scale(0.92); }
+  100% { transform: scale(1); }
+}
+
+.mission-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.mission-title {
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1.3;
+  margin-bottom: 2px;
+  color: var(--text);
+}
+
+.mission-weekly {
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+.mission-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.mission-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ctrl-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: var(--bg-card-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--text);
+  transition: transform 120ms ease, background 120ms ease;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.ctrl-btn:hover { background: rgba(124,58,237,0.3); }
+.ctrl-btn:active { transform: scale(0.88); }
+.ctrl-btn.plus { color: var(--green); }
+.ctrl-btn.minus { color: var(--red); }
+
+.mission-count {
+  font-size: 15px;
+  font-weight: 700;
+  min-width: 22px;
+  text-align: center;
+}
+
+.mission-coins {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #FCD34D;
+}
+
+.mission-coins img {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+
+/* completed state */
+.mission-row.completed .mission-title { color: var(--green); }
+.mission-row.completed .mission-emoji-wrap { background: rgba(16,217,160,0.12); }
+
+/* ═══════════════════════════════════════════════════
+   PREMIOS — Total Card
+═══════════════════════════════════════════════════ */
+.total-card {
+  background: var(--purple);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 24px;
+  margin-bottom: 20px;
+}
+
+.total-label {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+  max-width: 130px;
+}
+
+.total-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.total-coins-icon { width: 48px; height: 48px; object-fit: contain; }
+
+.total-value {
+  font-size: 56px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* ═══════════════════════════════════════════════════
+   PREMIOS — Levels
+═══════════════════════════════════════════════════ */
+.subsection-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+  letter-spacing: 0.2px;
+}
+
+.levels-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.level-card {
+  flex: 1;
+  background: var(--bg-card);
+  border-radius: 16px;
+  padding: 14px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  border: 2px solid transparent;
+  transition: border-color 200ms;
+}
+
+.level-card--ultra {
+  border-color: var(--purple);
+  background: rgba(124,58,237,0.12);
+}
+
+.level-avatar {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+}
+
+.level-name {
+  font-size: 11px;
+  font-weight: 700;
+  text-align: center;
+  color: var(--text-muted);
+}
+.level-name--ultra { color: var(--purple-light); }
+
+.level-points {
+  font-size: 22px;
+  font-weight: 700;
+}
+.level-points--ultra { color: var(--purple-light); }
+
+.level-perks {
+  font-size: 9.5px;
+  font-weight: 400;
+  color: var(--text-muted);
+  text-align: center;
+  line-height: 1.5;
+}
+.level-perks li { margin-bottom: 1px; }
+.level-perks em { font-style: italic; font-size: 9px; }
+
+/* ═══════════════════════════════════════════════════
+   PREMIOS — Racha Épica
+═══════════════════════════════════════════════════ */
+.racha-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  justify-content: space-between;
+}
+
+.racha-left { flex: 1; }
+
+.racha-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--orange);
+  margin-bottom: 2px;
+}
+
+.racha-subtitle {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+
+.racha-perks {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.racha-perks li {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-sub);
+}
+
+.racha-trophy {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.disclaimer {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-top: -6px;
+  margin-bottom: 16px;
+}
+
+/* ═══════════════════════════════════════════════════
+   RESUMEN — Stats Grid
+═══════════════════════════════════════════════════ */
+.resumen-week-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.stat-card {
+  border-radius: var(--radius);
+  padding: 20px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card--green  { background: var(--green); }
+.stat-card--red    { background: var(--red); }
+.stat-card--orange { background: var(--orange); }
+.stat-card--purple { background: var(--purple); }
+
+.stat-icon {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.stat-number {
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+}
+
+.stat-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.85);
+}
+
+/* ═══════════════════════════════════════════════════
+   RESUMEN — Cerrar Semana
+═══════════════════════════════════════════════════ */
+.btn-cerrar-semana {
+  width: 100%;
+  background: linear-gradient(135deg, var(--purple), #9B59B6);
+  border-radius: 14px;
+  padding: 16px;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #fff;
+  margin-bottom: 24px;
+  transition: transform 120ms ease, box-shadow 120ms ease;
+  box-shadow: 0 4px 20px rgba(124,58,237,0.4);
+}
+.btn-cerrar-semana:hover  { box-shadow: 0 6px 28px rgba(124,58,237,0.55); }
+.btn-cerrar-semana:active { transform: scale(0.97); }
+
+/* ═══════════════════════════════════════════════════
+   RESUMEN — Historial
+═══════════════════════════════════════════════════ */
+.historial-title { margin-bottom: 10px; }
+
+.historial-list { display: flex; flex-direction: column; gap: 10px; }
+
+.historial-empty {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.historial-item {
+  background: var(--bg-card);
+  border-radius: 14px;
+  padding: 14px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.historial-week-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.historial-meta {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 3px;
+}
+
+.historial-coins {
+  font-size: 18px;
+  font-weight: 700;
+  color: #FCD34D;
+}
+
+/* ═══════════════════════════════════════════════════
+   BOTTOM NAV
+═══════════════════════════════════════════════════ */
+#bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 430px;
+  height: var(--nav-h);
+  background: #111;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  align-items: stretch;
+  z-index: 100;
+}
+
+.nav-tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted);
+  padding-bottom: 6px;
+  transition: color 150ms;
+  position: relative;
+}
+
+.nav-tab::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  width: 32px;
+  height: 2px;
+  background: var(--purple);
+  border-radius: 0 0 2px 2px;
+  transition: transform 200ms ease;
+}
+
+.nav-tab.active { color: #fff; }
+.nav-tab.active::after { transform: translateX(-50%) scaleX(1); }
+
+.nav-icon {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  opacity: 0.6;
+  transition: opacity 150ms;
+}
+.nav-icon--resumen { width: 24px; height: 24px; }
+.nav-tab.active .nav-icon { opacity: 1; }
+
+/* ═══════════════════════════════════════════════════
+   MODAL
+═══════════════════════════════════════════════════ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  padding: 24px;
+}
+.modal-overlay.hidden { display: none; }
+
+.modal-box {
+  background: var(--bg-card);
+  border-radius: 24px;
+  padding: 32px 28px;
+  width: 100%;
+  max-width: 340px;
+  text-align: center;
+  animation: modalIn 250ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes modalIn {
+  from { transform: scale(0.88); opacity: 0; }
+  to   { transform: scale(1);    opacity: 1; }
+}
+
+.modal-emoji { font-size: 48px; margin-bottom: 8px; }
+.modal-title { font-size: 22px; font-weight: 700; margin-bottom: 24px; letter-spacing: 1px; }
+
+.modal-stats {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 28px;
+}
+.modal-stat { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.modal-stat-value { font-size: 32px; font-weight: 700; }
+.modal-stat-label { font-size: 11px; color: var(--text-muted); font-weight: 500; }
+
+.btn-nueva-semana {
+  width: 100%;
+  background: var(--purple);
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.5px;
+  transition: transform 120ms ease;
+}
+.btn-nueva-semana:active { transform: scale(0.97); }
+
+/* ═══════════════════════════════════════════════════
+   SCROLLBAR (webkit)
+═══════════════════════════════════════════════════ */
+.screen::-webkit-scrollbar { width: 0; }
+
+/* ═══════════════════════════════════════════════════
+   DESKTOP wrapper
+═══════════════════════════════════════════════════ */
+@media (min-width: 431px) {
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: #000;
+    z-index: -1;
+  }
+}
