@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Sigma Life</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+::-webkit-scrollbar { display: none; }
+
+:root {
+  --bg-grad: linear-gradient(135deg, #EAF5EA 0%, #F5F7E8 50%, #FAEDDA 100%);
+  --bg-solid: #F4F6F0;
+  --card-bg-solid: #FFFFFF;
+  --text-primary: #1E1E1E;
+  --text-secondary: #888;
+  --text-muted: #B0B0B0;
+  --border: rgba(0,0,0,0.05);
+  --purple: #7C3AED;
+  --purple-light: #A78BFA;
+  --teal: #2DD4BF;
+  --coral: #EF4444;
+  --orange: #FB923C;
+  --cyan: #06B6D4;
+  --gold: #F59E0B;
+  --green: #10B981;
+  --r-card: 20px;
+  --r-row: 16px;
+  --r-pill: 14px;
+  --shadow-card: 0 2px 12px rgba(0,0,0,0.04);
+  --shadow-card-lg: 0 4px 20px rgba(0,0,0,0.06);
+  --ff: 'Lexend Deca', -apple-system, sans-serif;
+}
+
+html, body { background: var(--bg-solid); }
+
+body {
+  font-family: var(--ff);
+  background: var(--bg-grad);
+  background-attachment: fixed;
+  color: var(--text-primary);
+  min-height: 100vh;
+  max-width: 430px;
+  margin: 0 auto;
+  overflow-x: hidden;
+  padding-bottom: 100px;
+  -webkit-tap-highlight-color: transparent;
+  font-weight: 500;
+}
+
+.splash { position: fixed; inset: 0; background: var(--bg-grad); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; z-index: 999; transition: opacity 0.5s ease; }
+.splash.out { opacity: 0; pointer-events: none; }
+.splash-img { width: 200px; height: 200px; object-fit: contain; animation: floatY 3s ease-in-out infinite; }
+.splash-title { font-weight: 800; font-size: 44px; color: var(--text-primary); letter-spacing: -0.02em; }
+@keyframes floatY { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+.header { position: sticky; top: 0; z-index: 100; background: linear-gradient(180deg, rgba(244,246,240,0.95) 0%, rgba(244,246,240,0.85) 100%); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 14px 20px 12px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); }
+.header-left { display: flex; align-items: center; gap: 12px; }
+.avatar { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; background: rgba(255,255,255,0.5); }
+.app-title { font-weight: 800; font-size: 22px; color: var(--text-primary); letter-spacing: -0.02em; }
+.header-right { display: flex; align-items: center; background: var(--card-bg-solid); border: 1.5px solid rgba(124,58,237,0.15); border-radius: var(--r-pill); padding: 6px 12px; gap: 10px; box-shadow: var(--shadow-card); position: relative; }
+.pill-item { display: flex; align-items: center; gap: 6px; font-weight: 700; font-size: 15px; color: var(--text-primary); }
+.pill-item img { width: 28px; height: 28px; object-fit: contain; }
+.sync-dot { position: absolute; top: 4px; right: 4px; width: 6px; height: 6px; border-radius: 50%; background: var(--text-muted); transition: background 0.4s; }
+.sync-dot.synced  { background: var(--green); }
+.sync-dot.syncing { background: var(--gold); animation: pulse 0.8s infinite; }
+.sync-dot.error   { background: var(--coral); }
+@keyframes pulse { 0%,100% { opacity: 0.4; } 50% { opacity: 1; } }
+
+.week-nav { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px 14px; border-bottom: 1px solid var(--border); margin: 0 16px; }
+.wk-arrow { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; color: var(--purple); font-size: 24px; font-weight: 700; transition: transform 0.15s; }
+.wk-arrow:active { transform: scale(0.9); }
+.wk-arrow:disabled { color: var(--text-muted); opacity: 0.4; cursor: not-allowed; }
+.wk-label { font-weight: 600; font-size: 16px; color: var(--purple); }
+
+.day-strip { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; padding: 16px 16px 4px; }
+.day-chip { background: var(--card-bg-solid); border-radius: var(--r-pill); padding: 14px 4px 12px; display: flex; flex-direction: column; align-items: center; gap: 8px; box-shadow: var(--shadow-card); transition: all 0.2s ease; cursor: pointer; border: 1.5px solid transparent; }
+.day-chip:active { transform: scale(0.95); }
+.day-chip.active { background: var(--purple); border-color: var(--purple); box-shadow: 0 6px 16px rgba(124,58,237,0.35); }
+.day-chip.active .dc-name { color: #fff; }
+.day-chip.active .dc-dot { background: #fff; }
+.dc-name { font-weight: 700; font-size: 14px; color: var(--text-primary); letter-spacing: 0.05em; }
+.dc-dot { width: 10px; height: 10px; border-radius: 50%; background: transparent; transition: background 0.3s; }
+.day-chip.has-done .dc-dot { background: var(--purple); }
+.day-chip.has-debt .dc-dot { background: var(--coral); }
+.day-chip.has-both .dc-dot { background: linear-gradient(90deg, var(--purple) 50%, var(--coral) 50%); }
+
+.content { padding: 16px; }
+
+.progress-card { background: var(--purple); border-radius: var(--r-card); padding: 22px 24px; color: #fff; margin-bottom: 14px; box-shadow: 0 8px 24px rgba(124,58,237,0.25); }
+.progress-card.neg { background: linear-gradient(135deg, #DC2626 0%, #B91C1C 100%); box-shadow: 0 8px 24px rgba(220,38,38,0.25); }
+.pc-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 18px; }
+.pc-title { font-weight: 600; font-size: 18px; max-width: 60%; line-height: 1.3; }
+.pc-score { font-weight: 800; font-size: 52px; line-height: 1; letter-spacing: -0.03em; }
+.pc-bar { background: rgba(255,255,255,0.2); border-radius: 100px; height: 12px; overflow: hidden; margin-bottom: 8px; }
+.pc-fill { background: linear-gradient(90deg, #2DD4BF 0%, #06B6D4 100%); height: 100%; border-radius: 100px; transition: width 0.6s ease-out; width: 0%; }
+.pc-fill.neg { background: linear-gradient(90deg, #FCA5A5 0%, #F87171 100%); }
+.pc-footer { display: flex; justify-content: space-between; font-size: 14px; font-weight: 600; }
+.pc-now { color: #fff; }
+.pc-tgt { color: rgba(255,255,255,0.7); }
+
+.debt-banner { background: var(--coral); border-radius: var(--r-card); padding: 14px 18px; display: none; align-items: center; gap: 12px; margin-bottom: 14px; box-shadow: 0 4px 16px rgba(239,68,68,0.2); }
+.debt-banner.show { display: flex; }
+.debt-banner img { width: 40px; height: 40px; object-fit: contain; flex-shrink: 0; }
+.debt-banner-text { color: #fff; font-weight: 500; font-size: 14px; line-height: 1.35; }
+.debt-banner-text b { font-weight: 700; }
+
+.section-title { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 18px 0 14px; }
+.section-title .castle, .section-title .map { width: 56px; height: 56px; object-fit: contain; }
+.section-title h2 { font-weight: 700; font-size: 22px; color: var(--text-primary); }
+
+.task-list { display: flex; flex-direction: column; gap: 10px; }
+.task-card { background: var(--card-bg-solid); border-radius: var(--r-row); padding: 14px; display: grid; grid-template-columns: 56px 1fr auto; gap: 12px; align-items: center; box-shadow: var(--shadow-card); transition: transform 0.15s, box-shadow 0.2s; border: 1px solid transparent; }
+.task-card.st-done { border-color: rgba(16,185,129,0.3); background: rgba(16,185,129,0.04); }
+.task-card.st-debt { border-color: rgba(239,68,68,0.3); background: rgba(239,68,68,0.04); }
+.task-ico { width: 56px; height: 56px; background: rgba(0,0,0,0.04); border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 32px; }
+.task-info { min-width: 0; }
+.task-name { font-weight: 600; font-size: 14.5px; color: var(--text-primary); line-height: 1.25; margin-bottom: 4px; }
+.task-freq { font-size: 12px; font-weight: 500; color: var(--text-secondary); }
+.task-freq .freq-n { font-weight: 700; color: var(--text-primary); }
+.task-freq .freq-n.good { color: var(--green); }
+.task-freq .freq-n.ok { color: var(--orange); }
+.task-freq .freq-n.behind { color: var(--coral); }
+.task-pts { font-size: 11px; font-weight: 600; color: var(--purple); margin-top: 2px; }
+
+.task-actions { display: flex; flex-direction: column; gap: 6px; }
+.act-btn { width: 44px; height: 44px; border-radius: 12px; background: rgba(0,0,0,0.04); display: flex; align-items: center; justify-content: center; padding: 0; transition: all 0.2s; position: relative; overflow: hidden; }
+.act-btn:active { transform: scale(0.9); }
+.act-btn img { width: 32px; height: 32px; object-fit: contain; opacity: 0.5; transition: opacity 0.2s, transform 0.2s; pointer-events: none; }
+.act-btn.aok { background: rgba(245,158,11,0.08); }
+.act-btn.aok.on { background: rgba(245,158,11,0.22); box-shadow: 0 0 0 2px rgba(245,158,11,0.4); }
+.act-btn.aok.on img { opacity: 1; transform: scale(1.05); }
+.act-btn.adbt { background: rgba(239,68,68,0.06); }
+.act-btn.adbt.on { background: rgba(239,68,68,0.22); box-shadow: 0 0 0 2px rgba(239,68,68,0.4); }
+.act-btn.adbt.on img { opacity: 1; transform: scale(1.05); }
+
+.prize-big-card { background: var(--purple); border-radius: var(--r-card); padding: 20px 24px; color: #fff; margin-bottom: 18px; display: flex; align-items: center; gap: 16px; box-shadow: 0 8px 24px rgba(124,58,237,0.25); }
+.prize-big-card.neg { background: linear-gradient(135deg, #DC2626 0%, #B91C1C 100%); }
+.prize-big-title { font-weight: 600; font-size: 16px; flex: 1; line-height: 1.3; }
+.prize-big-coins { width: 70px; height: 70px; object-fit: contain; flex-shrink: 0; }
+.prize-big-num { font-weight: 800; font-size: 56px; line-height: 1; letter-spacing: -0.03em; }
+
+.niveles-label { font-size: 14px; color: var(--text-secondary); margin-bottom: 10px; padding-left: 4px; }
+.level-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 18px; }
+.level-card { background: var(--card-bg-solid); border-radius: var(--r-card); padding: 14px 8px 16px; text-align: center; box-shadow: var(--shadow-card); transition: transform 0.2s; opacity: 0.95; }
+.level-card.locked { opacity: 0.55; filter: grayscale(0.3); }
+.level-avatar { width: 64px; height: 64px; margin: 0 auto 8px; object-fit: contain; }
+.lv-name { font-weight: 700; font-size: 15px; margin-bottom: 6px; }
+.lv-pts { font-weight: 800; font-size: 32px; margin-bottom: 8px; line-height: 1; }
+.lv-list { font-size: 10.5px; font-weight: 500; color: var(--text-secondary); line-height: 1.4; }
+
+.epic-card { background: var(--card-bg-solid); border-radius: var(--r-card); padding: 18px 20px; display: flex; align-items: flex-start; gap: 12px; box-shadow: var(--shadow-card); margin-bottom: 14px; }
+.epic-content { flex: 1; min-width: 0; }
+.epic-title { font-weight: 800; font-size: 22px; background: linear-gradient(90deg, #F59E0B 0%, #EC4899 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 4px; }
+.epic-sub { font-size: 12px; color: var(--text-secondary); margin-bottom: 12px; }
+.epic-list { font-size: 12.5px; font-weight: 500; color: var(--text-primary); line-height: 1.7; }
+.epic-trophy { width: 110px; height: 110px; object-fit: contain; flex-shrink: 0; margin-top: -6px; }
+.epic-foot { font-size: 11px; color: var(--text-muted); margin-top: 8px; }
+
+.summary-label { font-size: 14px; color: var(--text-secondary); margin-bottom: 14px; padding-left: 4px; }
+.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 22px; }
+.stat-card { border-radius: var(--r-card); padding: 16px 18px; color: #fff; position: relative; min-height: 130px; display: flex; flex-direction: column; justify-content: flex-end; box-shadow: var(--shadow-card-lg); overflow: hidden; }
+.stat-card .stat-emoji { position: absolute; top: 14px; left: 14px; width: 30px; height: 30px; object-fit: contain; }
+.stat-card.no-img .stat-emoji { font-size: 24px; display: flex; align-items: center; justify-content: center; }
+.stat-content { text-align: right; }
+.stat-num { font-weight: 800; font-size: 52px; line-height: 1; letter-spacing: -0.03em; margin-bottom: 2px; }
+.stat-name { font-weight: 600; font-size: 17px; }
+.sc-teal { background: var(--teal); }
+.sc-coral { background: var(--coral); }
+.sc-orange { background: var(--orange); }
+.sc-purple { background: var(--purple); }
+
+.close-week-btn { background: var(--purple); color: #fff; border-radius: 100px; padding: 16px; font-family: inherit; font-weight: 700; font-size: 15px; width: 100%; margin-bottom: 16px; letter-spacing: 0.04em; box-shadow: 0 8px 16px rgba(124,58,237,0.25); transition: transform 0.15s; }
+.close-week-btn:active { transform: scale(0.97); }
+
+.hist-label { font-size: 14px; color: var(--text-secondary); margin-bottom: 10px; padding-left: 4px; }
+.hist-list { background: var(--card-bg-solid); border-radius: var(--r-card); padding: 10px; box-shadow: var(--shadow-card); min-height: 80px; }
+.hist-row { display: grid; grid-template-columns: 1fr auto auto auto auto; gap: 10px; padding: 10px 8px; align-items: center; font-size: 13px; font-weight: 600; border-bottom: 1px solid var(--border); }
+.hist-row:last-child { border-bottom: none; }
+.hist-empty { padding: 22px; text-align: center; color: var(--text-muted); font-size: 13px; }
+
+.view { display: none; animation: fadeIn 0.3s ease; }
+.view.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+.bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; max-width: 430px; margin: 0 auto; background: #0F0F0F; border-top-left-radius: 28px; border-top-right-radius: 28px; display: flex; justify-content: space-around; padding: 14px 12px 18px; z-index: 100; box-shadow: 0 -4px 20px rgba(0,0,0,0.15); }
+.nav-btn { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px 6px; color: rgba(255,255,255,0.6); font-weight: 600; font-size: 12px; transition: all 0.2s; background: none; border: none; border-radius: 12px; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.nav-btn.active { color: #fff; }
+.nav-btn:active { transform: scale(0.95); }
+.nav-btn img { width: 38px; height: 38px; object-fit: contain; opacity: 0.6; transition: opacity 0.2s; pointer-events: none; }
+.nav-btn.active img { opacity: 1; }
+.nav-btn span { pointer-events: none; }
+
+.toast { position: fixed; bottom: 110px; left: 50%; transform: translateX(-50%) translateY(80px); background: #1E1E1E; color: #fff; padding: 12px 22px; border-radius: 100px; font-size: 13px; font-weight: 600; z-index: 200; opacity: 0; transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); white-space: nowrap; box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+.toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+.modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: none; align-items: center; justify-content: center; z-index: 300; padding: 20px; backdrop-filter: blur(4px); }
+.modal-bg.open { display: flex; animation: fadeIn 0.2s; }
+.modal { background: var(--card-bg-solid); border-radius: 24px; padding: 28px 24px; width: 100%; max-width: 360px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); text-align: center; }
+.modal-title { font-weight: 800; font-size: 22px; margin-bottom: 18px; }
+.modal-score { font-weight: 800; font-size: 64px; color: var(--purple); letter-spacing: -0.03em; margin-bottom: 6px; line-height: 1; }
+.modal-lv { display: inline-block; padding: 6px 14px; border-radius: 100px; font-weight: 700; font-size: 13px; margin-bottom: 18px; }
+.modal-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 22px; }
+.ms-cell { background: rgba(0,0,0,0.03); border-radius: 12px; padding: 10px 6px; }
+.ms-cell-val { font-weight: 800; font-size: 22px; margin-bottom: 2px; }
+.ms-cell-lbl { font-size: 11px; color: var(--text-secondary); font-weight: 500; }
+.modal-actions { display: flex; gap: 10px; }
+.modal-actions button { flex: 1; padding: 14px; border-radius: 14px; font-family: inherit; font-weight: 700; font-size: 14px; transition: transform 0.15s; }
+.modal-actions button:active { transform: scale(0.96); }
+.mb-cancel { background: rgba(0,0,0,0.05); color: var(--text-primary); }
+.mb-confirm { background: var(--purple); color: #fff; }
+</style>
+</head>
+<body>
+
+<div class="splash" id="splash">
+  <img src="public/assets/icons/sigma-face-1.png" class="splash-img" alt="">
+  <div class="splash-title">Sigma Life</div>
+</div>
+
+<div class="header">
+  <div class="header-left">
+    <img src="public/assets/icons/sigma-face-1.png" class="avatar" alt="">
+    <div class="app-title">Sigma Life</div>
+  </div>
+  <div class="header-right">
+    <div class="sync-dot" id="sync-dot"></div>
+    <div class="pill-item">
+      <img src="public/assets/icons/gold-coins-3.png" alt="">
+      <span id="h-done">0</span>
+    </div>
+    <div class="pill-item">
+      <img src="public/assets/icons/skull-1.png" alt="">
+      <span id="h-debt">0</span>
+    </div>
+  </div>
+</div>
+
+<div class="view active" id="view-tasks">
+  <div class="week-nav">
+    <button class="wk-arrow" id="wk-prev" onclick="changeWeek(-1)">‹</button>
+    <div class="wk-label" id="wk-label">Semana actual</div>
+    <button class="wk-arrow" id="wk-next" onclick="changeWeek(1)">›</button>
+  </div>
+  <div class="day-strip" id="day-strip"></div>
+  <div class="content">
+    <div class="progress-card" id="progress-card">
+      <div class="pc-header">
+        <div class="pc-title">Puntos de esta semana</div>
+        <div class="pc-score" id="wp-num">0</div>
+      </div>
+      <div class="pc-bar"><div class="pc-fill" id="wp-fill"></div></div>
+      <div class="pc-footer">
+        <span class="pc-now" id="wp-now">0</span>
+        <span class="pc-tgt" id="wp-tgt">Objetivo: 0</span>
+      </div>
+    </div>
+    <div class="debt-banner" id="debt-banner">
+      <img src="public/assets/icons/skull-1.png" alt="">
+      <div class="debt-banner-text" id="debt-txt"></div>
+    </div>
+    <div class="section-title">
+      <img src="public/assets/icons/castle-1.png" class="castle" alt="">
+      <h2>Misiones del día</h2>
+      <img src="public/assets/icons/treasure-map-open-1.png" class="map" alt="">
+    </div>
+    <div class="task-list" id="task-list"></div>
+  </div>
+</div>
+
+<div class="view" id="view-prizes">
+  <div class="content" style="padding-top: 24px;">
+    <div class="prize-big-card" id="prize-big-card">
+      <div class="prize-big-title">Total de puntos de esta semana</div>
+      <img src="public/assets/icons/gold-coins-2.png" class="prize-big-coins" alt="">
+      <div class="prize-big-num" id="prize-big">0</div>
+    </div>
+    <div class="niveles-label">Niveles de premio</div>
+    <div class="level-grid" id="level-grid"></div>
+    <div class="epic-card">
+      <div class="epic-content">
+        <div class="epic-title">Racha Épica</div>
+        <div class="epic-sub" id="epic-sub">0 semanas seguidas en Nivel God</div>
+        <div class="epic-list">
+          🌸 Unos tenis<br>
+          💍 Accesorio especial (cadena, anillo, arete)<br>
+          🍕 Parrillada o pizza con amigos<br>
+          🍽️ Restaurante + 1 invitado<br>
+          ⭐ Premio libre a escoger
+        </div>
+        <div class="epic-foot">*Se pueden negociar premios equivalentes</div>
+      </div>
+      <img src="public/assets/icons/trophy-1.png" class="epic-trophy" alt="">
+    </div>
+  </div>
+</div>
+
+<div class="view" id="view-summary">
+  <div class="content" style="padding-top: 24px;">
+    <div class="summary-label">Esta semana</div>
+    <div class="stats-grid" id="stats-grid"></div>
+    <button class="close-week-btn" onclick="openModal()">🏁 CERRAR SEMANA</button>
+    <div class="hist-label">Historial</div>
+    <div class="hist-list" id="hist-list"></div>
+  </div>
+</div>
+
+<div class="bottom-nav">
+  <button class="nav-btn active" id="nav-tasks" onclick="switchView('tasks', this)">
+    <img src="public/assets/icons/treasure-map-open-1.png" alt="">
+    <span>Misiones</span>
+  </button>
+  <button class="nav-btn" id="nav-prizes" onclick="switchView('prizes', this)">
+    <img src="public/assets/icons/treasure-chest-1.png" alt="">
+    <span>Premios</span>
+  </button>
+  <button class="nav-btn" id="nav-summary" onclick="switchView('summary', this)">
+    <img src="public/assets/icons/game-reward-1.png" alt="">
+    <span>Resumen</span>
+  </button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<div class="modal-bg" id="modal-bg">
+  <div class="modal">
+    <div class="modal-title">🏁 Cerrar semana</div>
+    <div class="modal-score" id="m-score">0</div>
+    <div class="modal-lv" id="m-lv">Sin nivel</div>
+    <div class="modal-stats">
+      <div class="ms-cell"><div class="ms-cell-val" id="m-done" style="color:var(--green)">0</div><div class="ms-cell-lbl">Hechas</div></div>
+      <div class="ms-cell"><div class="ms-cell-val" id="m-debt" style="color:var(--coral)">0</div><div class="ms-cell-lbl">Deudas</div></div>
+      <div class="ms-cell"><div class="ms-cell-val" id="m-net" style="color:var(--purple)">0</div><div class="ms-cell-lbl">Puntos</div></div>
+    </div>
+    <div class="modal-actions">
+      <button class="mb-cancel" onclick="closeModal()">Cancelar</button>
+      <button class="mb-confirm" onclick="doReset()">Iniciar nueva</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const DB = 'https://abrahamtaskboard-default-rtdb.firebaseio.com/sigmalife';
+
+const TASKS = [
+  { id:'t01', e:'📚', n:'Hizo tareas / estudió con tiempo',                       tgt:5, pts:2 },
+  { id:'t02', e:'🍽️', n:'Lavó los platos y ordenó la cocina',                    tgt:4, pts:2 },
+  { id:'t03', e:'🛏️', n:'Cama, cuarto ordenado y piso limpio',                   tgt:2, pts:3 },
+  { id:'t04', e:'👕', n:'Ropa sucia en la canasta',                              tgt:6, pts:1 },
+  { id:'t05', e:'👟', n:'Zapatos en la zapatera',                                tgt:6, pts:2 },
+  { id:'t06', e:'🗑️', n:'Sacó la basura',                                        tgt:2, pts:3 },
+  { id:'t07', e:'🏍️', n:'Limpió moto y casco',                                   tgt:1, pts:3 },
+  { id:'t08', e:'🐕', n:'Paseó a Night',                                         tgt:2, pts:2 },
+  { id:'t09', e:'🚿', n:'No dejó ropa en el baño',                               tgt:6, pts:1 },
+  { id:'t10', e:'🪣', n:'Colgó bien el paño',                                    tgt:4, pts:1 },
+  { id:'t11', e:'⏰', n:'Listo 15 min antes en tutorías',                        tgt:2, pts:1 },
+  { id:'t12', e:'📵', n:'Comió sin ver el celular',                              tgt:3, pts:2 },
+  { id:'t13', e:'👔', n:'Lavó su uniforme',                                      tgt:3, pts:2 },
+  { id:'t14', e:'🧹', n:'Barrer todo el piso de abajo',                          tgt:3, pts:3 },
+  { id:'t15', e:'📝', n:'Reporte detallado a papá y tutorías de pendientes',    tgt:5, pts:2 },
+];
+
+const WEEK_TGT = TASKS.reduce((s,t) => s + (t.tgt * t.pts), 0);
+
+const LEVELS = [
+  { n:1, lbl:'Nivel Básico', pts: Math.round(WEEK_TGT*0.30), color:'var(--text-primary)', bg:'rgba(0,0,0,0.04)', border:'rgba(0,0,0,0.1)', avatar:'public/assets/icons/sigma-basic.png', rewards:['Dr Pepper','Sobre Mundial','Helado','Snack pequeño','*Otro similar'] },
+  { n:2, lbl:'Nivel Ultra', pts: Math.round(WEEK_TGT*0.65), color:'var(--cyan)', bg:'rgba(6,182,212,0.08)', border:'rgba(6,182,212,0.3)', avatar:'public/assets/icons/sigma-ultra.png', rewards:['Chocolate grande','Frappuccino','Accesorio','Producto digital','*Otro similar'] },
+  { n:3, lbl:'Nivel God', pts: WEEK_TGT, color:'var(--purple)', bg:'rgba(124,58,237,0.08)', border:'rgba(124,58,237,0.3)', avatar:'public/assets/icons/sigma-god.png', rewards:['Cine','₡10,000 salida','Camisa','Cena especial','*Otro similar'] },
+];
+
+const DAYS_SHORT = ['LU','MA','MI','JU','VI','SA','DO'];
+const DAYS_KEY = ['Lu','Ma','Mi','Ju','Vi','Sá','Do'];
+
+function todayDow() { const d = new Date().getDay(); return d === 0 ? 6 : d - 1; }
+function freshState() { return { wo:0, day:todayDow(), data:{}, streak:0, hist:[] }; }
+
+let S = freshState();
+let ignoreSSE = false;
+let saveTimer;
+
+function syncStatus(s) { const dot = document.getElementById('sync-dot'); if (dot) dot.className = 'sync-dot ' + s; }
+
+async function loadFromDB() {
+  try {
+    syncStatus('syncing');
+    const res = await fetch(DB + '.json');
+    const data = await res.json();
+    if (data && typeof data === 'object') S = data;
+    else S = freshState();
+    if (!S.data) S.data = {};
+    if (!S.hist) S.hist = [];
+    if (typeof S.streak !== 'number') S.streak = 0;
+    if (typeof S.wo !== 'number') S.wo = 0;
+    if (typeof S.day !== 'number') S.day = todayDow();
+    syncStatus('synced');
+  } catch(e) { syncStatus('error'); showToast('⚠️ Sin conexión — modo offline'); }
+}
+
+function save() {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(async () => {
+    syncStatus('syncing');
+    ignoreSSE = true;
+    try {
+      await fetch(DB + '.json', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(S) });
+      syncStatus('synced');
+    } catch(e) { syncStatus('error'); }
+    setTimeout(() => { ignoreSSE = false; }, 1500);
+  }, 350);
+}
+
+function startRealtime() {
+  try {
+    const es = new EventSource(DB + '.json');
+    es.addEventListener('put', (e) => {
+      if (ignoreSSE) return;
+      try {
+        const payload = JSON.parse(e.data);
+        if (payload && payload.data && typeof payload.data === 'object') {
+          S = payload.data;
+          if (!S.data) S.data = {};
+          if (!S.hist) S.hist = [];
+          renderAll();
+          showToast('🔄 Actualizado');
+        }
+      } catch {}
+    });
+    es.onerror = () => syncStatus('error');
+    es.onopen  = () => syncStatus('synced');
+  } catch(e) { syncStatus('error'); }
+}
+
+async function init() {
+  await loadFromDB();
+  renderAll();
+  startRealtime();
+  setTimeout(() => {
+    const sp = document.getElementById('splash');
+    sp.classList.add('out');
+    setTimeout(() => sp.style.display = 'none', 550);
+  }, 1400);
+}
+
+function getWeekNum(d) { const j = new Date(d.getFullYear(), 0, 1); return Math.ceil(((d - j) / 86400000 + j.getDay() + 1) / 7); }
+function weekKey(offset) { const d = new Date(); d.setDate(d.getDate() - d.getDay() + 1 + offset * 7); return d.getFullYear() + '-W' + String(getWeekNum(d)).padStart(2,'0'); }
+function dayKey(wo, di) { return weekKey(wo) + '-' + DAYS_KEY[di]; }
+function dayData(wo, di) { const k = dayKey(wo,di); if (!S.data[k]) S.data[k] = {}; return S.data[k]; }
+
+function weekDoneCount(wo) { let n=0; for(let d=0;d<7;d++) { const x=dayData(wo,d); TASKS.forEach(t=>{if(x[t.id]==='done')n++}); } return n; }
+function weekDebtCount(wo) { let n=0; for(let d=0;d<7;d++) { const x=dayData(wo,d); TASKS.forEach(t=>{if(x[t.id]==='debt')n++}); } return n; }
+function weekDonePts(wo) { let p=0; for(let d=0;d<7;d++) { const x=dayData(wo,d); TASKS.forEach(t=>{ if(x[t.id]==='done') p += t.pts; }); } return p; }
+function weekDebtPts(wo) { let p=0; for(let d=0;d<7;d++) { const x=dayData(wo,d); TASKS.forEach(t=>{ if(x[t.id]==='debt') p += t.pts; }); } return p; }
+function weekNet(wo) { return weekDonePts(wo) - weekDebtPts(wo); }
+function taskWeekDone(wo,tid) { let n=0; for(let d=0;d<7;d++){if(dayData(wo,d)[tid]==='done')n++;} return n; }
+function levelFor(net) { return net>=LEVELS[2].pts?3:net>=LEVELS[1].pts?2:net>=LEVELS[0].pts?1:0; }
+function fmt(n) { return n>0?'+'+n:''+n; }
+
+function toggleTask(tid, status) {
+  const x = dayData(S.wo, S.day);
+  const t = TASKS.find(t=>t.id===tid);
+  if (x[tid] === status) { x[tid]='none'; showToast('↩️ '+t.n); }
+  else {
+    x[tid] = status;
+    if (status==='done') showToast(`✅ +${t.pts} pts — `+t.n);
+    if (status==='debt') showToast(`💀 −${t.pts} pts — `+t.n);
+  }
+  save(); renderAll();
+}
+
+function changeWeek(dir) { if (S.wo+dir>0 || S.wo+dir<-3) return; S.wo += dir; S.day = 0; save(); renderAll(); }
+
+function switchView(name, btn) {
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('view-'+name).classList.add('active');
+  btn.classList.add('active');
+  if (name==='prizes')  renderPrizes();
+  if (name==='summary') renderSummary();
+}
+
+function openModal() {
+  const done=weekDoneCount(0), debt=weekDebtCount(0), net=weekNet(0), lv=levelFor(net);
+  const ms=document.getElementById('m-score');
+  ms.textContent=fmt(net);
+  ms.style.color = net<0?'var(--coral)':'var(--purple)';
+  document.getElementById('m-done').textContent=done;
+  document.getElementById('m-debt').textContent=debt;
+  document.getElementById('m-net').textContent=fmt(net);
+  const ml=document.getElementById('m-lv');
+  if(lv===0){ ml.style.cssText='background:rgba(0,0,0,0.05);color:var(--text-secondary);'; ml.textContent='Sin nivel esta semana'; }
+  else { const L=LEVELS[lv-1]; ml.style.cssText=`background:${L.bg};color:${L.color};border:1px solid ${L.border};`; ml.textContent=['','🥉','🥈','🥇'][lv]+' '+L.lbl+(lv===3?' — ¡RECLAMA TU PREMIO!':''); }
+  document.getElementById('modal-bg').classList.add('open');
+}
+function closeModal() { document.getElementById('modal-bg').classList.remove('open'); }
+
+function doReset() {
+  const done=weekDoneCount(0),debt=weekDebtCount(0),net=weekNet(0),lv=levelFor(net);
+  S.hist.unshift({done,debt,net,lv});
+  if(S.hist.length>3) S.hist=S.hist.slice(0,3);
+  S.streak = lv===3 ? S.streak+1 : 0;
+  const pfx=weekKey(0);
+  Object.keys(S.data).forEach(k=>{ if(k.startsWith(pfx)) delete S.data[k]; });
+  S.wo=0; S.day=todayDow();
+  save(); closeModal();
+  switchView('tasks', document.getElementById('nav-tasks'));
+  showToast('🔄 ¡Nueva semana, a grindear!');
+}
+
+let toastTimer;
+function showToast(msg) {
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove('show'),2200);
+}
+
+function renderHeader() {
+  document.getElementById('h-done').textContent = weekDonePts(S.wo);
+  document.getElementById('h-debt').textContent = weekDebtPts(S.wo);
+}
+
+function renderWeekLabel() {
+  const labels = ['Semana actual','Hace 1 semana','Hace 2 semanas','Hace 3 semanas'];
+  document.getElementById('wk-label').textContent = labels[Math.abs(S.wo)];
+  document.getElementById('wk-next').disabled = S.wo===0;
+  document.getElementById('wk-prev').disabled = S.wo===-3;
+}
+
+function renderDays() {
+  const strip=document.getElementById('day-strip');
+  strip.innerHTML='';
+  DAYS_SHORT.forEach((d,i)=>{
+    const x=dayData(S.wo,i);
+    const hasDone=TASKS.some(t=>x[t.id]==='done');
+    const hasDebt=TASKS.some(t=>x[t.id]==='debt');
+    const chip=document.createElement('div');
+    let cls = 'day-chip';
+    if (i===S.day) cls += ' active';
+    if (hasDone && hasDebt) cls += ' has-both';
+    else if (hasDone) cls += ' has-done';
+    else if (hasDebt) cls += ' has-debt';
+    chip.className = cls;
+    chip.innerHTML=`<span class="dc-name">${d}</span><div class="dc-dot"></div>`;
+    chip.onclick=()=>{ S.day=i; save(); renderAll(); };
+    strip.appendChild(chip);
+  });
+}
+
+function renderWeekProgress() {
+  const net=weekNet(S.wo);
+  const pct=Math.max(0,Math.min(100,net/WEEK_TGT*100));
+  document.getElementById('wp-num').textContent = net;
+  const card=document.getElementById('progress-card');
+  card.classList.toggle('neg', net<0);
+  const fill=document.getElementById('wp-fill');
+  fill.style.width=pct+'%';
+  fill.classList.toggle('neg', net<0);
+  document.getElementById('wp-now').textContent = net;
+  document.getElementById('wp-tgt').textContent='Objetivo: '+WEEK_TGT;
+}
+
+function renderDebtBanner() {
+  const debt=weekDebtCount(S.wo);
+  const b=document.getElementById('debt-banner');
+  if(debt>0){ b.classList.add('show'); document.getElementById('debt-txt').innerHTML=`Papá hizo <b>${debt} de tus tareas</b> — Puede cobrar favores`; }
+  else b.classList.remove('show');
+}
+
+function renderTaskList() {
+  const list=document.getElementById('task-list');
+  list.innerHTML='';
+  const x=dayData(S.wo,S.day);
+  TASKS.forEach(t=>{
+    const state=x[t.id]||'none';
+    const wd=taskWeekDone(S.wo,t.id);
+    const r=wd/t.tgt;
+    const clr=r>=1?'good':r>=0.5?'ok':'behind';
+    const card=document.createElement('div');
+    card.className='task-card'+(state==='done'?' st-done':state==='debt'?' st-debt':'');
+    card.innerHTML=`
+      <div class="task-ico">${t.e}</div>
+      <div class="task-info">
+        <div class="task-name">${t.n}</div>
+        <div class="task-freq">
+          <span class="freq-n ${clr}">${wd}</span>
+          <span class="freq-t">/ ${t.tgt} esta semana</span>
+        </div>
+        <div class="task-pts">${t.pts} ${t.pts===1?'punto':'puntos'} c/u</div>
+      </div>
+      <div class="task-actions">
+        <button class="act-btn aok${state==='done'?' on':''}" onclick="toggleTask('${t.id}','done')" aria-label="Completar">
+          <img src="public/assets/icons/gold-coins-3.png" alt="">
+        </button>
+        <button class="act-btn adbt${state==='debt'?' on':''}" onclick="toggleTask('${t.id}','debt')" aria-label="Papá lo hizo">
+          <img src="public/assets/icons/skull-1.png" alt="">
+        </button>
+      </div>`;
+    list.appendChild(card);
+  });
+}
+
+function renderPrizes() {
+  const net=weekNet(S.wo);
+  document.getElementById('prize-big').textContent = net;
+  document.getElementById('prize-big-card').classList.toggle('neg', net<0);
+  document.getElementById('epic-sub').textContent = `${S.streak} semana${S.streak!==1?'s':''} seguida${S.streak!==1?'s':''} en Nivel God`;
+  const grid=document.getElementById('level-grid');
+  grid.innerHTML='';
+  LEVELS.forEach(L=>{
+    const on = net >= L.pts;
+    const card=document.createElement('div');
+    card.className='level-card'+(on?'':' locked');
+    card.innerHTML=`
+      <img src="${L.avatar}" class="level-avatar" alt="">
+      <div class="lv-name" style="color:${L.color}">${L.lbl}</div>
+      <div class="lv-pts" style="color:${L.color}">${L.pts}</div>
+      <div class="lv-list">${L.rewards.join('<br>')}</div>`;
+    grid.appendChild(card);
+  });
+}
+
+function renderSummary() {
+  const done=weekDoneCount(S.wo);
+  const debt=weekDebtCount(S.wo);
+  const coins=weekDonePts(S.wo);
+  const streak=S.streak||0;
+
+  document.getElementById('stats-grid').innerHTML=`
+    <div class="stat-card sc-teal no-img">
+      <div class="stat-emoji">🏰</div>
+      <div class="stat-content">
+        <div class="stat-num">${done}</div>
+        <div class="stat-name">Misiones</div>
+      </div>
+    </div>
+    <div class="stat-card sc-coral">
+      <img src="public/assets/icons/skull-1.png" class="stat-emoji" alt="">
+      <div class="stat-content">
+        <div class="stat-num">${debt}</div>
+        <div class="stat-name">Deudas</div>
+      </div>
+    </div>
+    <div class="stat-card sc-orange">
+      <img src="public/assets/icons/gold-coins-3.png" class="stat-emoji" alt="">
+      <div class="stat-content">
+        <div class="stat-num">${coins}</div>
+        <div class="stat-name">Coins</div>
+      </div>
+    </div>
+    <div class="stat-card sc-purple">
+      <img src="public/assets/icons/trophy-1.png" class="stat-emoji" alt="">
+      <div class="stat-content">
+        <div class="stat-num">${streak}</div>
+        <div class="stat-name">Rachas</div>
+      </div>
+    </div>`;
+
+  const hist=document.getElementById('hist-list');
+  hist.innerHTML='';
+  if(!S.hist||S.hist.length===0){ hist.innerHTML='<div class="hist-empty">Sin historial aún</div>'; return; }
+  const lbls=['Hace 1 semana','Hace 2 semanas','Hace 3 semanas'];
+  const icos=['—','🥉','🥈','🥇'];
+  S.hist.forEach((h,i)=>{
+    const row=document.createElement('div');
+    row.className='hist-row';
+    row.innerHTML=`
+      <span style="color:var(--text-secondary)">${lbls[i]||'Anterior'}</span>
+      <span style="color:var(--green)">✅ ${h.done}</span>
+      <span style="color:var(--coral)">💀 ${h.debt}</span>
+      <span style="color:var(--purple)">${fmt(h.net)}</span>
+      <span>${icos[h.lv]||'—'}</span>`;
+    hist.appendChild(row);
+  });
+}
+
+function renderAll() {
+  renderHeader(); renderWeekLabel(); renderDays();
+  renderWeekProgress(); renderDebtBanner(); renderTaskList();
+  if (document.getElementById('view-prizes').classList.contains('active')) renderPrizes();
+  if (document.getElementById('view-summary').classList.contains('active')) renderSummary();
+}
+
+document.getElementById('modal-bg').addEventListener('click', function(e){ if(e.target===this) closeModal(); });
+init();
+</script>
+</body>
+</html>
