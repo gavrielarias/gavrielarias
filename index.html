@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gavriel Arias — Creative Signal Sprint</title>
+<meta name="description" content="From creative chaos to strategic clarity. I help founders and creative brands reframe how they see their brand, so the right decisions become obvious.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Bricolage+Grotesque:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+:root {
+  --white: #ffffff;
+  --off: #f7f6f3;
+  --dark: #0f0f0f;
+  --dark2: #1a1a1a;
+  --ink: #1a1814;
+  --ink-mid: #5c574f;
+  --ink-dim: #9c968e;
+  --accent: #b8f241;
+  --accent2: #ff6b35;
+  --accent3: #c084fc;
+  --accent4: #38bdf8;
+  --border: rgba(26,24,20,0.09);
+  --border-dark: rgba(255,255,255,0.1);
+  --r: 16px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  background: var(--white);
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+[data-lucide] { stroke-width: 1.75; }
+.icon-sm { width: 16px; height: 16px; }
+.icon-md { width: 20px; height: 20px; }
+.icon-lg { width: 24px; height: 24px; }
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--off); }
+::-webkit-scrollbar-thumb { background: var(--ink-dim); border-radius: 2px; }
+
+/* ═══ NAV ═══ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px; height: 64px;
+  background: rgba(15,15,15,0.65);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid var(--border-dark);
+}
+.nav-logo {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-weight: 700; font-size: 1rem;
+  letter-spacing: -0.02em; color: var(--white);
+  display: flex; align-items: center; gap: 8px;
+}
+.nav-logo-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent);
+}
+.nav-links { display: flex; gap: 32px; list-style: none; }
+.nav-links a {
+  font-size: 0.82rem; color: rgba(255,255,255,0.5);
+  text-decoration: none; letter-spacing: 0.01em;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--white); }
+.nav-cta {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 0.8rem; font-weight: 600;
+  background: var(--accent); color: var(--dark);
+  padding: 9px 22px; border-radius: 100px;
+  text-decoration: none; letter-spacing: -0.01em;
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.nav-cta:hover { transform: translateY(-1px); box-shadow: 0 6px 24px rgba(184,242,65,0.35); }
+
+/* ═══ HERO ═══ */
+.hero {
+  background: var(--dark);
+  min-height: 100vh;
+  padding: 64px 40px 80px;
+  display: flex; flex-direction: column;
+  align-items: center;
+  position: relative; overflow: hidden;
+  isolation: isolate;
+}
+.hero::after {
+  content: '';
+  position: absolute; inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 100% 80% at 50% 100%, transparent 0%, rgba(0,0,0,0.8) 70%),
+    radial-gradient(ellipse 60% 60% at 50% 50%, transparent 0%, rgba(0,0,0,0.4) 100%);
+  pointer-events: none;
+}
+.nebula {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 130%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(
+    circle at center,
+    rgb(211, 251, 82) 0%,
+    rgba(184, 242, 65, 0.85) 18%,
+    rgba(122, 243, 255, 0.55) 42%,
+    rgba(74, 158, 200, 0.25) 62%,
+    rgba(0, 0, 0, 0) 78%
+  );
+  filter: blur(40px);
+  animation: nebulaShift 18s ease-in-out infinite;
+  z-index: 0;
+  pointer-events: none;
+}
+.nebula-2 {
+  position: absolute;
+  top: 30%; left: 65%;
+  width: 70%; aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle at center, rgba(122, 243, 255, 0.4) 0%, rgba(122, 243, 255, 0.15) 30%, rgba(0, 0, 0, 0) 65%);
+  filter: blur(60px);
+  animation: nebulaShift2 22s ease-in-out infinite reverse;
+  z-index: 0; pointer-events: none;
+}
+.nebula-3 {
+  position: absolute;
+  top: 70%; left: 30%;
+  width: 60%; aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle at center, rgba(211, 251, 82, 0.3) 0%, rgba(211, 251, 82, 0.1) 40%, rgba(0, 0, 0, 0) 70%);
+  filter: blur(80px);
+  animation: nebulaShift3 26s ease-in-out infinite;
+  z-index: 0; pointer-events: none;
+}
+
+@keyframes nebulaShift {
+  0%,100% { transform: translate(-50%,-50%) scale(1) rotate(0deg); opacity:.95; }
+  25% { transform: translate(-55%,-52%) scale(1.08) rotate(15deg); opacity:1; }
+  50% { transform: translate(-48%,-48%) scale(1.03) rotate(30deg); opacity:.9; }
+  75% { transform: translate(-52%,-55%) scale(1.1) rotate(45deg); opacity:1; }
+}
+@keyframes nebulaShift2 {
+  0%,100% { transform: translate(-50%,-50%) scale(1); opacity:.7; }
+  33% { transform: translate(-40%,-55%) scale(1.15); opacity:1; }
+  66% { transform: translate(-60%,-45%) scale(.95); opacity:.6; }
+}
+@keyframes nebulaShift3 {
+  0%,100% { transform: translate(-50%,-50%) scale(1); opacity:.6; }
+  50% { transform: translate(-45%,-55%) scale(1.2); opacity:.9; }
+}
+
+.hero::before {
+  content: '';
+  position: absolute; inset: 0; z-index: 1;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
+  opacity: 0.5; pointer-events: none;
+}
+
+.hero-content { position: relative; z-index: 2; text-align: center; padding-top: 80px; max-width: 820px; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(15,15,15,0.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 100px; padding: 6px 16px 6px 8px;
+  margin-bottom: 32px;
+}
+.badge-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.6;transform:scale(0.85)} }
+.hero-badge span { font-size: 0.72rem; font-weight: 500; color: rgba(255,255,255,0.85); letter-spacing: 0.04em; }
+
+.hero-title {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-weight: 800;
+  font-size: clamp(3.2rem, 7vw, 6.2rem);
+  line-height: 1.0;
+  letter-spacing: -0.04em;
+  color: var(--white);
+  margin-bottom: 12px;
+  text-shadow: 0 4px 30px rgba(0,0,0,0.3);
+}
+.hero-title .italic-line {
+  font-family: 'Instrument Serif', serif;
+  font-weight: 400; font-style: italic;
+  color: var(--white);
+  letter-spacing: -0.02em;
+  text-shadow: 0 4px 30px rgba(0,0,0,0.4);
+}
+.hero-sub {
+  font-size: 1.05rem;
+  color: rgba(255,255,255,0.85);
+  line-height: 1.75; max-width: 520px;
+  margin: 20px auto 36px;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.4);
+}
+.hero-actions { display: flex; justify-content: center; align-items: center; gap: 14px; margin-bottom: 64px; flex-wrap: wrap; }
+.btn-lime {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 0.88rem; font-weight: 700;
+  background: var(--accent); color: var(--dark);
+  padding: 14px 32px; border-radius: 100px;
+  text-decoration: none; letter-spacing: -0.01em;
+  display: inline-flex; align-items: center; gap: 8px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.btn-lime:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(184,242,65,0.4); }
+.btn-outline {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 0.88rem; font-weight: 500;
+  color: var(--white);
+  background: rgba(0,0,0,0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 14px 28px; border-radius: 100px;
+  text-decoration: none;
+  display: inline-flex; align-items: center; gap: 8px;
+  transition: border-color 0.2s, background 0.2s;
+}
+.btn-outline:hover { border-color: rgba(255,255,255,0.5); background: rgba(0,0,0,0.35); }
+
+.hero-visual { position: relative; z-index: 2; width: 100%; max-width: 980px; margin: 0 auto; }
+.hero-visual::before {
+  content: '';
+  position: absolute;
+  bottom: -40px; left: 50%; transform: translateX(-50%);
+  width: 80%; height: 120px;
+  background: radial-gradient(ellipse, rgba(184,242,65,0.25) 0%, transparent 70%);
+  filter: blur(30px);
+}
+.video-wrap {
+  position: relative; border-radius: 20px; overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: var(--dark2);
+  box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+}
+.video-frame { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; }
+.video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+/* SHARED */
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 0.7rem; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ink-dim); margin-bottom: 20px;
+}
+.eyebrow::before { content: ''; width: 20px; height: 1.5px; background: var(--accent2); display: block; }
+.section-title { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; letter-spacing: -0.04em; line-height: 1.05; color: var(--ink); }
+.section-title .serif { font-family: 'Instrument Serif', serif; font-weight: 400; font-style: italic; letter-spacing: -0.02em; }
+
+/* ═══ WHAT I DO ═══ */
+.whatido-bg { background: var(--dark); }
+.whatido-inner {
+  max-width: 1160px; margin: 0 auto;
+  padding: 100px 40px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px; align-items: start;
+}
+.whatido-left .section-title { font-size: clamp(2.8rem, 4vw, 4rem); color: var(--white); }
+.whatido-left .section-title .serif { color: var(--accent); }
+.whatido-left .eyebrow { color: rgba(255,255,255,0.4); }
+.whatido-left .eyebrow::before { background: var(--accent); }
+.principle-box {
+  margin-top: 32px;
+  background: rgba(184,242,65,0.08);
+  border: 1px solid rgba(184,242,65,0.2);
+  border-radius: 14px;
+  padding: 24px 28px;
+}
+.principle-box .pb-label {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 0.65rem; font-weight: 700;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 8px;
+}
+.principle-box p {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.15rem; font-style: italic;
+  color: rgba(255,255,255,0.75); line-height: 1.5;
+}
+.do-list { display: flex; flex-direction: column; }
+.do-row { display: flex; gap: 18px; padding: 28px 0; border-bottom: 1px solid rgba(255,255,255,0.07); align-items: flex-start; }
+.do-row:first-child { border-top: 1px solid rgba(255,255,255,0.07); }
+.do-icon {
+  flex-shrink: 0; width: 40px; height: 40px;
+  border-radius: 10px;
+  background: rgba(184,242,65,0.1);
+  border: 1px solid rgba(184,242,65,0.2);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--accent);
+}
+.do-row strong { display: block; font-weight: 600; font-size: 0.95rem; color: var(--white); margin-bottom: 6px; font-family: 'Bricolage Grotesque', sans-serif; letter-spacing: -0.01em; }
+.do-row p { font-size: 0.85rem; color: rgba(255,255,255,0.45); line-height: 1.7; }
+
+/* ═══ TESTIMONIALS ═══ */
+.testimonials-section { background: var(--dark); padding: 100px 0; position: relative; overflow: hidden; border-top: 1px solid rgba(255,255,255,0.05); }
+.testimonials-section .eyebrow { color: rgba(255,255,255,0.4); }
+.testimonials-section .eyebrow::before { background: var(--accent); }
+.testimonials-header { max-width: 1160px; margin: 0 auto 56px; padding: 0 40px; text-align: center; }
+.testimonials-header .section-title { font-size: clamp(2.6rem, 4.5vw, 4.4rem); color: var(--white); }
+.testimonials-header .section-title .serif { color: var(--accent3); }
+.testimonials-header .eyebrow { justify-content: center; }
+.carousel { position: relative; width: 100%; max-width: 1280px; margin: 0 auto; padding: 0 80px; }
+.carousel-track-wrap { overflow: hidden; border-radius: 24px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); }
+.carousel-track { display: flex; transition: transform 0.6s cubic-bezier(0.65, 0, 0.35, 1); will-change: transform; }
+.carousel-slide { flex: 0 0 100%; min-width: 0; position: relative; aspect-ratio: 16 / 10; background: #000; display: flex; align-items: center; justify-content: center; }
+.carousel-slide img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transition: opacity 0.4s ease; }
+.carousel-slide img.loaded { opacity: 1; }
+.carousel-slide-fallback {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+  color: rgba(255,255,255,0.3);
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 0.85rem; text-align: center; padding: 24px;
+}
+.carousel-slide-fallback small { font-size: 0.7rem; opacity: 0.6; }
+.carousel-btn {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: var(--white);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, transform 0.2s;
+  z-index: 5;
+}
+.carousel-btn:hover { background: rgba(184,242,65,0.15); border-color: rgba(184,242,65,0.4); transform: translateY(-50%) scale(1.05); }
+.carousel-btn:active { transform: translateY(-50%) scale(0.95); }
+.carousel-btn.prev { left: 8px; }
+.carousel-btn.next { right: 8px; }
+.carousel-dots { display: flex; justify-content: center; gap: 8px; margin-top: 28px; }
+.carousel-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.2); border: none; cursor: pointer; transition: all 0.3s; padding: 0; }
+.carousel-dot.active { background: var(--accent); width: 28px; border-radius: 4px; box-shadow: 0 0 12px rgba(184,242,65,0.5); }
+.carousel-counter { display: flex; justify-content: center; align-items: center; gap: 14px; margin-top: 16px; font-family: 'Bricolage Grotesque', sans-serif; font-size: 0.75rem; color: rgba(255,255,255,0.4); letter-spacing: 0.05em; }
+.carousel-counter .current { color: var(--white); font-weight: 600; }
+.carousel-counter .divider { width: 24px; height: 1px; background: rgba(255,255,255,0.2); }
+
+/* ═══ CONTACT ═══ */
+.contact-section { background: var(--dark); padding: 100px 40px 140px; position: relative; overflow: hidden; border-top: 1px solid rgba(255,255,255,0.06); }
+.contact-blob {
+  position: absolute; border-radius: 50%;
+  width: 700px; height: 500px;
+  background: radial-gradient(ellipse, rgba(184,242,65,0.08) 0%, transparent 70%);
+  filter: blur(60px);
+  top: 50%; left: 50%; transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+.contact-inner { max-width: 1160px; margin: 0 auto; display: grid; grid-template-columns: 380px 1fr; gap: 80px; align-items: center; position: relative; z-index: 1; }
+.contact-photo-wrap { position: relative; border-radius: 24px; overflow: hidden; aspect-ratio: 1 / 1; background: var(--dark2); border: 1px solid rgba(255,255,255,0.08); }
+.contact-photo-wrap::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(15,15,15,0.7) 100%); pointer-events: none; }
+.contact-photo { width: 100%; height: 100%; object-fit: cover; display: block; }
+.contact-photo-tag { position: absolute; bottom: 20px; left: 20px; z-index: 2; display: inline-flex; align-items: center; gap: 8px; background: rgba(15,15,15,0.7); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); border-radius: 100px; padding: 6px 14px 6px 8px; }
+.contact-photo-tag .tag-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 8px var(--accent); }
+.contact-photo-tag span { font-family: 'Bricolage Grotesque', sans-serif; font-size: 0.7rem; font-weight: 600; color: rgba(255,255,255,0.85); letter-spacing: 0.04em; }
+.contact-right .eyebrow { color: rgba(255,255,255,0.4); }
+.contact-right .eyebrow::before { background: var(--accent); }
+.contact-title { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(2.4rem, 5vw, 4.4rem); line-height: 1.0; letter-spacing: -0.04em; color: var(--white); margin-bottom: 20px; }
+.contact-title .serif { font-family: 'Instrument Serif', serif; font-weight: 400; font-style: italic; color: var(--accent); }
+.contact-sub { font-size: 1rem; color: rgba(255,255,255,0.5); line-height: 1.7; max-width: 480px; margin-bottom: 32px; }
+.contact-channels { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+.contact-channel { display: flex; align-items: center; gap: 14px; padding: 14px 18px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; text-decoration: none; transition: background 0.2s, border-color 0.2s, transform 0.2s; }
+.contact-channel:hover { background: rgba(184,242,65,0.05); border-color: rgba(184,242,65,0.3); transform: translateX(4px); }
+.cc-icon { width: 36px; height: 36px; border-radius: 10px; background: rgba(184,242,65,0.1); border: 1px solid rgba(184,242,65,0.2); display: flex; align-items: center; justify-content: center; color: var(--accent); flex-shrink: 0; }
+.cc-content { flex: 1; min-width: 0; }
+.cc-label { font-family: 'Bricolage Grotesque', sans-serif; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 2px; }
+.cc-value { font-size: 0.92rem; color: var(--white); font-weight: 500; }
+.cc-arrow { color: rgba(255,255,255,0.3); transition: color 0.2s, transform 0.2s; }
+.contact-channel:hover .cc-arrow { color: var(--accent); transform: translate(3px, -3px); }
+.avail-note { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.3); display: inline-flex; align-items: center; gap: 8px; }
+.avail-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+
+footer { background: #080808; border-top: 1px solid rgba(255,255,255,0.06); padding: 28px 40px 110px; display: flex; justify-content: space-between; align-items: center; }
+.footer-logo { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 0.88rem; letter-spacing: -0.01em; color: rgba(255,255,255,0.4); display: flex; align-items: center; gap: 8px; }
+.footer-logo .nav-logo-dot { background: var(--accent); box-shadow: 0 0 8px var(--accent); }
+.footer-link { font-size: 0.72rem; color: rgba(255,255,255,0.3); text-decoration: none; letter-spacing: 0.06em; transition: color 0.2s; }
+.footer-link:hover { color: var(--accent); }
+
+.fade-up { opacity: 0; transform: translateY(32px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+
+/* ═══════════════════════════════════════
+   AI CHATBAR — FIXED BOTTOM
+═══════════════════════════════════════ */
+.chatbar-wrap {
+  position: fixed;
+  bottom: 16px; left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 32px);
+  max-width: 560px;
+  z-index: 500;
+  font-family: 'DM Sans', sans-serif;
+}
+
+/* Conversation panel (above input) */
+.chat-panel {
+  background: rgba(15, 15, 15, 0.92);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(184, 242, 65, 0.25);
+  border-radius: 20px;
+  margin-bottom: 12px;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease, margin-bottom 0.3s ease;
+  box-shadow: 0 0 0 1px rgba(184, 242, 65, 0.1), 0 20px 50px rgba(0, 0, 0, 0.4);
+}
+.chat-panel.open {
+  max-height: 480px;
+  opacity: 1;
+}
+.chat-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 18px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.chat-header-left {
+  display: flex; align-items: center; gap: 10px;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 0.78rem; font-weight: 600;
+  color: var(--white);
+}
+.chat-status-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent);
+  animation: pulse 2s infinite;
+}
+.chat-close {
+  width: 28px; height: 28px;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px;
+  color: rgba(255,255,255,0.6);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.chat-close:hover { background: rgba(255,255,255,0.1); color: var(--white); }
+
+.chat-messages {
+  padding: 16px 18px;
+  height: 360px;
+  overflow-y: auto;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.chat-messages::-webkit-scrollbar { width: 4px; }
+.chat-messages::-webkit-scrollbar-thumb { background: rgba(184,242,65,0.2); border-radius: 2px; }
+
+.msg {
+  max-width: 88%;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  padding: 11px 15px;
+  border-radius: 16px;
+  word-wrap: break-word;
+  animation: msgIn 0.3s ease;
+}
+@keyframes msgIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.msg.ai {
+  align-self: flex-start;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.92);
+  border-bottom-left-radius: 4px;
+}
+.msg.user {
+  align-self: flex-end;
+  background: rgba(184, 242, 65, 0.18);
+  border: 1px solid rgba(184, 242, 65, 0.3);
+  color: var(--white);
+  border-bottom-right-radius: 4px;
+}
+.msg a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.msg a:hover { text-decoration: none; }
+
+.typing { display: flex; gap: 4px; padding: 4px 0; }
+.typing span {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent);
+  animation: typingBounce 1.2s infinite ease-in-out;
+}
+.typing span:nth-child(2) { animation-delay: 0.15s; }
+.typing span:nth-child(3) { animation-delay: 0.3s; }
+@keyframes typingBounce {
+  0%,60%,100% { transform: scale(0.7); opacity: 0.4; }
+  30% { transform: scale(1); opacity: 1; }
+}
+
+.chat-suggestions {
+  display: flex; flex-wrap: wrap;
+  gap: 6px;
+  padding: 0 18px 14px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  padding-top: 12px;
+}
+.chip {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.6);
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 100px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.chip:hover {
+  background: rgba(184,242,65,0.1);
+  border-color: rgba(184,242,65,0.3);
+  color: var(--white);
+}
+
+/* INPUT BAR with glow effect */
+.chatbar {
+  position: relative;
+  background: #1a1a1a;
+  border-radius: 16px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 0 0 1px rgba(184, 242, 65, 0.2);
+  transition: box-shadow 0.3s;
+}
+
+/* Animated lime glow border */
+.chatbar::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 18px;
+  background: conic-gradient(
+    from var(--angle, 0deg),
+    rgba(184, 242, 65, 0.9),
+    rgba(122, 243, 255, 0.7),
+    rgba(184, 242, 65, 0.5),
+    rgba(122, 243, 255, 0.9),
+    rgba(184, 242, 65, 0.9)
+  );
+  z-index: -2;
+  animation: rotateGlow 6s linear infinite;
+  filter: blur(8px);
+  opacity: 0.7;
+}
+.chatbar::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  background: #1a1a1a;
+  z-index: -1;
+}
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+@keyframes rotateGlow {
+  to { --angle: 360deg; }
+}
+/* Fallback for Safari/Firefox (no @property) */
+@supports not (background: conic-gradient(from 0deg, red, blue)) {
+  .chatbar::before { animation: none; }
+}
+
+.chatbar:focus-within {
+  box-shadow: 0 0 0 1px rgba(184, 242, 65, 0.4);
+}
+.chatbar:focus-within::before {
+  filter: blur(12px);
+  opacity: 1;
+}
+
+.chat-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.92rem;
+  padding: 6px 4px;
+  font-weight: 400;
+}
+.chat-input::placeholder { color: rgba(255,255,255,0.4); }
+
+.chat-send {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--dark);
+  border: none;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.2s, opacity 0.2s;
+  flex-shrink: 0;
+}
+.chat-send:hover { transform: scale(1.05); box-shadow: 0 4px 16px rgba(184,242,65,0.4); }
+.chat-send:active { transform: scale(0.95); }
+.chat-send:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .nebula, .nebula-2, .nebula-3 { animation: none; }
+  .chatbar::before { animation: none; }
+  .carousel-track { transition: none; }
+}
+
+@media (max-width: 900px) {
+  nav { padding: 0 20px; }
+  .nav-links { display: none; }
+  .hero { padding: 64px 24px 60px; }
+  .hero-content { padding-top: 60px; }
+  .nebula { width: 180%; }
+  .whatido-inner { grid-template-columns: 1fr; gap: 48px; padding: 72px 24px; }
+  .contact-inner { grid-template-columns: 1fr; gap: 48px; }
+  .contact-section { padding: 72px 24px 140px; }
+  .contact-photo-wrap { max-width: 320px; margin: 0 auto; }
+  .testimonials-section { padding: 72px 0; }
+  .testimonials-header { padding: 0 24px; margin-bottom: 40px; }
+  .carousel { padding: 0 20px; }
+  .carousel-btn { width: 40px; height: 40px; }
+  .carousel-btn.prev { left: -4px; }
+  .carousel-btn.next { right: -4px; }
+  footer { padding: 24px 24px 100px; flex-direction: column; gap: 12px; text-align: center; }
+  .chat-panel.open { max-height: 70vh; }
+  .chat-messages { height: calc(70vh - 130px); }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">
+    <div class="nav-logo-dot"></div>
+    Gavriel Arias
+  </div>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#testimonials">Testimonials</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="https://cal.com/gavrielarias/15min" target="_blank" class="nav-cta">
+    Book a Call
+    <i data-lucide="arrow-up-right" class="icon-sm"></i>
+  </a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="nebula"></div>
+  <div class="nebula-2"></div>
+  <div class="nebula-3"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <div class="badge-dot"></div>
+      <span>Creative Signal Sprint · 30 Days</span>
+    </div>
+    <h1 class="hero-title">
+      From Creative Chaos<br>
+      <span class="italic-line">to Strategic Clarity</span>
+    </h1>
+    <p class="hero-sub">
+      I help founders and creative brands reframe how they see their brand, so the right decisions become obvious.
+    </p>
+    <div class="hero-actions">
+      <a href="https://cal.com/gavrielarias/15min" target="_blank" class="btn-lime">
+        Schedule a Clarity Call
+        <i data-lucide="arrow-right" class="icon-sm"></i>
+      </a>
+      <a href="#work" class="btn-outline">See what's included</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="video-wrap">
+      <div class="video-frame">
+        <iframe
+          src="https://www.youtube-nocookie.com/embed/9jNRsr2kPPM?rel=0&modestbranding=1&playsinline=1"
+          title="Gavriel Arias — Creative Signal Sprint"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT I DO -->
+<div class="whatido-bg" id="work">
+  <div class="whatido-inner">
+    <div class="whatido-left fade-up">
+      <div class="eyebrow">What I do</div>
+      <h2 class="section-title">
+        I work with founders to<br>
+        <span class="serif">remove the bottleneck</span>
+      </h2>
+      <div class="principle-box">
+        <div class="pb-label">The Principle</div>
+        <p>Strategy first. Execution only when it accelerates clarity.</p>
+      </div>
+    </div>
+    <div class="do-list fade-up" style="transition-delay:0.15s">
+      <div class="do-row">
+        <div class="do-icon"><i data-lucide="search" class="icon-md"></i></div>
+        <div>
+          <strong>Strategic Diagnosis</strong>
+          <p>Brand, narrative, digital presence, and positioning — audited to find exactly where the signal is getting lost.</p>
+        </div>
+      </div>
+      <div class="do-row">
+        <div class="do-icon"><i data-lucide="repeat" class="icon-md"></i></div>
+        <div>
+          <strong>Core Problem Reframing</strong>
+          <p>Most brands are solving the wrong problem, beautifully. A new perspective changes everything downstream.</p>
+        </div>
+      </div>
+      <div class="do-row">
+        <div class="do-icon"><i data-lucide="target" class="icon-md"></i></div>
+        <div>
+          <strong>Clear Decisions</strong>
+          <p>Explicit answers: what to focus on, what to eliminate, and what to stop doing entirely. Zero ambiguity.</p>
+        </div>
+      </div>
+      <div class="do-row">
+        <div class="do-icon"><i data-lucide="map" class="icon-md"></i></div>
+        <div>
+          <strong>Structured Roadmap</strong>
+          <p>So execution becomes simple and intentional. A foundation your team can build from without constant hand-holding.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials-section" id="testimonials">
+  <div class="testimonials-header fade-up">
+    <div class="eyebrow">What clients say</div>
+    <h2 class="section-title">
+      Words from the<br>
+      <span class="serif">people I've worked with</span>
+    </h2>
+  </div>
+  <div class="carousel fade-up" style="transition-delay:0.15s">
+    <button class="carousel-btn prev" id="carousel-prev" aria-label="Previous testimonial">
+      <i data-lucide="chevron-left" class="icon-lg"></i>
+    </button>
+    <div class="carousel-track-wrap">
+      <div class="carousel-track" id="carousel-track">
+        <div class="carousel-slide"><div class="carousel-slide-fallback">Loading testimonial 1<small>images/Testimonials-01.png</small></div><img src="images/Testimonials-01.png" alt="Testimonial — Manuel Bouza" loading="lazy"></div>
+        <div class="carousel-slide"><div class="carousel-slide-fallback">Loading testimonial 2<small>images/Testimonials-02.png</small></div><img src="images/Testimonials-02.png" alt="Testimonial — Diego Ramos" loading="lazy"></div>
+        <div class="carousel-slide"><div class="carousel-slide-fallback">Loading testimonial 3<small>images/Testimonials-03.png</small></div><img src="images/Testimonials-03.png" alt="Testimonial — Luis Arias" loading="lazy"></div>
+        <div class="carousel-slide"><div class="carousel-slide-fallback">Loading testimonial 4<small>images/Testimonials-04.png</small></div><img src="images/Testimonials-04.png" alt="Testimonial — Tony Madson" loading="lazy"></div>
+        <div class="carousel-slide"><div class="carousel-slide-fallback">Loading testimonial 5<small>images/Testimonials-05.png</small></div><img src="images/Testimonials-05.png" alt="Testimonial — Rogelio Umaña" loading="lazy"></div>
+        <div class="carousel-slide"><div class="carousel-slide-fallback">Loading testimonial 6<small>images/Testimonials-06.png</small></div><img src="images/Testimonials-06.png" alt="Testimonial — Marianella Snowball" loading="lazy"></div>
+        <div class="carousel-slide"><div class="carousel-slide-fallback">Loading testimonial 7<small>images/Testimonials-07.png</small></div><img src="images/Testimonials-07.png" alt="Testimonial — Kristy Bowden" loading="lazy"></div>
+        <div class="carousel-slide"><div class="carousel-slide-fallback">Loading testimonial 8<small>images/Testimonials-08.png</small></div><img src="images/Testimonials-08.png" alt="Testimonial — Gabriella Fantozzi" loading="lazy"></div>
+      </div>
+    </div>
+    <button class="carousel-btn next" id="carousel-next" aria-label="Next testimonial">
+      <i data-lucide="chevron-right" class="icon-lg"></i>
+    </button>
+  </div>
+  <div class="carousel-dots" id="carousel-dots"></div>
+  <div class="carousel-counter">
+    <span class="current" id="carousel-current">01</span>
+    <span class="divider"></span>
+    <span>08</span>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<div class="contact-section" id="contact">
+  <div class="contact-blob"></div>
+  <div class="contact-inner">
+    <div class="fade-up">
+      <div class="contact-photo-wrap">
+        <img src="gavriel.jpg" alt="Gavriel Arias" class="contact-photo">
+        <div class="contact-photo-tag">
+          <div class="tag-dot"></div>
+          <span>Gavriel Arias</span>
+        </div>
+      </div>
+    </div>
+    <div class="contact-right fade-up" style="transition-delay:0.15s">
+      <div class="eyebrow">Get in touch</div>
+      <h2 class="contact-title">
+        Ready to move<br>
+        <span class="serif">forward clearly?</span>
+      </h2>
+      <p class="contact-sub">
+        Book a 15-minute clarity call — no pitch, just a conversation about where the signal is breaking down in your brand.
+      </p>
+      <div class="contact-channels">
+        <a href="https://cal.com/gavrielarias/15min" target="_blank" class="contact-channel">
+          <div class="cc-icon"><i data-lucide="calendar" class="icon-md"></i></div>
+          <div class="cc-content">
+            <div class="cc-label">Book a call</div>
+            <div class="cc-value">cal.com/gavrielarias/15min</div>
+          </div>
+          <i data-lucide="arrow-up-right" class="icon-md cc-arrow"></i>
+        </a>
+        <a href="mailto:hello@gavrielarias.com" class="contact-channel">
+          <div class="cc-icon"><i data-lucide="mail" class="icon-md"></i></div>
+          <div class="cc-content">
+            <div class="cc-label">Email</div>
+            <div class="cc-value">hello@gavrielarias.com</div>
+          </div>
+          <i data-lucide="arrow-up-right" class="icon-md cc-arrow"></i>
+        </a>
+        <a href="https://www.linkedin.com/in/gavrielarias" target="_blank" class="contact-channel">
+          <div class="cc-icon"><i data-lucide="linkedin" class="icon-md"></i></div>
+          <div class="cc-content">
+            <div class="cc-label">LinkedIn</div>
+            <div class="cc-value">@gavrielarias</div>
+          </div>
+          <i data-lucide="arrow-up-right" class="icon-md cc-arrow"></i>
+        </a>
+      </div>
+      <div class="avail-note">
+        <div class="avail-dot"></div>
+        Limited spots available
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">
+    <div class="nav-logo-dot"></div>
+    Gavriel Arias © <span id="year"></span>
+  </div>
+  <a href="https://gavrielarias.com" class="footer-link" target="_blank">gavrielarias.com</a>
+</footer>
+
+<!-- ═══════════════════════════════════════
+     AI CHATBAR (fixed bottom)
+═══════════════════════════════════════ -->
+<div class="chatbar-wrap" id="chatbar-wrap">
+
+  <div class="chat-panel" id="chat-panel">
+    <div class="chat-header">
+      <div class="chat-header-left">
+        <div class="chat-status-dot"></div>
+        Ask about working with Gavriel
+      </div>
+      <button class="chat-close" id="chat-close" aria-label="Close chat">
+        <i data-lucide="x" class="icon-sm"></i>
+      </button>
+    </div>
+    <div class="chat-messages" id="chat-messages">
+      <div class="msg ai">Hey 👋 I'm here to answer questions about working with Gavriel — what he does, his process, the sprint, or how to get in touch. What would you like to know?</div>
+    </div>
+    <div class="chat-suggestions" id="chat-suggestions">
+      <button class="chip" data-q="Why work with you?">Why work with you?</button>
+      <button class="chip" data-q="What is the Creative Signal Sprint?">What's the Sprint?</button>
+      <button class="chip" data-q="How long does it take?">How long?</button>
+      <button class="chip" data-q="How do I get started?">How to start?</button>
+    </div>
+  </div>
+
+  <form class="chatbar" id="chatbar-form" autocomplete="off">
+    <input
+      type="text"
+      class="chat-input"
+      id="chat-input"
+      placeholder="Why work with Gavriel?"
+      aria-label="Ask a question">
+    <button type="submit" class="chat-send" id="chat-send" aria-label="Send">
+      <i data-lucide="arrow-up" class="icon-md"></i>
+    </button>
+  </form>
+</div>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+lucide.createIcons();
+
+// Scroll reveal
+const io = new IntersectionObserver(entries => {
+  entries.forEach((e) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), 60);
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+
+// ═══ CAROUSEL ═══
+(function() {
+  const track = document.getElementById('carousel-track');
+  const slides = track.querySelectorAll('.carousel-slide');
+  const prevBtn = document.getElementById('carousel-prev');
+  const nextBtn = document.getElementById('carousel-next');
+  const dotsContainer = document.getElementById('carousel-dots');
+  const currentEl = document.getElementById('carousel-current');
+  const total = slides.length;
+  let current = 0, autoplayTimer;
+  const AUTOPLAY_MS = 6000;
+
+  slides.forEach(slide => {
+    const img = slide.querySelector('img');
+    if (img.complete && img.naturalWidth > 0) img.classList.add('loaded');
+    else {
+      img.addEventListener('load', () => img.classList.add('loaded'));
+      img.addEventListener('error', () => img.style.display = 'none');
+    }
+  });
+
+  slides.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+    dot.setAttribute('aria-label', `Go to testimonial ${i + 1}`);
+    dot.addEventListener('click', () => goTo(i));
+    dotsContainer.appendChild(dot);
+  });
+  const dots = dotsContainer.querySelectorAll('.carousel-dot');
+
+  function update() {
+    track.style.transform = `translateX(-${current * 100}%)`;
+    dots.forEach((d, i) => d.classList.toggle('active', i === current));
+    currentEl.textContent = String(current + 1).padStart(2, '0');
+  }
+  function goTo(i) { current = (i + total) % total; update(); resetAutoplay(); }
+  function next() { goTo(current + 1); }
+  function prev() { goTo(current - 1); }
+  function startAutoplay() { autoplayTimer = setInterval(next, AUTOPLAY_MS); }
+  function stopAutoplay() { clearInterval(autoplayTimer); }
+  function resetAutoplay() { stopAutoplay(); startAutoplay(); }
+
+  prevBtn.addEventListener('click', prev);
+  nextBtn.addEventListener('click', next);
+
+  const carousel = document.querySelector('.carousel');
+  carousel.addEventListener('mouseenter', stopAutoplay);
+  carousel.addEventListener('mouseleave', startAutoplay);
+
+  let touchStartX = 0, touchEndX = 0;
+  track.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; stopAutoplay(); }, { passive: true });
+  track.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    const diff = touchStartX - touchEndX;
+    if (Math.abs(diff) > 50) { if (diff > 0) next(); else prev(); }
+    else startAutoplay();
+  }, { passive: true });
+
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) startAutoplay();
+})();
+
+// ═══════════════════════════════════════
+// AI CHAT — pattern matching, zero tokens
+// ═══════════════════════════════════════
+(function() {
+  const form = document.getElementById('chatbar-form');
+  const input = document.getElementById('chat-input');
+  const sendBtn = document.getElementById('chat-send');
+  const panel = document.getElementById('chat-panel');
+  const messages = document.getElementById('chat-messages');
+  const closeBtn = document.getElementById('chat-close');
+  const suggestions = document.getElementById('chat-suggestions');
+
+  // Knowledge base — keywords → response
+  // Each entry: keywords to match (lowercase) + response (HTML allowed)
+  const KB = [
+    {
+      keys: ['why work', 'why hire', 'why you', 'why gavriel', 'why should i', 'why pick', 'why choose', 'value', 'what makes you'],
+      a: "Most consultants give you more to do. I do the opposite — I help you see what to <strong>stop doing</strong>. Founders come to me when they have too many ideas and no clear filter. After the sprint, decisions that took weeks take minutes. That's the value."
+    },
+    {
+      keys: ['what is the sprint', 'creative signal sprint', 'tell me about the sprint', 'what sprint', 'sprint about', 'what does sprint'],
+      a: "The <strong>Creative Signal Sprint</strong> is a 30-day strategic engagement. I diagnose where your brand signal is breaking down, reframe the core problem you're really solving, and give you a roadmap that's simple enough to actually follow. Not branding. Not production. Decision-making clarity."
+    },
+    {
+      keys: ['how long', 'how much time', 'duration', 'timeline', 'how many days', 'how many weeks'],
+      a: "The sprint is <strong>30 days</strong>. Mostly independent work on my side, with strategic sessions when alignment is needed. You don't lose weeks in meetings."
+    },
+    {
+      keys: ['process', 'how does it work', 'how do you work', 'methodology', 'approach', 'steps'],
+      a: "Four phases: <strong>Diagnosis</strong> (audit brand + positioning), <strong>Reframing</strong> (find the real problem), <strong>Clear Decisions</strong> (what to focus on, what to kill), <strong>Roadmap</strong> (so your team can execute without constant guidance). Strategy first, execution only when it accelerates clarity."
+    },
+    {
+      keys: ['price', 'cost', 'how much', 'fee', 'pricing', 'investment', 'rate', 'budget'],
+      a: "I prefer to discuss investment on the <a href='https://cal.com/gavrielarias/15min' target='_blank'>clarity call</a> — once I understand your situation, I can tell you if the sprint is the right fit. No pressure pitch, just an honest conversation."
+    },
+    {
+      keys: ['contact', 'get in touch', 'reach you', 'talk to you', 'email', 'how to reach', 'how to contact'],
+      a: "Easiest path: <a href='https://cal.com/gavrielarias/15min' target='_blank'>book a 15-min clarity call</a>. Or email <a href='mailto:hello@gavrielarias.com'>hello@gavrielarias.com</a>. Or DM on <a href='https://www.linkedin.com/in/gavrielarias' target='_blank'>LinkedIn</a>."
+    },
+    {
+      keys: ['book a call', 'schedule', 'call', 'meeting', 'consultation', 'meet'],
+      a: "Yes — <a href='https://cal.com/gavrielarias/15min' target='_blank'>cal.com/gavrielarias/15min</a>. 15 minutes, no pitch, just figuring out where the signal is breaking down in your brand."
+    },
+    {
+      keys: ['who do you work', 'clients', 'who are your clients', 'who hires', 'who is this for', 'who is it for', 'ideal client'],
+      a: "Founders and creative brands stuck in chaos — too many ideas, too much execution, not enough clarity. If your team is busy but progress feels slow, that's the signal."
+    },
+    {
+      keys: ['result', 'outcome', 'what do i get', 'deliverable', 'what will i get', 'what to expect', 'expect'],
+      a: "Not a 60-page deck. A new way of seeing your brand that makes every decision after it feel obvious. Clients often say: <em>\"I never saw it this way before. Now everything makes sense.\"</em>"
+    },
+    {
+      keys: ['branding', 'logo', 'visual identity', 'design', 'rebrand'],
+      a: "I don't do branding or visual identity work. The sprint is about <strong>decision-making clarity</strong>, not deliverables. Once strategy is clear, branding becomes a 10x easier brief for any designer."
+    },
+    {
+      keys: ['marketing', 'ads', 'campaign', 'social media', 'content'],
+      a: "I don't run marketing campaigns or produce content. I help you decide <strong>what</strong> to market and <strong>why</strong> — before anyone wastes budget on the wrong message."
+    },
+    {
+      keys: ['guarantee', 'refund', 'money back', 'what if'],
+      a: "No money-back guarantee — strategy work depends on you applying it. What I promise: clarity you didn't have before, or I'll keep working with you until you do."
+    },
+    {
+      keys: ['experience', 'background', 'who are you', 'about you', 'about gavriel', 'tell me about'],
+      a: "Gavriel has worked with founders and creative teams across LATAM and the US, from solo founders to brands like Publicis Sapient and RingLogix. Background in design + strategy + creative direction — useful when the answer needs both clarity and craft."
+    },
+    {
+      keys: ['testimonial', 'review', 'feedback', 'client say'],
+      a: "Scroll up to the testimonials carousel — eight real clients, their words, not mine. Common thread: clarity, responsiveness, quality."
+    },
+    {
+      keys: ['language', 'spanish', 'english', 'espanol', 'español'],
+      a: "I work in English and Spanish. The sprint and all deliverables can be in either — your call."
+    },
+    {
+      keys: ['remote', 'in person', 'location', 'where', 'based'],
+      a: "Fully remote, async-first. Sessions via video call when needed. I work with clients across timezones."
+    },
+    {
+      keys: ['team', 'agency', 'solo', 'who delivers', 'do you work alone'],
+      a: "It's me. No agency layer, no junior handoff. You work directly with Gavriel for the full 30 days."
+    },
+    {
+      keys: ['available', 'availability', 'when can we start', 'start date', 'open', 'capacity'],
+      a: "Limited spots each month to keep work quality high. Book the <a href='https://cal.com/gavrielarias/15min' target='_blank'>clarity call</a> and I'll tell you the next opening."
+    },
+    {
+      keys: ['hello', 'hi', 'hey', 'hola', 'good morning', 'good afternoon'],
+      a: "Hey! 👋 Ask me anything about working with Gavriel — the sprint, the process, getting started. Or check the suggestions below."
+    },
+    {
+      keys: ['thanks', 'thank you', 'gracias', 'thx'],
+      a: "Anytime. If you want to take the next step, <a href='https://cal.com/gavrielarias/15min' target='_blank'>book a 15-min call</a>."
+    },
+    {
+      keys: ['bye', 'goodbye', 'see you', 'later'],
+      a: "Catch you later. The <a href='https://cal.com/gavrielarias/15min' target='_blank'>call link</a> is always here when you're ready."
+    },
+  ];
+
+  // Off-topic detector — declines politely
+  const OFF_TOPIC_KEYS = [
+    'sex', 'porn', 'nude', 'naked', 'sexual',
+    'politic', 'trump', 'biden', 'election', 'vote', 'president',
+    'religion', 'god', 'jesus', 'christian', 'muslim', 'buddha',
+    'crypto', 'bitcoin', 'investment advice', 'stock tip',
+    'medical', 'doctor', 'diagnose', 'symptom',
+    'recipe', 'cook', 'weather', 'sports', 'football', 'soccer',
+    'kill', 'murder', 'weapon', 'gun', 'drug',
+    'how to code', 'write code for me', 'program for me'
+  ];
+
+  function findResponse(text) {
+    const q = text.toLowerCase().trim();
+
+    // Off-topic guard first
+    for (const k of OFF_TOPIC_KEYS) {
+      if (q.includes(k)) {
+        return "I only answer questions about Gavriel's services — the Creative Signal Sprint, his process, and how to work together. Try one of the suggestions below, or <a href='https://cal.com/gavrielarias/15min' target='_blank'>book a quick call</a>.";
+      }
+    }
+
+    // Match knowledge base
+    let best = null, bestScore = 0;
+    for (const item of KB) {
+      for (const key of item.keys) {
+        if (q.includes(key)) {
+          const score = key.length;
+          if (score > bestScore) { bestScore = score; best = item; }
+        }
+      }
+    }
+    if (best) return best.a;
+
+    // Fallback
+    return "Not sure I can help with that exact question — but here's what I can answer about: <strong>the sprint</strong>, <strong>how I work</strong>, <strong>who it's for</strong>, <strong>pricing</strong>, and <strong>how to get in touch</strong>. Or <a href='https://cal.com/gavrielarias/15min' target='_blank'>book a 15-min call</a> and ask Gavriel directly.";
+  }
+
+  function addMessage(text, sender) {
+    const msg = document.createElement('div');
+    msg.className = 'msg ' + sender;
+    msg.innerHTML = text;
+    messages.appendChild(msg);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  function addTyping() {
+    const t = document.createElement('div');
+    t.className = 'msg ai';
+    t.id = 'typing-indicator';
+    t.innerHTML = '<div class="typing"><span></span><span></span><span></span></div>';
+    messages.appendChild(t);
+    messages.scrollTop = messages.scrollHeight;
+  }
+  function removeTyping() {
+    const t = document.getElementById('typing-indicator');
+    if (t) t.remove();
+  }
+
+  function openPanel() {
+    panel.classList.add('open');
+  }
+  function closePanel() {
+    panel.classList.remove('open');
+  }
+
+  function send(text) {
+    if (!text || !text.trim()) return;
+    openPanel();
+    addMessage(text, 'user');
+    input.value = '';
+    addTyping();
+    // Simulated thinking delay (feels more natural)
+    const delay = 600 + Math.random() * 400;
+    setTimeout(() => {
+      removeTyping();
+      addMessage(findResponse(text), 'ai');
+    }, delay);
+  }
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    send(input.value);
+  });
+
+  input.addEventListener('focus', openPanel);
+
+  closeBtn.addEventListener('click', closePanel);
+
+  // Close panel when clicking outside chatbar area
+  document.addEventListener('click', (e) => {
+    const wrap = document.getElementById('chatbar-wrap');
+    if (panel.classList.contains('open') && !wrap.contains(e.target)) {
+      closePanel();
+    }
+  });
+
+  // Suggestion chips
+  suggestions.addEventListener('click', (e) => {
+    const chip = e.target.closest('.chip');
+    if (!chip) return;
+    const q = chip.dataset.q;
+    send(q);
+  });
+
+  // ESC to close
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && panel.classList.contains('open')) closePanel();
+  });
+})();
+</script>
+</body>
+</html>
