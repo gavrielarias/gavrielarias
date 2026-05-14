@@ -932,9 +932,9 @@ document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
 
   slides.forEach(slide => {
     const img = slide.querySelector('img');
-    if (img.complete && img.naturalWidth > 0) img.classList.add('loaded');
+    if (img.complete && img.naturalWidth > 0) { img.classList.add('loaded'); const fb = slide.querySelector('.carousel-slide-fallback'); if (fb) fb.style.display = 'none'; }
     else {
-      img.addEventListener('load', () => img.classList.add('loaded'));
+      img.addEventListener('load', () => { img.classList.add('loaded'); const fb = slide.querySelector('.carousel-slide-fallback'); if (fb) fb.style.display = 'none'; });
       img.addEventListener('error', () => img.style.display = 'none');
     }
   });
