@@ -654,10 +654,89 @@ footer { background: #080808; border-top: 1px solid rgba(255,255,255,0.06); padd
   .carousel-btn { width: 40px; height: 40px; }
   .carousel-btn.prev { left: -4px; }
   .carousel-btn.next { right: -4px; }
+
+  .compare-section,.pricing-section,.notfor-section { padding: 72px 24px; }
+  .pricing-grid { grid-template-columns: 1fr; }
+  .notfor-inner { grid-template-columns: 1fr; gap: 40px; }
+  .compare-table { font-size: 0.8rem; }
+  .compare-table th,.compare-table td { padding: 12px 10px; }
   footer { padding: 24px 24px 100px; flex-direction: column; gap: 12px; text-align: center; }
   .chat-panel.open { max-height: 70vh; }
   .chat-messages { height: calc(70vh - 130px); }
 }
+
+/* COMPARISON TABLE */
+.compare-section { background: var(--dark); border-top: 1px solid rgba(255,255,255,0.05); padding: 100px 40px; }
+.compare-inner { max-width: 1000px; margin: 0 auto; }
+.compare-header { text-align: center; margin-bottom: 56px; }
+.compare-header .eyebrow { color: rgba(255,255,255,0.4); justify-content: center; }
+.compare-header .eyebrow::before { background: var(--accent); }
+.compare-header .section-title { font-size: clamp(2.2rem,4vw,3.4rem); color: var(--white); }
+.compare-header .section-title .serif { color: var(--accent); }
+.compare-table { width: 100%; border-collapse: collapse; }
+.compare-table th { font-family: 'Bricolage Grotesque', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 16px 20px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1); }
+.compare-table th:first-child { color: rgba(255,255,255,0.4); width: 26%; }
+.compare-table th.col-diy,.compare-table th.col-agency { color: rgba(255,255,255,0.4); }
+.compare-table th.col-sprint { color: var(--accent); background: rgba(184,242,65,0.07); border-left: 1px solid rgba(184,242,65,0.2); border-right: 1px solid rgba(184,242,65,0.2); border-radius: 12px 12px 0 0; }
+.compare-table td { padding: 18px 20px; font-size: 0.88rem; border-bottom: 1px solid rgba(255,255,255,0.05); line-height: 1.55; vertical-align: top; }
+.compare-table td:first-child { color: rgba(255,255,255,0.5); font-weight: 500; font-size: 0.82rem; font-family: 'Bricolage Grotesque', sans-serif; letter-spacing: 0.02em; }
+.compare-table td.col-diy,.compare-table td.col-agency { color: rgba(255,255,255,0.4); }
+.compare-table td.col-sprint { color: var(--white); font-weight: 500; background: rgba(184,242,65,0.04); border-left: 1px solid rgba(184,242,65,0.15); border-right: 1px solid rgba(184,242,65,0.15); }
+.compare-table tr:last-child td.col-sprint { border-radius: 0 0 12px 12px; border-bottom: 1px solid rgba(184,242,65,0.15); }
+.tag-good { display: inline-flex; align-items: center; background: rgba(184,242,65,0.12); color: var(--accent); font-size: 0.75rem; font-weight: 700; padding: 3px 10px; border-radius: 100px; font-family: 'Bricolage Grotesque', sans-serif; letter-spacing: 0.04em; }
+
+/* PRICING */
+.pricing-section { background: var(--dark); border-top: 1px solid rgba(255,255,255,0.05); padding: 100px 40px; }
+.pricing-inner { max-width: 1100px; margin: 0 auto; }
+.pricing-header { text-align: center; margin-bottom: 56px; }
+.pricing-header .eyebrow { color: rgba(255,255,255,0.4); justify-content: center; }
+.pricing-header .eyebrow::before { background: var(--accent3); }
+.pricing-header .section-title { font-size: clamp(2.2rem,4vw,3.4rem); color: var(--white); }
+.pricing-header .section-title .serif { color: var(--accent3); }
+.pricing-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; align-items: start; }
+.pricing-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 32px 28px; position: relative; transition: border-color 0.3s; }
+.pricing-card:hover { border-color: rgba(255,255,255,0.15); }
+.pricing-card.featured { background: rgba(184,242,65,0.05); border-color: rgba(184,242,65,0.3); }
+.pricing-card.anchor { background: rgba(122,243,255,0.03); border-color: rgba(122,243,255,0.15); }
+.pc-badge { display: inline-flex; font-family: 'Bricolage Grotesque', sans-serif; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; padding: 4px 12px; border-radius: 100px; margin-bottom: 20px; }
+.pc-badge.entry { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.5); }
+.pc-badge.sprint { background: rgba(184,242,65,0.15); color: var(--accent); }
+.pc-badge.executive { background: rgba(122,243,255,0.1); color: var(--accent4); }
+.pc-name { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 1.35rem; letter-spacing: -0.03em; color: var(--white); margin-bottom: 6px; }
+.pc-price { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 2.8rem; letter-spacing: -0.04em; line-height: 1; color: var(--white); margin-bottom: 4px; }
+.pc-price span { font-size: 1rem; font-weight: 500; color: rgba(255,255,255,0.4); letter-spacing: 0; }
+.pc-price-note { font-size: 0.75rem; color: rgba(255,255,255,0.35); margin-bottom: 24px; }
+.pc-divider { height: 1px; background: rgba(255,255,255,0.07); margin-bottom: 24px; }
+.pc-desc { font-size: 0.88rem; color: rgba(255,255,255,0.55); line-height: 1.65; margin-bottom: 24px; }
+.pc-list { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
+.pc-list li { display: flex; gap: 10px; align-items: flex-start; font-size: 0.85rem; color: rgba(255,255,255,0.65); line-height: 1.5; }
+.pc-list li::before { content: ''; width: 16px; height: 16px; border-radius: 50%; background: rgba(184,242,65,0.15) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23b8f241' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='3,8 6,11 13,5'/%3E%3C/svg%3E") center/10px no-repeat; border: 1px solid rgba(184,242,65,0.3); flex-shrink: 0; margin-top: 1px; }
+.anchor .pc-list li::before { background-color: rgba(122,243,255,0.1); border-color: rgba(122,243,255,0.3); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%2338bdf8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='3,8 6,11 13,5'/%3E%3C/svg%3E"); }
+.pc-cta { display: block; width: 100%; text-align: center; font-family: 'Bricolage Grotesque', sans-serif; font-size: 0.88rem; font-weight: 700; padding: 14px 24px; border-radius: 100px; text-decoration: none; letter-spacing: -0.01em; transition: transform 0.2s, box-shadow 0.2s, background 0.2s; }
+.pc-cta.primary { background: var(--accent); color: var(--dark); }
+.pc-cta.primary:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(184,242,65,0.4); }
+.pc-cta.secondary { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.1); }
+.pc-cta.secondary:hover { background: rgba(255,255,255,0.1); color: var(--white); }
+.pc-cta.anchor-cta { background: rgba(122,243,255,0.08); color: var(--accent4); border: 1px solid rgba(122,243,255,0.2); }
+.pc-cta.anchor-cta:hover { background: rgba(122,243,255,0.14); }
+.pricing-note { text-align: center; margin-top: 28px; font-size: 0.78rem; color: rgba(255,255,255,0.3); }
+.pricing-note strong { color: rgba(255,255,255,0.5); }
+.featured-tag { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); background: var(--accent); color: var(--dark); font-family: 'Bricolage Grotesque', sans-serif; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 14px; border-radius: 100px; white-space: nowrap; }
+
+/* NOT FOR */
+.notfor-section { background: var(--dark2); border-top: 1px solid rgba(255,255,255,0.05); padding: 100px 40px; }
+.notfor-inner { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+.notfor-left .eyebrow { color: rgba(255,255,255,0.4); }
+.notfor-left .eyebrow::before { background: var(--accent2); }
+.notfor-left .section-title { font-size: clamp(2rem,3.5vw,3rem); color: var(--white); }
+.notfor-left .section-title .serif { color: var(--accent2); }
+.notfor-left p { margin-top: 20px; font-size: 0.9rem; color: rgba(255,255,255,0.45); line-height: 1.7; }
+.notfor-list { display: flex; flex-direction: column; gap: 14px; padding-top: 8px; }
+.notfor-item { display: flex; gap: 14px; align-items: flex-start; padding: 18px 20px; background: rgba(255,107,53,0.06); border: 1px solid rgba(255,107,53,0.15); border-radius: 14px; }
+.notfor-x { flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: rgba(255,107,53,0.15); border: 1px solid rgba(255,107,53,0.3); display: flex; align-items: center; justify-content: center; color: var(--accent2); margin-top: 1px; }
+.notfor-item p { font-size: 0.85rem; color: rgba(255,255,255,0.6); line-height: 1.55; }
+.notfor-item strong { display: block; color: var(--white); font-weight: 600; font-family: 'Bricolage Grotesque', sans-serif; font-size: 0.88rem; margin-bottom: 3px; }
+
 </style>
 </head>
 <body>
@@ -669,11 +748,12 @@ footer { background: #080808; border-top: 1px solid rgba(255,255,255,0.06); padd
   </div>
   <ul class="nav-links">
     <li><a href="#work">Work</a></li>
+    <li><a href="#pricing">Pricing</a></li>
     <li><a href="#testimonials">Testimonials</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
   <a href="https://cal.com/gavrielarias/15min" target="_blank" class="nav-cta">
-    Book a Call
+    Check Availability
     <i data-lucide="arrow-up-right" class="icon-sm"></i>
   </a>
 </nav>
@@ -697,7 +777,7 @@ footer { background: #080808; border-top: 1px solid rgba(255,255,255,0.06); padd
     </p>
     <div class="hero-actions">
       <a href="https://cal.com/gavrielarias/15min" target="_blank" class="btn-lime">
-        Schedule a Clarity Call
+        Check Availability for <span id="hero-month">this month</span>
         <i data-lucide="arrow-right" class="icon-sm"></i>
       </a>
       <a href="#work" class="btn-outline">See what's included</a>
@@ -722,8 +802,8 @@ footer { background: #080808; border-top: 1px solid rgba(255,255,255,0.06); padd
     <div class="whatido-left fade-up">
       <div class="eyebrow">What I do</div>
       <h2 class="section-title">
-        I work with founders to<br>
-        <span class="serif">remove the bottleneck</span>
+        I stop the creative drift<br>
+        <span class="serif">that burns your runway</span>
       </h2>
       <div class="principle-box">
         <div class="pb-label">The Principle</div>
@@ -734,8 +814,8 @@ footer { background: #080808; border-top: 1px solid rgba(255,255,255,0.06); padd
       <div class="do-row">
         <div class="do-icon"><i data-lucide="search" class="icon-md"></i></div>
         <div>
-          <strong>Strategic Diagnosis</strong>
-          <p>Brand, narrative, digital presence, and positioning — audited to find exactly where the signal is getting lost.</p>
+          <strong>The Friction Audit</strong>
+          <p>Brand, narrative, digital presence, and positioning — audited to find exactly where the signal is getting lost and decisions are getting stuck.</p>
         </div>
       </div>
       <div class="do-row">
@@ -762,6 +842,115 @@ footer { background: #080808; border-top: 1px solid rgba(255,255,255,0.06); padd
     </div>
   </div>
 </div>
+
+
+<!-- COMPARISON TABLE -->
+<section class="compare-section" id="compare">
+  <div class="compare-inner">
+    <div class="compare-header fade-up">
+      <div class="eyebrow">Why the sprint</div>
+      <h2 class="section-title">The honest <span class="serif">comparison</span></h2>
+    </div>
+    <div class="fade-up" style="transition-delay:0.1s;overflow-x:auto;">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th class="col-diy">Doing it yourself</th>
+            <th class="col-agency">Hiring a big agency</th>
+            <th class="col-sprint">Creative Signal Sprint</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Cost</td><td class="col-diy">$0 upfront</td><td class="col-agency">$25,000+</td><td class="col-sprint"><span class="tag-good">From $750</span></td></tr>
+          <tr><td>Time</td><td class="col-diy">Months of iteration</td><td class="col-agency">3+ months of meetings</td><td class="col-sprint"><span class="tag-good">30 days</span></td></tr>
+          <tr><td>Who you work with</td><td class="col-diy">Yourself</td><td class="col-agency">Account managers + juniors</td><td class="col-sprint"><span class="tag-good">Gavriel directly</span></td></tr>
+          <tr><td>Real cost</td><td class="col-diy">Team misalignment, wasted runway</td><td class="col-agency">Budget, time, and energy</td><td class="col-sprint"><span class="tag-good">One focused engagement</span></td></tr>
+          <tr><td>Output</td><td class="col-diy">More confusion</td><td class="col-agency">A deck you might not use</td><td class="col-sprint"><span class="tag-good">Decisions + roadmap</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing-section" id="pricing">
+  <div class="pricing-inner">
+    <div class="pricing-header fade-up">
+      <div class="eyebrow">Investments</div>
+      <h2 class="section-title">Three ways to <span class="serif">work together</span></h2>
+    </div>
+    <div class="pricing-grid fade-up" style="transition-delay:0.1s">
+      <div class="pricing-card">
+        <div class="pc-badge entry">Entry Point</div>
+        <div class="pc-name">Light Signal</div>
+        <div class="pc-price">$750<span> USD</span></div>
+        <div class="pc-price-note">One-time &middot; 90 minutes</div>
+        <div class="pc-divider"></div>
+        <p class="pc-desc">For founders who need clarity before committing. A focused diagnostic + 1-page reframing doc you can act on immediately.</p>
+        <ul class="pc-list">
+          <li>90-min deep-dive session</li>
+          <li>1-page Strategic Reframing Doc</li>
+          <li>Top 3 friction points identified</li>
+          <li>Clear next-step recommendation</li>
+        </ul>
+        <a href="https://cal.com/gavrielarias/15min" target="_blank" class="pc-cta secondary">Book a clarity call</a>
+      </div>
+      <div class="pricing-card featured">
+        <div class="featured-tag">Most Popular</div>
+        <div class="pc-badge sprint">The Sprint</div>
+        <div class="pc-name">Creative Signal Sprint</div>
+        <div class="pc-price">$3,000<span> USD</span></div>
+        <div class="pc-price-note">50% upfront &middot; 30 days</div>
+        <div class="pc-divider"></div>
+        <p class="pc-desc">The complete strategic engagement. From chaos to a roadmap your team can execute on day 31 — without Gavriel holding their hand.</p>
+        <ul class="pc-list">
+          <li>Full Friction Audit</li>
+          <li>Core problem reframing</li>
+          <li>Explicit decision framework</li>
+          <li>30-day execution roadmap</li>
+          <li>Strategy sessions as needed</li>
+          <li>Direct access to Gavriel</li>
+        </ul>
+        <a href="https://cal.com/gavrielarias/15min" target="_blank" class="pc-cta primary">Check availability</a>
+      </div>
+      <div class="pricing-card anchor">
+        <div class="pc-badge executive">Executive</div>
+        <div class="pc-name">Execution Partner</div>
+        <div class="pc-price">$8,500<span> USD</span></div>
+        <div class="pc-price-note">For funded teams &middot; 90 days</div>
+        <div class="pc-divider"></div>
+        <p class="pc-desc">The Sprint plus 60 days of advisory and implementation oversight. For teams that want Gavriel to stay involved as the roadmap comes to life.</p>
+        <ul class="pc-list">
+          <li>Everything in the Sprint</li>
+          <li>60 days advisory support</li>
+          <li>2 bespoke strategic assets</li>
+          <li>Weekly implementation check-ins</li>
+          <li>Priority access &amp; fast responses</li>
+        </ul>
+        <a href="https://cal.com/gavrielarias/15min" target="_blank" class="pc-cta anchor-cta">Discuss fit</a>
+      </div>
+    </div>
+    <p class="pricing-note">All prices in USD. <strong>Spots are limited</strong> — Gavriel works with a small number of clients at a time to keep quality high.</p>
+  </div>
+</section>
+
+<!-- NOT FOR EVERYONE -->
+<section class="notfor-section">
+  <div class="notfor-inner">
+    <div class="notfor-left fade-up">
+      <div class="eyebrow">Honest filter</div>
+      <h2 class="section-title">This is <span class="serif">not for everyone</span></h2>
+      <p>The sprint works when founders are ready to kill their favorite ideas if the strategy demands it. If you're not there yet, that's okay — it's just not the right moment.</p>
+    </div>
+    <div class="notfor-list fade-up" style="transition-delay:0.15s">
+      <div class="notfor-item"><div class="notfor-x"><i data-lucide="x" class="icon-sm"></i></div><div><strong>You want a logo or visual identity</strong><p>This is not a branding engagement. Strategy comes first — branding follows.</p></div></div>
+      <div class="notfor-item"><div class="notfor-x"><i data-lucide="x" class="icon-sm"></i></div><div><strong>You're not ready to kill your favorite ideas</strong><p>Clarity requires letting go of what's comfortable. If every idea feels non-negotiable, the sprint won't move the needle.</p></div></div>
+      <div class="notfor-item"><div class="notfor-x"><i data-lucide="x" class="icon-sm"></i></div><div><strong>You want someone to do the execution</strong><p>Gavriel gives you the strategy and the roadmap. Your team executes.</p></div></div>
+      <div class="notfor-item"><div class="notfor-x"><i data-lucide="x" class="icon-sm"></i></div><div><strong>You want a 60-page deck</strong><p>The output is clarity and action, not documentation. If your board needs a polished deliverable, this probably isn't the right fit.</p></div></div>
+    </div>
+  </div>
+</section>
 
 <!-- TESTIMONIALS -->
 <section class="testimonials-section" id="testimonials">
@@ -840,7 +1029,7 @@ footer { background: #080808; border-top: 1px solid rgba(255,255,255,0.06); padd
           <i data-lucide="arrow-up-right" class="icon-md cc-arrow"></i>
         </a>
         <a href="https://www.linkedin.com/in/gavrielarias" target="_blank" class="contact-channel">
-          <div class="cc-icon"><svg class="icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div>
+          <div class="cc-icon"><i data-lucide="linkedin" class="icon-md"></i></div>
           <div class="cc-content">
             <div class="cc-label">LinkedIn</div>
             <div class="cc-value">@gavrielarias</div>
@@ -905,6 +1094,8 @@ footer { background: #080808; border-top: 1px solid rgba(255,255,255,0.06); padd
 
 <script>
 document.getElementById('year').textContent = new Date().getFullYear();
+const _months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const _el = document.getElementById('hero-month'); if(_el) _el.textContent = _months[new Date().getMonth()];
 lucide.createIcons();
 
 // Scroll reveal
@@ -1012,7 +1203,7 @@ document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
     },
     {
       keys: ['price', 'cost', 'how much', 'fee', 'pricing', 'investment', 'rate', 'budget'],
-      a: "I prefer to discuss investment on the <a href='https://cal.com/gavrielarias/15min' target='_blank'>clarity call</a> — once I understand your situation, I can tell you if the sprint is the right fit. No pressure pitch, just an honest conversation."
+      a: "Three tiers: <strong>Light Signal</strong> ($750 — 90-min diagnostic), <strong>Creative Signal Sprint</strong> ($3,000 — 30 days, the main offering), <strong>Execution Partner</strong> ($8,500 — Sprint + 60 days advisory). Scroll up to the Pricing section, or <a href='https://cal.com/gavrielarias/15min' target='_blank'>book a call</a> to discuss fit."
     },
     {
       keys: ['contact', 'get in touch', 'reach you', 'talk to you', 'email', 'how to reach', 'how to contact'],
