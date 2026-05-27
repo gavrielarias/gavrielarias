@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Prueba Tu Suerte FIFA</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Arial Black', Gadget, sans-serif;
+            /* Usamos un degradado que simula el fondo de tu imagen (estadio/césped desenfocado) */
+            background: radial-gradient(circle, #2a5298 0%, #1e3c72 40%, #112233 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Pantalla de Inicio (Splash Screen) */
+        #splash-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: opacity 0.5s ease;
+            padding: 20px;
+        }
+
+        .logo-placeholder {
+            max-width: 90%;
+            max-height: 70%;
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        .tap-instruction {
+            background-color: rgba(255, 255, 255, 0.95);
+            color: #112233;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.5rem;
+            margin-top: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Pantalla Principal del Juego */
+        #game-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+            padding: 20px;
+        }
+
+        #game-screen.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .chest-container {
+            position: relative;
+            width: 320px;
+            height: 320px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .chest-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* Contenedor de Premios (Efecto Ruleta) */
+        .roulette-container {
+            width: 85%;
+            max-width: 550px;
+            height: 110px;
+            background: #ffffff;
+            border: 6px solid #f1c40f;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+        }
+
+        /* Línea indicadora central */
+        .roulette-container::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 100%;
+            background: #e74c3c;
+            z-index: 5;
+        }
+
+        .reward-wrapper {
+            display: flex;
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            will-change: transform;
+        }
+
+        .reward-item {
+            width: 250px; /* Ancho fijo para calcular el desplazamiento */
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 1.2rem;
+            color: #1a252f;
+            padding: 10px;
+            border-right: 2px solid #e0e0e0;
+            background: #f8f9fa;
+        }
+
+        .reward-item .icon {
+            font-size: 2rem;
+            margin-bottom: 4px;
+        }
+
+        /* Botón de reinicio al terminar */
+        #action-btn {
+            margin-top: 35px;
+            padding: 18px 50px;
+            font-size: 1.4rem;
+            background: linear-gradient(135deg, #f1c40f, #f39c12);
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+            text-transform: uppercase;
+            display: none;
+        }
+
+        #action-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Animaciones */
+        @keyframes pulse {
+            0% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(255,255,255,0.2)); }
+            50% { transform: scale(1.03); filter: drop-shadow(0 0 25px rgba(241,196,15,0.6)); }
+            100% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(255,255,255,0.2)); }
+        }
+
+        @keyframes chestGlow {
+            0% { filter: drop-shadow(0 0 15px rgba(241,196,15,0.4)); }
+            50% { filter: drop-shadow(0 0 35px rgba(241,196,15,0.9)); }
+            100% { filter: drop-shadow(0 0 15px rgba(241,196,15,0.4)); }
+        }
+
+        .glow-active {
+            animation: chestGlow 1.5s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="splash-screen" onclick="startLottery()">
+        <img class="logo-placeholder" src="splash-screen.jpg" alt="¡PRUEBA TU SUERTE FIFA!">
+        <div class="tap-instruction">👉 Toca para Jugar 👈</div>
+    </div>
+
+    <div id="game-screen">
+        <div class="chest-container">
+            <img class="chest-image glow-active" src="cofre big.png" alt="Cofre de Premios">
+        </div>
+
+        <div class="roulette-container">
+            <div class="reward-wrapper" id="reward-wrapper">
+                </div>
+        </div>
+
+        <button id="action-btn" onclick="resetGame()">Volver a empezar</button>
+    </div>
+
+    <script>
+        // Configuración de premios y las probabilidades matemáticas acordadas
+        const rewardsPool = [
+            { id: 1, text: "Tarjeta Regular", icon: "⚽", weight: 18 },
+            { id: 2, text: "2 Tarjetas Regulares", icon: "⚽⚽", weight: 6 },
+            { id: 3, text: "Tarjeta Especial", icon: "⭐", weight: 8 },
+            { id: 4, text: "Tarjeta Música", icon: "🎵", weight: 28 },
+            { id: 5, text: "Tarjeta Reg. + Música", icon: "⚽🎵", weight: 18 },
+            { id: 6, text: "Vuelve a jugar (¢300)", icon: "🔄", weight: 20 },
+            { id: 7, text: "Poster FIFA", icon: "🏆", weight: 2 }
+        ];
+
+        const ITEM_WIDTH = 250; // Ancho de cada tarjeta en píxeles
+        const wrapper = document.getElementById('reward-wrapper');
+        let isSpinning = false;
+
+        // Función para elegir premio basado estrictamente en los porcentajes de peso
+        function getRandomReward() {
+            const totalWeight = rewardsPool.reduce((sum, item) => sum + item.weight, 0);
+            let random = Math.random() * totalWeight;
+
+            for (let i = 0; i < rewardsPool.length; i++) {
+                if (random < rewardsPool[i].weight) {
+                    return rewardsPool[i];
+                }
+                random -= rewardsPool[i].weight;
+            }
+            return rewardsPool[0]; // Respaldo seguro
+        }
+
+        function startLottery() {
+            if (isSpinning) return;
+
+            // Transición de Splash Screen a Pantalla de Juego
+            document.getElementById('splash-screen').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('splash-screen').style.display = 'none';
+                const gameScreen = document.getElementById('game-screen');
+                gameScreen.classList.add('active');
+
+                // Ejecutar la ruleta de inmediato tras el cambio de pantalla
+                spinRoulette();
+            }, 500);
+        }
+
+        function spinRoulette() {
+            isSpinning = true;
+            document.getElementById('action-btn').style.display = 'none';
+
+            // 1. Decidir matemáticamente qué premio va a ganar el usuario de antemano
+            const winningReward = getRandomReward();
+
+            // 2. Construir una lista larga aleatoria para el efecto visual de "pasar rápido"
+            wrapper.innerHTML = '';
+            wrapper.style.transition = 'none';
+            wrapper.style.transform = 'translateX(0px)';
+
+            const totalItemsVisual = 40; // Cantidad de ítems en la fila
+            const winningIndex = 35;     // Posición fija donde queremos que se detenga la ruleta
+
+            for (let i = 0; i < totalItemsVisual; i++) {
+                let currentItem;
+
+                if (i === winningIndex) {
+                    currentItem = winningReward; // Inyectamos el ganador real en la casilla ganadora
+                } else {
+                    // Rellenamos el resto con premios aleatorios visuales
+                    currentItem = rewardsPool[Math.floor(Math.random() * rewardsPool.length)];
+                }
+
+                const div = document.createElement('div');
+                div.className = 'reward-item';
+                div.innerHTML = `<span class="icon">${currentItem.icon}</span><div>${currentItem.text}</div>`;
+                wrapper.appendChild(div);
+            }
+
+            // 3. Calcular la distancia exacta para centrar el premio ganador en la línea roja
+            const containerWidth = document.querySelector('.roulette-container').offsetWidth;
+            const centerOffset = (containerWidth / 2) - (ITEM_WIDTH / 2);
+            const targetX = -(winningIndex * ITEM_WIDTH) + centerOffset;
+
+            // 4. Aplicar el efecto de desaceleración usando CSS transition (cubic-bezier simulando el freno)
+            setTimeout(() => {
+                wrapper.style.transition = 'transform 6s cubic-bezier(0.15, 0.85, 0.35, 1)';
+                wrapper.style.transform = `translateX(${targetX}px)`;
+            }, 50);
+
+            // 5. Al finalizar la animación, habilitar el botón para reiniciar el terminal
+            setTimeout(() => {
+                isSpinning = false;
+                document.getElementById('action-btn').style.display = 'block';
+            }, 6100);
+        }
+
+        function resetGame() {
+            // Regresar el sistema al estado inicial (Splash Screen) para el siguiente usuario
+            document.getElementById('game-screen').classList.remove('active');
+            const splash = document.getElementById('splash-screen');
+            splash.style.display = 'flex';
+            setTimeout(() => {
+                splash.style.opacity = '1';
+            }, 50);
+        }
+    </script>
+</body>
+</html>
