@@ -10,7 +10,7 @@
             user-select: none;
             -webkit-user-select: none;
         }
-
+        
         body, html {
             margin: 0;
             padding: 0;
@@ -18,7 +18,6 @@
             height: 100%;
             overflow: hidden;
             font-family: 'Arial Black', Gadget, sans-serif;
-            /* Usamos un degradado que simula el fondo de tu imagen (estadio/césped desenfocado) */
             background: radial-gradient(circle, #2a5298 0%, #1e3c72 40%, #112233 100%);
             display: flex;
             justify-content: center;
@@ -134,14 +133,14 @@
         }
 
         .reward-item {
-            width: 250px; /* Ancho fijo para calcular el desplazamiento */
+            width: 250px; 
             height: 100%;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: #1a252f;
             padding: 10px;
             border-right: 2px solid #e0e0e0;
@@ -185,7 +184,7 @@
             50% { filter: drop-shadow(0 0 35px rgba(241,196,15,0.9)); }
             100% { filter: drop-shadow(0 0 15px rgba(241,196,15,0.4)); }
         }
-
+        
         .glow-active {
             animation: chestGlow 1.5s infinite ease-in-out;
         }
@@ -212,46 +211,44 @@
     </div>
 
     <script>
-        // Configuración de premios y las probabilidades matemáticas acordadas
+        // Nueva configuración de premios con las probabilidades requeridas
         const rewardsPool = [
-            { id: 1, text: "Tarjeta Regular", icon: "⚽", weight: 18 },
-            { id: 2, text: "2 Tarjetas Regulares", icon: "⚽⚽", weight: 6 },
-            { id: 3, text: "Tarjeta Especial", icon: "⭐", weight: 8 },
-            { id: 4, text: "Tarjeta Música", icon: "🎵", weight: 28 },
-            { id: 5, text: "Tarjeta Reg. + Música", icon: "⚽🎵", weight: 18 },
-            { id: 6, text: "Vuelve a jugar (¢300)", icon: "🔄", weight: 20 },
-            { id: 7, text: "Poster FIFA", icon: "🏆", weight: 2 }
+            { id: 1, text: "Tarjeta de Música", icon: "🎵", weight: 30 },
+            { id: 7, text: "Tarj. Música + Jugador Normal", icon: "🎵⚽", weight: 22 },
+            { id: 5, text: "Vuelve a jugar", icon: "🔄", weight: 18 },
+            { id: 6, text: "Vuelve a jugar por ¢200", icon: "🪙", weight: 15 },
+            { id: 2, text: "3 Tarjetas Normales Mundial", icon: "⚽⚽⚽", weight: 8 },
+            { id: 3, text: "1 Tarjeta Escudo/Equipo", icon: "🛡️", weight: 4 },
+            { id: 4, text: "Poster FIFA", icon: "🏆", weight: 2 },
+            { id: 8, text: "Súper Descuento: Poster x ¢1000", icon: "⚡", weight: 1 }
         ];
 
-        const ITEM_WIDTH = 250; // Ancho de cada tarjeta en píxeles
+        const ITEM_WIDTH = 250; 
         const wrapper = document.getElementById('reward-wrapper');
         let isSpinning = false;
 
-        // Función para elegir premio basado estrictamente en los porcentajes de peso
         function getRandomReward() {
             const totalWeight = rewardsPool.reduce((sum, item) => sum + item.weight, 0);
             let random = Math.random() * totalWeight;
-
+            
             for (let i = 0; i < rewardsPool.length; i++) {
                 if (random < rewardsPool[i].weight) {
                     return rewardsPool[i];
                 }
                 random -= rewardsPool[i].weight;
             }
-            return rewardsPool[0]; // Respaldo seguro
+            return rewardsPool[0]; 
         }
 
         function startLottery() {
             if (isSpinning) return;
-
-            // Transición de Splash Screen a Pantalla de Juego
+            
             document.getElementById('splash-screen').style.opacity = '0';
             setTimeout(() => {
                 document.getElementById('splash-screen').style.display = 'none';
                 const gameScreen = document.getElementById('game-screen');
                 gameScreen.classList.add('active');
-
-                // Ejecutar la ruleta de inmediato tras el cambio de pantalla
+                
                 spinRoulette();
             }, 500);
         }
@@ -259,25 +256,22 @@
         function spinRoulette() {
             isSpinning = true;
             document.getElementById('action-btn').style.display = 'none';
-
-            // 1. Decidir matemáticamente qué premio va a ganar el usuario de antemano
+            
             const winningReward = getRandomReward();
-
-            // 2. Construir una lista larga aleatoria para el efecto visual de "pasar rápido"
+            
             wrapper.innerHTML = '';
             wrapper.style.transition = 'none';
             wrapper.style.transform = 'translateX(0px)';
 
-            const totalItemsVisual = 40; // Cantidad de ítems en la fila
-            const winningIndex = 35;     // Posición fija donde queremos que se detenga la ruleta
+            const totalItemsVisual = 40; 
+            const winningIndex = 35;     
 
             for (let i = 0; i < totalItemsVisual; i++) {
                 let currentItem;
-
+                
                 if (i === winningIndex) {
-                    currentItem = winningReward; // Inyectamos el ganador real en la casilla ganadora
+                    currentItem = winningReward; 
                 } else {
-                    // Rellenamos el resto con premios aleatorios visuales
                     currentItem = rewardsPool[Math.floor(Math.random() * rewardsPool.length)];
                 }
 
@@ -287,18 +281,15 @@
                 wrapper.appendChild(div);
             }
 
-            // 3. Calcular la distancia exacta para centrar el premio ganador en la línea roja
             const containerWidth = document.querySelector('.roulette-container').offsetWidth;
             const centerOffset = (containerWidth / 2) - (ITEM_WIDTH / 2);
             const targetX = -(winningIndex * ITEM_WIDTH) + centerOffset;
 
-            // 4. Aplicar el efecto de desaceleración usando CSS transition (cubic-bezier simulando el freno)
             setTimeout(() => {
                 wrapper.style.transition = 'transform 6s cubic-bezier(0.15, 0.85, 0.35, 1)';
                 wrapper.style.transform = `translateX(${targetX}px)`;
             }, 50);
 
-            // 5. Al finalizar la animación, habilitar el botón para reiniciar el terminal
             setTimeout(() => {
                 isSpinning = false;
                 document.getElementById('action-btn').style.display = 'block';
@@ -306,7 +297,6 @@
         }
 
         function resetGame() {
-            // Regresar el sistema al estado inicial (Splash Screen) para el siguiente usuario
             document.getElementById('game-screen').classList.remove('active');
             const splash = document.getElementById('splash-screen');
             splash.style.display = 'flex';
