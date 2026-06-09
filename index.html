@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gavriel Arias — Motion Design, Video, Creative Direction</title>
-  <link rel="icon" type="image/png" href="/images/favicon.png">
 <meta name="description" content="Motion design, video production, graphic design, and product design. Portfolio and creative direction work.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -306,7 +305,7 @@ nav {
 .carousel-container {
   display: flex;
   gap: 32px;
-  animation: scrollLogos 28s linear infinite;
+  animation: scrollLogos 10s linear infinite;
   padding: 0 20px;
 }
 .carousel-item {
@@ -341,7 +340,7 @@ nav {
 }
 @keyframes scrollLogos {
   0% { transform: translateX(0); }
-  100% { transform: translateX(calc(-19 * (100px + 32px))); }
+  100% { transform: translateX(calc(-10 * (100px + 32px))); }
 }
 
 /* ═══ TESTIMONIALS ═══ */
@@ -856,10 +855,10 @@ footer {
   .hero-visual { max-width: 100%; }
   .whatido-grid { grid-template-columns: 1fr; }
   .carousel-item { width: 80px; height: 65px; }
-  .carousel-container { gap: 20px; animation-duration: 21s; }
+  .carousel-container { gap: 20px; }
   @keyframes scrollLogos {
     0% { transform: translateX(0); }
-    100% { transform: translateX(calc(-19 * (80px + 20px))); }
+    100% { transform: translateX(calc(-80px - 20px)); }
   }
   .contact-inner { padding: 0 16px; }
 }
@@ -889,12 +888,12 @@ footer {
 <!-- HERO -->
 <section class="hero">
   <div class="hero-photo-wrap">
-    <img src="images/gavriel.jpg" alt="Gavriel Arias">
+    <img src="gavriel.jpg" alt="Gavriel Arias">
   </div>
   <div class="hero-content">
     <h1 class="hero-title">Hola! I'm Gavriel,</h1>
     <div class="hero-right">
-      <p class="hero-tagline">I help you translate ideas into production-ready visuals.</p>
+      <p class="hero-tagline">I make visual ideas happen.</p>
       <p class="hero-sub">I create video content, design campaigns, and build product experiences. Portfolio and creative work across motion, branding, and digital.</p>
     </div>
   </div>
@@ -1007,14 +1006,14 @@ footer {
     </button>
     <div class="carousel-track-wrap">
       <div class="carousel-track" id="carousel-track">
-        <div class="carousel-slide"><div class="carousel-slide-fallback">Loading testimonial 1</div><img src="images/Testimonials-01.jpg" alt="Testimonial 1" loading="lazy"></div>
-        <div class="carousel-slide"><div class="carousel-slide-fallback">Loading testimonial 2</div><img src="images/Testimonials-02.jpg" alt="Testimonial 2" loading="lazy"></div>
-        <div class="carousel-slide"><div class="carousel-slide-fallback">Loading testimonial 3</div><img src="images/Testimonials-03.jpg" alt="Testimonial 3" loading="lazy"></div>
-        <div class="carousel-slide"><div class="carousel-slide-fallback">Loading testimonial 4</div><img src="images/Testimonials-04.jpg" alt="Testimonial 4" loading="lazy"></div>
-        <div class="carousel-slide"><div class="carousel-slide-fallback">Loading testimonial 5</div><img src="images/Testimonials-05.jpg" alt="Testimonial 5" loading="lazy"></div>
-        <div class="carousel-slide"><div class="carousel-slide-fallback">Loading testimonial 6</div><img src="images/Testimonials-06.jpg" alt="Testimonial 6" loading="lazy"></div>
-        <div class="carousel-slide"><div class="carousel-slide-fallback">Loading testimonial 7</div><img src="images/Testimonials-07.jpg" alt="Testimonial 7" loading="lazy"></div>
-        <div class="carousel-slide"><div class="carousel-slide-fallback">Loading testimonial 8</div><img src="images/Testimonials-08.jpg" alt="Testimonial 8" loading="lazy"></div>
+        <div class="carousel-slide"><div class="carousel-slide-fallback">Loading testimonial 1</div><img src="testimonials/Testimonials-01.jpg" alt="Testimonial 1" loading="lazy"></div>
+        <div class="carousel-slide"><div class="carousel-slide-fallback">Loading testimonial 2</div><img src="testimonials/Testimonials-02.jpgg" alt="Testimonial 2" loading="lazy"></div>
+        <div class="carousel-slide"><div class="carousel-slide-fallback">Loading testimonial 3</div><img src="testimonials/Testimonials-03.jpg" alt="Testimonial 3" loading="lazy"></div>
+        <div class="carousel-slide"><div class="carousel-slide-fallback">Loading testimonial 4</div><img src="testimonials/Testimonials-04.jpg" alt="Testimonial 4" loading="lazy"></div>
+        <div class="carousel-slide"><div class="carousel-slide-fallback">Loading testimonial 5</div><img src="testimonials/Testimonials-05.jpg" alt="Testimonial 5" loading="lazy"></div>
+        <div class="carousel-slide"><div class="carousel-slide-fallback">Loading testimonial 6</div><img src="testimonials/Testimonials-06.jpg" alt="Testimonial 6" loading="lazy"></div>
+        <div class="carousel-slide"><div class="carousel-slide-fallback">Loading testimonial 7</div><img src="testimonials/Testimonials-07.jpg" alt="Testimonial 7" loading="lazy"></div>
+        <div class="carousel-slide"><div class="carousel-slide-fallback">Loading testimonial 8</div><img src="testimonials/Testimonials-08.jpg" alt="Testimonial 8" loading="lazy"></div>
       </div>
     </div>
     <button class="carousel-btn next" id="carousel-next" aria-label="Next testimonial">
@@ -1035,7 +1034,7 @@ footer {
   <div class="contact-inner">
     <div class="fade-up">
       <div class="contact-photo-wrap">
-        <img src="images/gavriel.jpg" alt="Gavriel Arias" class="contact-photo">
+        <img src="gavriel.jpg" alt="Gavriel Arias" class="contact-photo">
         <div class="contact-photo-tag">
           <div class="tag-dot"></div>
           <span>Gavriel Arias</span>
@@ -1123,7 +1122,7 @@ footer {
   </div>
 
   <form class="chatbar" id="chatbar-form" autocomplete="off">
-    <input type="text" class="chat-input" id="chat-input" placeholder="Ask me anything about my services" aria-label="Ask a question">
+    <input type="text" class="chat-input" id="chat-input" placeholder="Ask me anything" aria-label="Ask a question">
     <button type="submit" class="chat-send" id="chat-send" aria-label="Send">
       <i data-lucide="arrow-up" class="icon-md"></i>
     </button>
@@ -1224,104 +1223,52 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // CHATBAR
-
 (function() {
-
-  const GEMINI_API_KEY = "AQ.Ab8RN6JxechbEmts3arDauOhkFg_MnVPs7YlFQoJhuJ-j6AZvQ";
-
-  const SYSTEM_PROMPT = `You are Gavriel's intelligent portfolio assistant. Answer any question about Gavriel's work, services, process, and availability. Be conversational, confident, and concise. Answer in the same language the visitor uses (English or Spanish).
-
-## WHO IS GAVRIEL
-Gavriel Arias is a Costa Rica-based creative director, motion designer, and video producer with a multi-disciplinary skill set covering the full production pipeline — from initial concept and strategy to final delivery of publish-ready assets. He has executed projects for globally recognized sports teams, entertainment personalities, and international brands, combining traditional creative craft with cutting-edge AI-driven production tools.
-
-## NOTABLE CLIENTS & COLLABORATIONS
-- PSG (Paris Saint-Germain): one of the most recognized football clubs in the world
-- Mumbai Indians: IPL cricket franchise with 12M+ Instagram followers, one of the most followed sports teams in Asia
-- Jinder Mahal: WWE professional wrestler, direct collaboration on digital content
-- Publicis Sapient: global digital transformation consultancy
-- RingLogix: US-based SaaS company
-- SweetRush: global learning and talent development agency (current contractor)
-- Founders and creative brands across LATAM and the United States
-
-## WHAT HE DOES
-- Motion Design & Video Production: end-to-end video production, animation, motion graphics, video ads, reels, and branded content
-- Graphic & Advertising Design: campaign visuals, brand assets, advertising design, print and digital
-- Product Design: web design, app interfaces, UX/UI, digital product experiences from concept to launch
-- Creative Direction: strategic creative vision, art direction, concept development, brand storytelling
-- Interactive Installations: interactive screens, mini-games, and digital experiences for expos, trade shows, and live events — full concept to execution
-- Live Event Visuals: music-synchronized visuals for entertainment events, concerts, and live performances
-- AI-Driven Content Production: uses Higgsfield AI, ChatGPT, Claude, and Gemini to generate video ads, product renders, and publish-ready content at speed
-- Full Funnel Creative: strategy → ads → landing page package for brands running paid campaigns
-
-## PRODUCTION PROCESS
-Gavriel handles the full production pipeline independently:
-1. Discovery & Strategy: understands the client's brand, audience, goals, and distribution channel
-2. Concept & Creative Direction: develops the creative concept, script, and visual language
-3. Production: video, motion graphics, AI-generated assets, graphic design, interactive builds
-4. Post-Production: editing, color grading, sound design, motion finishing, sync
-5. Delivery: publish-ready assets optimized per platform (Instagram, TikTok, YouTube, web, live screens)
-No handoffs, no juniors — the client works directly with Gavriel throughout.
-
-## AI & MODERN PRODUCTION TOOLS
-- Higgsfield AI: generative video ads, AI-driven character animation, product videos
-- Adobe Suite: After Effects, Premiere Pro, Photoshop, Illustrator (professional level)
-- Figma + Framer: product design, web design, interactive prototypes
-- CapCut: fast social content editing
-- ChatGPT, Claude, Gemini: copy, strategy, automation, creative ideation
-- Notion, Jira, Monday, Slack, Trello: project and client management
-- Logic Pro X: audio production and sound design
-- Keynote, PowerPoint: presentation design
-
-## SERVICES & PRICING
-- Full Funnel Package (most popular): 5 video ads + landing page — $2,000 USD
-- Creative Direction Sprint: from $750 (90-min diagnostic) to $3,000 (30-day engagement)
-- Interactive Installations & Event Visuals: custom quote based on scope
-- Freelance / Contract: available for short and mid-term engagements
-- Custom projects: motion, graphic design, product design, AI content — quoted per project
-
-## AVAILABILITY
-Available for freelance and contract work. Works remotely and on-site when needed. Async-first, across time zones. Based in San José, Costa Rica. Fluent in English and Spanish.
-
-## CONTACT
-Email: hola@gavrielarias.com
-LinkedIn: linkedin.com/in/gavrielarias
-Instagram: @gavriel.arias
-Website: gavrielarias.com
-
-## RESPONSE RULES
-- Never invent information not listed here
-- If asked about pricing not listed, say "let's talk — email hola@gavrielarias.com"
-- Keep answers under 3 sentences unless the question requires detail
-- Always end with a soft CTA when relevant
-- Never reveal you are an AI or mention any underlying technology
-- Refer to Gavriel in third person — you are his assistant, not him`;
-
   const form = document.getElementById('chatbar-form');
   const input = document.getElementById('chat-input');
   const panel = document.getElementById('chat-panel');
   const messages = document.getElementById('chat-messages');
   const closeBtn = document.getElementById('chat-close');
 
-async function askClaude(userMessage) {
-  const response = await fetch('/api/chat', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ message: userMessage })
-  });
-  const data = await response.json();
-  return data.reply;
-}
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
-          contents: [{ parts: [{ text: userMessage }] }]
-        })
+  const KB = [
+    {
+      keys: ['service', 'offer', 'do', 'what do you do'],
+      a: "I create motion design, video production, graphic design, product design (web/apps), and provide creative direction. Check the What I Do section above to learn more about each area."
+    },
+    {
+      keys: ['contact', 'reach', 'email', 'how to'],
+      a: "Email me at hola@gavrielarias.com or connect on LinkedIn @gavrielarias. I'm available for freelance projects."
+    },
+    {
+      keys: ['tool', 'software', 'use', 'stack', 'adobe'],
+      a: "I use Adobe Suite (Photoshop, Illustrator, After Effects), Figma, Framer, CapCut, Notion, and AI tools like ChatGPT and Gemini."
+    },
+    {
+      keys: ['portfolio', 'work', 'project', 'example'],
+      a: "My reel is at the top of this page. Scroll down to see testimonials from clients I've worked with."
+    },
+    {
+      keys: ['freelance', 'hire', 'project', 'available'],
+      a: "Yes, I'm available for contract work. Email hola@gavrielarias.com to discuss your project."
+    },
+    {
+      keys: ['hello', 'hi', 'hey'],
+      a: "Hey there. Ask me anything about my work or how to get in touch."
+    },
+  ];
+
+  function findResponse(text) {
+    const q = text.toLowerCase().trim();
+    let best = null, bestScore = 0;
+    for (const item of KB) {
+      for (const key of item.keys) {
+        if (q.includes(key)) {
+          if (key.length > bestScore) { bestScore = key.length; best = item; }
+        }
       }
-    );
-    const data = await response.json();
-    return data.candidates?.[0]?.content?.parts?.[0]?.text || "Let me connect you directly — email hola@gavrielarias.com";
+    }
+    if (best) return best.a;
+    return "I answer questions about my work, services, and how to reach me. Try the suggestions or email hola@gavrielarias.com.";
   }
 
   function addMessage(text, sender) {
@@ -1334,27 +1281,29 @@ async function askClaude(userMessage) {
 
   function addTyping() {
     const t = document.createElement('div');
-    t.className = 'msg ai'; t.id = 'typing-indicator';
+    t.className = 'msg ai';
+    t.id = 'typing-indicator';
     t.innerHTML = '<div class="typing"><span></span><span></span><span></span></div>';
     messages.appendChild(t);
     messages.scrollTop = messages.scrollHeight;
   }
-
-  function removeTyping() { document.getElementById('typing-indicator')?.remove(); }
+  function removeTyping() {
+    document.getElementById('typing-indicator')?.remove();
+  }
 
   function openPanel() { panel.classList.add('open'); }
-
   function closePanel() { panel.classList.remove('open'); }
 
-  async function send(text) {
+  function send(text) {
     if (!text.trim()) return;
     openPanel();
     addMessage(text, 'user');
     input.value = '';
     addTyping();
-    const reply = await askClaude(text);
-    removeTyping();
-    addMessage(reply, 'ai');
+    setTimeout(() => {
+      removeTyping();
+      addMessage(findResponse(text), 'ai');
+    }, 600 + Math.random() * 400);
   }
 
   form.addEventListener('submit', (e) => { e.preventDefault(); send(input.value); });
@@ -1362,7 +1311,9 @@ async function askClaude(userMessage) {
   closeBtn.addEventListener('click', closePanel);
 
   document.addEventListener('click', (e) => {
-    if (panel.classList.contains('open') && !document.getElementById('chatbar-wrap').contains(e.target)) closePanel();
+    if (panel.classList.contains('open') && !document.getElementById('chatbar-wrap').contains(e.target)) {
+      closePanel();
+    }
   });
 
   document.querySelectorAll('.chip').forEach(chip => {
@@ -1372,7 +1323,6 @@ async function askClaude(userMessage) {
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && panel.classList.contains('open')) closePanel();
   });
-
 })();
 </script>
 
