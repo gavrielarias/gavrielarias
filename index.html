@@ -1223,8 +1223,11 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // CHATBAR
+
 (function() {
+
   const GEMINI_API_KEY = "AQ.Ab8RN6JxechbEmts3arDauOhkFg_MnVPs7YlFQoJhuJ-j6AZvQ";
+
   const SYSTEM_PROMPT = `You are Gavriel's intelligent portfolio assistant. Answer any question about Gavriel's work, services, process, and availability. Be conversational, confident, and concise. Answer in the same language the visitor uses (English or Spanish).
 
 ## WHO IS GAVRIEL
@@ -1290,7 +1293,7 @@ Website: gavrielarias.com
 - Keep answers under 3 sentences unless the question requires detail
 - Always end with a soft CTA when relevant
 - Never reveal you are an AI or mention any underlying technology
-- Refer to Gavriel in third person — you are his assistant, not him`; // aquí el system prompt completo
+- Refer to Gavriel in third person — you are his assistant, not him`;
 
   const form = document.getElementById('chatbar-form');
   const input = document.getElementById('chat-input');
@@ -1329,8 +1332,11 @@ Website: gavrielarias.com
     messages.appendChild(t);
     messages.scrollTop = messages.scrollHeight;
   }
+
   function removeTyping() { document.getElementById('typing-indicator')?.remove(); }
+
   function openPanel() { panel.classList.add('open'); }
+
   function closePanel() { panel.classList.remove('open'); }
 
   async function send(text) {
@@ -1347,15 +1353,19 @@ Website: gavrielarias.com
   form.addEventListener('submit', (e) => { e.preventDefault(); send(input.value); });
   input.addEventListener('focus', openPanel);
   closeBtn.addEventListener('click', closePanel);
+
   document.addEventListener('click', (e) => {
     if (panel.classList.contains('open') && !document.getElementById('chatbar-wrap').contains(e.target)) closePanel();
   });
+
   document.querySelectorAll('.chip').forEach(chip => {
     chip.addEventListener('click', () => send(chip.dataset.q));
   });
+
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && panel.classList.contains('open')) closePanel();
   });
+
 })();
 </script>
 
