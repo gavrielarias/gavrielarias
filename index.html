@@ -1302,7 +1302,7 @@ Website: gavrielarias.com
   const messages = document.getElementById('chat-messages');
   const closeBtn = document.getElementById('chat-close');
 
-async function askGemini(userMessage) {
+async function askClaude(userMessage) {
   const response = await fetch('/api/chat', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -1352,7 +1352,7 @@ async function askGemini(userMessage) {
     addMessage(text, 'user');
     input.value = '';
     addTyping();
-    const reply = await askGemini(text);
+    const reply = await askClaude(text);
     removeTyping();
     addMessage(reply, 'ai');
   }
