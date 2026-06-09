@@ -1230,46 +1230,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const messages = document.getElementById('chat-messages');
   const closeBtn = document.getElementById('chat-close');
 
-  const KB = [
-    {
-      keys: ['service', 'offer', 'do', 'what do you do'],
-      a: "I create motion design, video production, graphic design, product design (web/apps), and provide creative direction. Check the What I Do section above to learn more about each area."
-    },
-    {
-      keys: ['contact', 'reach', 'email', 'how to'],
-      a: "Email me at hola@gavrielarias.com or connect on LinkedIn @gavrielarias. I'm available for freelance projects."
-    },
-    {
-      keys: ['tool', 'software', 'use', 'stack', 'adobe'],
-      a: "I use Adobe Suite (Photoshop, Illustrator, After Effects), Figma, Framer, CapCut, Notion, and AI tools like ChatGPT and Gemini."
-    },
-    {
-      keys: ['portfolio', 'work', 'project', 'example'],
-      a: "My reel is at the top of this page. Scroll down to see testimonials from clients I've worked with."
-    },
-    {
-      keys: ['freelance', 'hire', 'project', 'available'],
-      a: "Yes, I'm available for contract work. Email hola@gavrielarias.com to discuss your project."
-    },
-    {
-      keys: ['hello', 'hi', 'hey'],
-      a: "Hey there. Ask me anything about my work or how to get in touch."
-    },
-  ];
-
-  function findResponse(text) {
-    const q = text.toLowerCase().trim();
-    let best = null, bestScore = 0;
-    for (const item of KB) {
-      for (const key of item.keys) {
-        if (q.includes(key)) {
-          if (key.length > bestScore) { bestScore = key.length; best = item; }
-        }
-      }
-    }
-    if (best) return best.a;
-    return "I answer questions about my work, services, and how to reach me. Try the suggestions or email hola@gavrielarias.com.";
-  }
+async function askClaude(userMessage) {
+  const response = await fetch('/api/chat', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ message: userMessage })
+  });
+  const data = await response.json();
+  return data.reply || "Let me connect you directly — email hola@gavrielarias.com";
+}
 
   function addMessage(text, sender) {
     const msg = document.createElement('div');
@@ -1294,17 +1263,16 @@ document.addEventListener('DOMContentLoaded', () => {
   function openPanel() { panel.classList.add('open'); }
   function closePanel() { panel.classList.remove('open'); }
 
-  function send(text) {
-    if (!text.trim()) return;
-    openPanel();
-    addMessage(text, 'user');
-    input.value = '';
-    addTyping();
-    setTimeout(() => {
-      removeTyping();
-      addMessage(findResponse(text), 'ai');
-    }, 600 + Math.random() * 400);
-  }
+async function send(text) {
+  if (!text.trim()) return;
+  openPanel();
+  addMessage(text, 'user');
+  input.value = '';
+  addTyping();
+  const reply = await askClaude(text);
+  removeTyping();
+  addMessage(reply, 'ai');
+}
 
   form.addEventListener('submit', (e) => { e.preventDefault(); send(input.value); });
   input.addEventListener('focus', openPanel);
