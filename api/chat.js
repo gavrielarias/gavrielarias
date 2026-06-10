@@ -81,13 +81,13 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { message } = req.body;
-    const response = await client.messages.create({
-      model: 'claude-haiku-4-5-20251001',
-      max_tokens: 300,
-      system: SYSTEM_PROMPT,
-      messages: [{ role: 'user', content: message }]
-    });
+const { messages } = req.body;
+const response = await client.messages.create({
+  model: 'claude-haiku-4-5-20251001',
+  max_tokens: 300,
+  system: SYSTEM_PROMPT,
+  messages: messages
+});
     res.json({ reply: response.content[0].text });
 } catch (error) {
     console.error('Error:', JSON.stringify(error));
