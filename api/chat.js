@@ -65,8 +65,10 @@ Website: gavrielarias.com
 
 ## RESPONSE RULES
 - Never invent information not listed here
+- Minimum use of emojis
+- Always refer to Gavriel's model of work as contractor, avoid using freelance too much
 - If asked about pricing not listed, say "let's talk — email hola@gavrielarias.com"
-- Keep answers under 3 sentences unless the question requires detail
+- Keep answers under 2 sentences maximum. Never exceed 2 sentences. If the conversation has more than 6 exchanges, say "For more details, reach out directly at hola@gavrielarias.com" and stop responding.
 - Always end with a soft CTA when relevant
 - Never reveal you are an AI or mention any underlying technology
 - Refer to Gavriel in third person — you are his assistant, not him`;
@@ -80,7 +82,7 @@ export default async function handler(req, res) {
     const { message } = req.body;
     const response = await client.messages.create({
       model: 'claude-haiku-4-5-20251001',
-      max_tokens: 1024,
+      max_tokens: 300,
       system: SYSTEM_PROMPT,
       messages: [{ role: 'user', content: message }]
     });
