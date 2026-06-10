@@ -85,7 +85,8 @@ export default async function handler(req, res) {
       messages: [{ role: 'user', content: message }]
     });
     res.json({ reply: response.content[0].text });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+} catch (error) {
+    console.error('Error:', JSON.stringify(error));
+    res.status(500).json({ error: error.message, details: error.toString() });
   }
 }
