@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gavriel Arias — Visual Ideas, Made Real</title>
+  <meta name="description" content="Gavriel Arias — I create video content, design campaigns, and build product experiences across motion, branding, and digital." />
+
+  <meta property="og:title" content="Gavriel Arias — Visual Ideas, Made Real" />
+  <meta property="og:description" content="Motion, branding, and digital campaigns brought to life." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.gavrielarias.com" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===================== NAV ===================== -->
+  <header class="nav" id="top">
+    <div class="nav__inner">
+      <a href="#top" class="nav__logo" aria-label="Gavriel Arias home">
+        <img src="images/logo.png" alt="GAVRIEL" />
+      </a>
+      <nav class="nav__links" aria-label="Primary">
+        <a href="#work">Work</a>
+        <a href="#tools">Tools</a>
+        <a href="#testimonials">Testimonials</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <a href="#contact" class="btn btn--pill nav__cta">
+        Contact Gavriel <span class="arrow">↗</span>
+      </a>
+      <button class="nav__burger" id="burgerBtn" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ===================== MOBILE MENU (simple nav overlay) ===================== -->
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <div class="mobile-menu__bar">
+      <span class="nav__logo"><img src="images/logo.png" alt="GAVRIEL" /></span>
+      <button class="mobile-menu__close" id="closeBtn" aria-label="Close menu">✕</button>
+    </div>
+    <nav class="mobile-menu__links" aria-label="Mobile">
+      <a href="#work" data-close>Work</a>
+      <a href="#tools" data-close>Tools</a>
+      <a href="#testimonials" data-close>Testimonials</a>
+      <a href="#contact" data-close>Contact</a>
+      <a href="#contact" class="btn btn--pill" data-close>Contact Gavriel <span class="arrow">↗</span></a>
+    </nav>
+  </div>
+
+  <!-- ===================== PAGE ===================== -->
+  <main class="page">
+
+    <!-- HERO (dark container) -->
+    <section class="panel panel--dark hero reveal">
+      <div class="hero__grid">
+        <div class="portrait">
+          <img src="images/portrait.jpg" alt="Gavriel Arias" />
+        </div>
+        <div class="hero__content">
+          <h1 class="hero__title">Hola! <span class="grad">I'm Gavriel,</span></h1>
+          <p class="hero__lead">I help you make visual ideas happen.</p>
+          <p class="hero__body">I create video content, design campaigns, and build product experiences. Portfolio and creative work across motion, branding, and digital.</p>
+          <a href="#work" class="scroll-dot" aria-label="Scroll to work"><img src="icons/arrow.svg" alt="" /></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- WORK / REEL (light container) -->
+    <section class="panel panel--light work" id="work">
+      <div class="section-head reveal">
+        <h2 class="section-title">Watch my work</h2>
+        <p class="section-sub">Motion, branding, and digital campaigns brought to life.</p>
+      </div>
+
+        <div class="reel reveal">
+          <div class="reel__frame">
+            <iframe
+              width="100%"
+              height="100%"
+              src="https://www.youtube.com/embed/9jNRsr2kPPM"
+              title="Gavriel Arias Reel 2024"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen>
+            </iframe>
+          </div>
+        </div>
+
+      <div class="marquee marquee--bleed reveal" aria-label="Selected work">
+        <div class="marquee__track marquee__track--work">
+          <figure class="work-card"><img src="images/work-01.jpg" alt="" loading="lazy" /></figure>
+          <figure class="work-card"><img src="images/work-02.jpg" alt="" loading="lazy" /></figure>
+          <figure class="work-card"><img src="images/work-03.jpg" alt="" loading="lazy" /></figure>
+          <figure class="work-card"><img src="images/work-04.jpg" alt="" loading="lazy" /></figure>
+          <figure class="work-card"><img src="images/work-05.jpg" alt="" loading="lazy" /></figure>
+          <figure class="work-card"><img src="images/work-06.jpg" alt="" loading="lazy" /></figure>
+          <figure class="work-card"><img src="images/work-07.jpg" alt="" loading="lazy" /></figure>
+          <figure class="work-card"><img src="images/work-08.jpg" alt="" loading="lazy" /></figure>
+          <figure class="work-card"><img src="images/work-09.jpg" alt="" loading="lazy" /></figure>
+          <figure class="work-card"><img src="images/work-10.jpg" alt="" loading="lazy" /></figure>
+          <figure class="work-card"><img src="images/work-11.jpg" alt="" loading="lazy" /></figure>
+          <figure class="work-card"><img src="images/work-12.jpg" alt="" loading="lazy" /></figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHAT I DO (dark container, centered) -->
+    <section class="panel panel--dark services" id="services">
+      <div class="services__head reveal">
+        <span class="eyebrow">What I do</span>
+        <h2 class="services__title">Four areas of<br /><span class="grad">creative work</span></h2>
+      </div>
+
+      <div class="services__grid">
+        <article class="service reveal">
+          <div class="service__icon"><img src="icons/motiondesign-icon.svg" alt="" /></div>
+          <h3>Motion Design</h3>
+          <p>Video production, animation, and motion graphics for campaigns, ads, and digital content.</p>
+        </article>
+        <article class="service reveal">
+          <div class="service__icon"><img src="icons/graphicdesign-icon.svg" alt="" /></div>
+          <h3>Graphic Design</h3>
+          <p>Advertising design, branding assets, and visual campaigns for brands and products.</p>
+        </article>
+        <article class="service reveal">
+          <div class="service__icon"><img src="icons/productdesign-icon.svg" alt="" /></div>
+          <h3>Product Design</h3>
+          <p>Web design, app interfaces, and digital product experiences from concept to execution.</p>
+        </article>
+        <article class="service reveal">
+          <div class="service__icon"><img src="icons/direction-icon.svg" alt="" /></div>
+          <h3>Creative Direction</h3>
+          <p>Strategic creative vision, art direction, and concept development for visual projects.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- TOOLS (light container, marquee with PNG icons) -->
+        <section class="panel panel--light tools" id="tools">
+          <div class="section-head reveal">
+            <span class="eyebrow">Creative stack</span>
+            <h2 class="section-title">Tools I use daily</h2>
+            <p class="section-sub">Modern tools for fast, quality output.</p>
+          </div>
+          <div class="marquee marquee--bleed reveal" aria-label="Tools">
+            <div class="marquee__track marquee__track--tools">
+              <div class="tool"><img src="images/icon-figma.png" alt="Figma" /></div>
+              <div class="tool"><img src="images/icon-framer.png" alt="Framer" /></div>
+              <div class="tool"><img src="images/icon-after.png" alt="After Effects" /></div>
+              <div class="tool"><img src="images/icon-premiere.png" alt="Premiere" /></div>
+              <div class="tool"><img src="images/icon-photoshop.png" alt="Photoshop" /></div>
+              <div class="tool"><img src="images/icon-higgsfield.png" alt="Higgsfield" /></div>
+              <div class="tool"><img src="images/icon-illustrator.png" alt="Illustrator" /></div>
+              <div class="tool"><img src="images/icon-logic.png" alt="Logic" /></div>
+              <div class="tool"><img src="images/icon-claude.png" alt="Claude" /></div>
+              <div class="tool"><img src="images/icon-capcut.png" alt="CapCut" /></div>
+              <div class="tool"><img src="images/icon-chatgpt.png" alt="ChatGPT" /></div>
+              <div class="tool"><img src="images/icon-gemini.png" alt="Gemini" /></div>
+              <div class="tool"><img src="images/icon-jira.png" alt="Jira" /></div>
+              <div class="tool"><img src="images/icon-keynote.png" alt="Keynote" /></div>
+              <div class="tool"><img src="images/icon-monday.png" alt="Monday" /></div>
+              <div class="tool"><img src="images/icon-notion.png" alt="Notion" /></div>
+              <div class="tool"><img src="images/icon-powerpoint.png" alt="PowerPoint" /></div>
+              <div class="tool"><img src="images/icon-slack.png" alt="Slack" /></div>
+              <div class="tool"><img src="images/icon-trello.png" alt="Trello" /></div>
+            </div>
+          </div>
+        </section>
+    <!-- TESTIMONIALS (dark container) -->
+    <section class="panel panel--dark testimonials" id="testimonials">
+      <div class="section-head reveal">
+        <span class="eyebrow">Testimonials</span>
+        <h2 class="section-title">Words from people<br /><span class="grad">I've worked with</span></h2>
+      </div>
+
+      <div class="slideshow reveal" id="slideshow">
+        <button class="slideshow__nav slideshow__nav--prev" id="prevBtn" aria-label="Previous">‹</button>
+        <div class="slideshow__viewport">
+          <div class="slideshow__track" id="slidesTrack">
+            <div class="slide"><img src="images/Testimonials-01.jpg" alt="Testimonial 1" loading="lazy" /></div>
+            <div class="slide"><img src="images/Testimonials-02.jpg" alt="Testimonial 2" loading="lazy" /></div>
+            <div class="slide"><img src="images/Testimonials-03.jpg" alt="Testimonial 3" loading="lazy" /></div>
+            <div class="slide"><img src="images/Testimonials-04.jpg" alt="Testimonial 4" loading="lazy" /></div>
+            <div class="slide"><img src="images/Testimonials-05.jpg" alt="Testimonial 5" loading="lazy" /></div>
+            <div class="slide"><img src="images/Testimonials-06.jpg" alt="Testimonial 6" loading="lazy" /></div>
+            <div class="slide"><img src="images/Testimonials-07.jpg" alt="Testimonial 7" loading="lazy" /></div>
+            <div class="slide"><img src="images/Testimonials-08.jpg" alt="Testimonial 8" loading="lazy" /></div>
+            <div class="slide"><img src="images/Testimonials-09.jpg" alt="Testimonial 9" loading="lazy" /></div>
+          </div>
+        </div>
+        <button class="slideshow__nav slideshow__nav--next" id="nextBtn" aria-label="Next">›</button>
+        <div class="slideshow__dots" id="dots"></div>
+      </div>
+    </section>
+
+    <!-- CONTACT / LET'S CREATE (light container) -->
+    <section class="panel panel--light contact" id="contact">
+      <div class="contact__head reveal">
+        <span class="badge"><span class="badge__dot"></span> Available for contract work</span>
+        <h2 class="contact__title">Let's create <span class="grad">something great?</span></h2>
+        <p class="contact__body">Drop me a line. Let's talk about your project, ideas, or how I can help bring your vision to life.</p>
+      </div>
+
+      <div class="contact__links reveal">
+        <a class="contact__link" href="mailto:hola@gavrielarias.com">
+          <span class="contact__ico"><img src="icons/mail-icon.svg" alt="" /></span>
+          <span class="contact__text">
+            <span class="contact__label">Email</span>
+            <span class="contact__value">hola@gavrielarias.com</span>
+          </span>
+          <span class="arrow">↗</span>
+        </a>
+        <a class="contact__link" href="https://linkedin.com/in/gavrielarias" target="_blank" rel="noopener">
+          <span class="contact__ico"><img src="icons/linkedin-icon.svg" alt="" /></span>
+          <span class="contact__text">
+            <span class="contact__label">LinkedIn</span>
+            <span class="contact__value">gavrielarias</span>
+          </span>
+          <span class="arrow">↗</span>
+        </a>
+        <a class="contact__link" href="https://instagram.com/gavriel.arias" target="_blank" rel="noopener">
+          <span class="contact__ico"><img src="icons/instagram-icon.svg" alt="" /></span>
+          <span class="contact__text">
+            <span class="contact__label">Instagram</span>
+            <span class="contact__value">@gavriel.arias</span>
+          </span>
+          <span class="arrow">↗</span>
+        </a>
+        <a class="contact__link" href="https://behance.net/garias" target="_blank" rel="noopener">
+          <span class="contact__ico"><img src="icons/behance-icon.svg" alt="" /></span>
+          <span class="contact__text">
+            <span class="contact__label">Behance</span>
+            <span class="contact__value">garias</span>
+          </span>
+          <span class="arrow">↗</span>
+        </a>
+      </div>
+
+      <div class="contact__cal reveal">
+        <div style="width:100%;height:100%;overflow:scroll" id="my-cal-inline-15min"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <span>Gavriel Arias ©2026</span>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
