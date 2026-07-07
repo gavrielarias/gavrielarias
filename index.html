@@ -1,390 +1,260 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Entreno — Gabriel</title>
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-<meta name="theme-color" content="#0d0d0d">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/tabler-icons.min.css">
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-:root{
-  --bg:#0d0d0d;--bg2:#161616;--card:#1a1a1a;--card2:#212121;--stroke:#2a2a2a;--stroke2:#333;
-  --txt:#ffffff;--txt2:#b8b8b8;--txt3:#7a7a7a;--txt4:#4a4a4a;
-  --lime:#c6ff2f;--lime-dim:rgba(198,255,47,.14);
-  --red:#ff5c5c;--amber:#ffb840;--green:#3ddc84;--teal:#2fe8c6;
-}
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;overflow-x:hidden}
-.app{max-width:440px;margin:0 auto;min-height:100vh;padding:0 18px 110px}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gavriel Arias — Visual Ideas, Made Real</title>
+  <meta name="description" content="Gavriel Arias — I create video content, design campaigns, and build product experiences across motion, branding, and digital." />
 
-/* HEADER */
-.topbar{display:flex;align-items:center;justify-content:space-between;padding:22px 0 6px}
-.hello{font-size:13px;color:var(--txt3);font-weight:600}
-.hello b{color:var(--txt)}
-.avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--lime),#7ad100);display:flex;align-items:center;justify-content:center;font-weight:900;color:#0d0d0d;font-size:15px}
-.page-title{font-size:30px;font-weight:800;letter-spacing:-1px;line-height:1.05;margin:14px 0 2px}
-.page-title span{color:var(--lime)}
-.page-sub{font-size:13px;color:var(--txt3);margin-bottom:18px}
+  <meta property="og:title" content="Gavriel Arias — Visual Ideas, Made Real" />
+  <meta property="og:description" content="Motion, branding, and digital campaigns brought to life." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.gavrielarias.com" />
 
-/* RING SUMMARY CARD */
-.summary-card{background:var(--card);border:1px solid var(--stroke);border-radius:22px;padding:18px;display:flex;align-items:center;gap:16px;margin-bottom:16px}
-.ring-wrap{position:relative;width:74px;height:74px;flex-shrink:0}
-.ring-wrap svg{width:100%;height:100%;transform:rotate(-90deg)}
-.ring-bg{fill:none;stroke:var(--stroke2);stroke-width:7}
-.ring-fill{fill:none;stroke:var(--lime);stroke-width:7;stroke-linecap:round;transition:stroke-dashoffset .5s}
-.ring-label{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800}
-.summary-txt{flex:1}
-.summary-txt .st-title{font-size:14px;font-weight:800;margin-bottom:3px}
-.summary-txt .st-sub{font-size:11.5px;color:var(--txt3);line-height:1.4}
-.chip-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
-.chip{font-size:10px;font-weight:700;color:var(--txt2);background:var(--card2);border:1px solid var(--stroke2);padding:4px 10px;border-radius:20px;letter-spacing:.2px}
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&display=swap" rel="stylesheet" />
 
-/* DAY SELECTOR — segmented */
-.day-selector{display:flex;gap:6px;background:var(--card);border:1px solid var(--stroke);border-radius:16px;padding:5px;margin-bottom:16px}
-.day-btn{flex:1;padding:11px 6px;background:none;border:none;color:var(--txt3);font-size:12px;font-weight:700;cursor:pointer;font-family:'Inter';text-align:center;letter-spacing:.2px;border-radius:12px;transition:all .2s}
-.day-btn.active{background:var(--lime);color:#0d0d0d}
-
-/* GLUCOSE PROTOCOL — collapsible */
-.protocol{background:var(--card);border:1px solid var(--stroke);border-radius:18px;margin-bottom:14px;overflow:hidden}
-.protocol-head{padding:14px 16px;display:flex;align-items:center;justify-content:between;justify-content:space-between;cursor:pointer}
-.protocol-head .ph-l{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;color:var(--txt)}
-.protocol-head .ph-l i{color:var(--lime);font-size:16px}
-.protocol-head i.chev{color:var(--txt3);transition:transform .25s}
-.protocol.open .chev{transform:rotate(180deg)}
-.protocol-body{max-height:0;overflow:hidden;transition:max-height .3s}
-.protocol.open .protocol-body{max-height:260px}
-.gp-row{display:flex;justify-content:space-between;font-size:11.5px;padding:8px 16px;border-top:1px solid var(--stroke)}
-.gp-range{font-weight:800}
-.gp-action{color:var(--txt3);text-align:right;max-width:60%}
-
-/* WARMUP */
-.warmup-card{background:var(--card);border:1px solid var(--stroke);border-radius:18px;padding:6px 16px;margin-bottom:16px}
-.warmup-title{font-size:10.5px;font-weight:800;color:var(--txt3);text-transform:uppercase;letter-spacing:1px;padding:12px 0 4px}
-.wu-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--stroke);font-size:12.5px;color:var(--txt2);cursor:pointer}
-.wu-check{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--stroke2);display:flex;align-items:center;justify-content:center;font-size:12px;color:#0d0d0d;flex-shrink:0;transition:all .15s}
-.wu-check.done{background:var(--lime);border-color:var(--lime)}
-
-/* EXERCISES */
-.gate-note{font-size:11px;color:var(--txt3);text-align:center;padding:12px 0;display:none}
-#exercises.locked + .gate-note{display:block}
-.ex-card{background:var(--card);border:1px solid var(--stroke);border-radius:20px;margin-bottom:12px;overflow:hidden}
-.ex-top{display:flex;gap:0}
-.ex-thumb{width:104px;height:104px;flex-shrink:0;background:var(--card2);position:relative;overflow:hidden}
-.ex-thumb img{width:100%;height:100%;object-fit:cover;display:block}
-.ex-thumb.fallback{display:flex;align-items:center;justify-content:center}
-.ex-thumb.fallback .fb-letter{font-size:34px;font-weight:900;color:var(--stroke2);letter-spacing:-1px}
-.ex-info{flex:1;padding:12px 14px;min-width:0}
-.ex-name{font-size:14.5px;font-weight:800;letter-spacing:-.2px;margin-bottom:3px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
-.tempo-badge{font-size:9px;color:var(--lime);font-weight:800;background:var(--lime-dim);padding:2px 7px;border-radius:8px}
-.ex-detail{font-size:11px;color:var(--txt3);margin-bottom:7px;line-height:1.4}
-.ex-prog{font-size:9.5px;color:var(--txt4);display:flex;align-items:center;gap:6px}
-.ex-prog-bar{flex:1;height:3px;background:var(--stroke2);border-radius:2px;overflow:hidden}
-.ex-prog-fill{height:3px;background:var(--teal);transition:width .4s}
-.ex-sets{display:flex;gap:6px;flex-wrap:wrap;padding:0 14px 14px}
-.set-btn{width:34px;height:34px;border-radius:10px;border:1px solid var(--stroke2);background:var(--bg2);color:var(--txt3);font-size:12px;font-weight:800;cursor:pointer;font-family:'Inter';display:flex;align-items:center;justify-content:center;transition:all .15s}
-.set-btn.done{background:var(--lime);color:#0d0d0d;border-color:var(--lime)}
-
-.prog-chart{padding:10px 14px 14px;border-top:1px solid var(--stroke)}
-.prog-chart .pc-title{font-size:9.5px;font-weight:700;color:var(--txt4);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px}
-.prog-bars{display:flex;align-items:flex-end;gap:5px;height:44px}
-.prog-bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px}
-.prog-bar-val{font-size:8.5px;color:var(--txt4)}
-.prog-bar-inner{width:100%;background:var(--teal);border-radius:3px 3px 0 0;transition:height .4s;min-height:2px}
-.prog-bar-date{font-size:7.5px;color:var(--txt4)}
-
-/* CARDIO */
-.cardio-box{background:var(--card);border:1px solid var(--stroke);border-radius:20px;padding:20px;text-align:center;margin-top:6px}
-.cardio-time{font-size:44px;font-weight:900;letter-spacing:-2px;color:var(--lime)}
-.cardio-sub{font-size:11.5px;color:var(--txt3);margin-bottom:6px;line-height:1.5}
-.btn-pill{border-radius:30px;padding:12px 22px;font-size:12.5px;font-weight:700;font-family:'Inter';cursor:pointer;letter-spacing:.2px;border:1px solid var(--stroke2);background:none;color:var(--txt);margin-top:8px}
-.btn-pill:active{background:var(--card2)}
-
-.post-prompt{background:var(--card);border:1px solid var(--stroke);border-left:3px solid var(--amber);border-radius:14px;padding:14px 16px;margin-top:12px;font-size:11.5px;color:var(--txt2);line-height:1.6;display:none}
-.post-prompt.show{display:block}
-.post-prompt b{color:var(--txt)}
-
-.finish-btn{width:100%;background:var(--lime);color:#0d0d0d;border:none;border-radius:30px;padding:16px;font-size:14px;font-weight:800;cursor:pointer;font-family:'Inter';margin-top:20px;letter-spacing:.2px}
-.finish-btn:active{background:#b0e828}
-
-/* REST OVERLAY */
-.rest-overlay{display:none;position:fixed;inset:0;background:rgba(10,10,10,.97);backdrop-filter:blur(6px);z-index:200;flex-direction:column;align-items:center;justify-content:center;gap:10px}
-.rest-overlay.show{display:flex}
-.rest-label{font-size:11px;color:var(--txt3);text-transform:uppercase;letter-spacing:3px}
-.rest-time{font-size:88px;font-weight:900;letter-spacing:-3px;color:var(--lime)}
-.rest-msg{font-size:13px;color:var(--txt3);text-align:center;max-width:240px;line-height:1.5;min-height:20px}
-
-.empty{text-align:center;color:var(--txt4);font-size:13px;padding:30px 0}
-</style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-<div class="app">
+  <!-- ===================== NAV ===================== -->
+  <header class="nav" id="top">
+    <div class="nav__inner">
+      <a href="#top" class="nav__logo" aria-label="Gavriel Arias home">
+        <img src="images/logo.png" alt="GAVRIEL" />
+      </a>
+      <nav class="nav__links" aria-label="Primary">
+        <a href="#work">Work</a>
+        <a href="#tools">Tools</a>
+        <a href="#testimonials">Testimonials</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <a href="#contact" class="btn btn--pill nav__cta">
+        Contact Gavriel <span class="arrow">↗</span>
+      </a>
+      <button class="nav__burger" id="burgerBtn" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
 
-<div class="topbar">
-<div class="hello">Hola, <b>Gabriel</b> 👋</div>
-<div class="avatar">G</div>
-</div>
+  <!-- ===================== MOBILE MENU (simple nav overlay) ===================== -->
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <div class="mobile-menu__bar">
+      <span class="nav__logo"><img src="images/logo.png" alt="GAVRIEL" /></span>
+      <button class="mobile-menu__close" id="closeBtn" aria-label="Close menu">✕</button>
+    </div>
+    <nav class="mobile-menu__links" aria-label="Mobile">
+      <a href="#work" data-close>Work</a>
+      <a href="#tools" data-close>Tools</a>
+      <a href="#testimonials" data-close>Testimonials</a>
+      <a href="#contact" data-close>Contact</a>
+      <a href="#contact" class="btn btn--pill" data-close>Contact Gavriel <span class="arrow">↗</span></a>
+    </nav>
+  </div>
 
-<div class="page-title">Día de <span id="day-name-title">Empuje</span></div>
-<div class="page-sub" id="day-muscles">Pecho · Hombros · Tríceps</div>
+  <!-- ===================== PAGE ===================== -->
+  <main class="page">
 
-<div class="summary-card">
-<div class="ring-wrap">
-<svg viewBox="0 0 74 74">
-<circle class="ring-bg" cx="37" cy="37" r="30"></circle>
-<circle class="ring-fill" id="ring-fill" cx="37" cy="37" r="30" stroke-dasharray="188.5" stroke-dashoffset="188.5"></circle>
-</svg>
-<div class="ring-label" id="ring-label">0%</div>
-</div>
-<div class="summary-txt">
-<div class="st-title" id="sets-summary">0 / 0 series completadas</div>
-<div class="st-sub">Parque · Pesas → Cardio</div>
-<div class="chip-row" id="muscle-chips"></div>
-</div>
-</div>
+    <!-- HERO (dark container) -->
+    <section class="panel panel--dark hero reveal">
+      <div class="hero__grid">
+        <div class="portrait">
+          <img src="images/portrait.jpg" alt="Gavriel Arias" />
+        </div>
+        <div class="hero__content">
+          <h1 class="hero__title">Hola! <span class="grad">I'm Gavriel,</span></h1>
+          <p class="hero__lead">I help you make visual ideas happen.</p>
+          <p class="hero__body">I create video content, design campaigns, and build product experiences. Portfolio and creative work across motion, branding, and digital.</p>
+          <a href="#work" class="scroll-dot" aria-label="Scroll to work"><img src="icons/arrow.svg" alt="" /></a>
+        </div>
+      </div>
+    </section>
 
-<div class="day-selector">
-<button class="day-btn active" data-day="A" onclick="selectDay('A')">A · Empuje</button>
-<button class="day-btn" data-day="B" onclick="selectDay('B')">B · Jalón</button>
-<button class="day-btn" data-day="C" onclick="selectDay('C')">C · Piernas</button>
-</div>
+    <!-- WORK / REEL (light container) -->
+    <section class="panel panel--light work" id="work">
+      <div class="section-head reveal">
+        <h2 class="section-title">Watch my work</h2>
+        <p class="section-sub">Motion, branding, and digital campaigns brought to life.</p>
+      </div>
 
-<div class="protocol" id="protocol">
-<div class="protocol-head" onclick="document.getElementById('protocol').classList.toggle('open')">
-<div class="ph-l"><i class="ti ti-droplet"></i>Glucemia para empezar</div>
-<i class="ti ti-chevron-down chev"></i>
-</div>
-<div class="protocol-body">
-<div class="gp-row"><span class="gp-range" style="color:var(--red)">&lt;90</span><span class="gp-action">No empezar. 15g carb, esperar.</span></div>
-<div class="gp-row"><span class="gp-range" style="color:var(--amber)">90–130</span><span class="gp-action">15g carb lento antes de arrancar.</span></div>
-<div class="gp-row"><span class="gp-range" style="color:var(--green)">130–180</span><span class="gp-action">Rango ideal. Empezar.</span></div>
-<div class="gp-row"><span class="gp-range" style="color:var(--txt2)">180–250</span><span class="gp-action">OK, monitorear. No corregir antes.</span></div>
-<div class="gp-row"><span class="gp-range" style="color:var(--red)">&gt;250</span><span class="gp-action">No entrenar. Verificar cetonas.</span></div>
-</div>
-</div>
+        <div class="reel reveal">
+          <div class="reel__frame">
+            <iframe
+              width="100%"
+              height="100%"
+              src="https://www.youtube.com/embed/9jNRsr2kPPM"
+              title="Gavriel Arias Reel 2024"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen>
+            </iframe>
+          </div>
+        </div>
 
-<div class="warmup-card" id="warmup-gate">
-<div class="warmup-title">Calentamiento — obligatorio</div>
-<div class="wu-item" onclick="toggleWU(0)"><div class="wu-check" id="wu0"></div>Movilidad articular · Cuello, hombros, muñecas, cadera (2 min)</div>
-<div class="wu-item" onclick="toggleWU(1)"><div class="wu-check" id="wu1"></div>Activación · Jumping jacks o trote en sitio (2 min)</div>
-<div class="wu-item" onclick="toggleWU(2)"><div class="wu-check" id="wu2"></div>Serie de calentamiento · 1 serie suave del primer ejercicio</div>
-</div>
+      <div class="marquee marquee--bleed reveal" aria-label="Selected work">
+        <div class="marquee__track marquee__track--work">
+          <figure class="work-card"><img src="images/work-01.jpg" alt="" loading="lazy" /></figure>
+          <figure class="work-card"><img src="images/work-02.jpg" alt="" loading="lazy" /></figure>
+          <figure class="work-card"><img src="images/work-03.jpg" alt="" loading="lazy" /></figure>
+          <figure class="work-card"><img src="images/work-04.jpg" alt="" loading="lazy" /></figure>
+          <figure class="work-card"><img src="images/work-05.jpg" alt="" loading="lazy" /></figure>
+          <figure class="work-card"><img src="images/work-06.jpg" alt="" loading="lazy" /></figure>
+          <figure class="work-card"><img src="images/work-07.jpg" alt="" loading="lazy" /></figure>
+          <figure class="work-card"><img src="images/work-08.jpg" alt="" loading="lazy" /></figure>
+          <figure class="work-card"><img src="images/work-09.jpg" alt="" loading="lazy" /></figure>
+          <figure class="work-card"><img src="images/work-10.jpg" alt="" loading="lazy" /></figure>
+          <figure class="work-card"><img src="images/work-11.jpg" alt="" loading="lazy" /></figure>
+          <figure class="work-card"><img src="images/work-12.jpg" alt="" loading="lazy" /></figure>
+        </div>
+      </div>
+    </section>
 
-<div id="exercises" class="locked"></div>
-<div class="gate-note">Completá el calentamiento para desbloquear los ejercicios</div>
+    <!-- WHAT I DO (dark container, centered) -->
+    <section class="panel panel--dark services" id="services">
+      <div class="services__head reveal">
+        <span class="eyebrow">What I do</span>
+        <h2 class="services__title">Four areas of<br /><span class="grad">creative work</span></h2>
+      </div>
 
-<div class="cardio-box">
-<div class="warmup-title" style="padding-top:0">Cardio final</div>
-<div class="cardio-sub">Trote suave o caminata rápida · Estabiliza la glucemia</div>
-<div class="cardio-time" id="cardio-timer">20:00</div>
-<button class="btn-pill" onclick="startCardio()" id="cardio-btn">Iniciar 20 min</button>
-</div>
+      <div class="services__grid">
+        <article class="service reveal">
+          <div class="service__icon"><img src="icons/motiondesign-icon.svg" alt="" /></div>
+          <h3>Motion Design</h3>
+          <p>Video production, animation, and motion graphics for campaigns, ads, and digital content.</p>
+        </article>
+        <article class="service reveal">
+          <div class="service__icon"><img src="icons/graphicdesign-icon.svg" alt="" /></div>
+          <h3>Graphic Design</h3>
+          <p>Advertising design, branding assets, and visual campaigns for brands and products.</p>
+        </article>
+        <article class="service reveal">
+          <div class="service__icon"><img src="icons/productdesign-icon.svg" alt="" /></div>
+          <h3>Product Design</h3>
+          <p>Web design, app interfaces, and digital product experiences from concept to execution.</p>
+        </article>
+        <article class="service reveal">
+          <div class="service__icon"><img src="icons/direction-icon.svg" alt="" /></div>
+          <h3>Creative Direction</h3>
+          <p>Strategic creative vision, art direction, and concept development for visual projects.</p>
+        </article>
+      </div>
+    </section>
 
-<div class="post-prompt" id="post-prompt">
-<b>Post-entreno:</b> Medir glucemia ahora y en 30 min. Reducir bolo de la comida siguiente en ~20–30%. Vigilancia extra esta noche — riesgo de hipo tardía 6–12h post-ejercicio.
-</div>
+    <!-- TOOLS (light container, marquee with PNG icons) -->
+        <section class="panel panel--light tools" id="tools">
+          <div class="section-head reveal">
+            <span class="eyebrow">Creative stack</span>
+            <h2 class="section-title">Tools I use daily</h2>
+            <p class="section-sub">Modern tools for fast, quality output.</p>
+          </div>
+          <div class="marquee marquee--bleed reveal" aria-label="Tools">
+            <div class="marquee__track marquee__track--tools">
+              <div class="tool"><img src="images/icon-figma.png" alt="Figma" /></div>
+              <div class="tool"><img src="images/icon-framer.png" alt="Framer" /></div>
+              <div class="tool"><img src="images/icon-after.png" alt="After Effects" /></div>
+              <div class="tool"><img src="images/icon-premiere.png" alt="Premiere" /></div>
+              <div class="tool"><img src="images/icon-photoshop.png" alt="Photoshop" /></div>
+              <div class="tool"><img src="images/icon-higgsfield.png" alt="Higgsfield" /></div>
+              <div class="tool"><img src="images/icon-illustrator.png" alt="Illustrator" /></div>
+              <div class="tool"><img src="images/icon-logic.png" alt="Logic" /></div>
+              <div class="tool"><img src="images/icon-claude.png" alt="Claude" /></div>
+              <div class="tool"><img src="images/icon-capcut.png" alt="CapCut" /></div>
+              <div class="tool"><img src="images/icon-chatgpt.png" alt="ChatGPT" /></div>
+              <div class="tool"><img src="images/icon-gemini.png" alt="Gemini" /></div>
+              <div class="tool"><img src="images/icon-jira.png" alt="Jira" /></div>
+              <div class="tool"><img src="images/icon-keynote.png" alt="Keynote" /></div>
+              <div class="tool"><img src="images/icon-monday.png" alt="Monday" /></div>
+              <div class="tool"><img src="images/icon-notion.png" alt="Notion" /></div>
+              <div class="tool"><img src="images/icon-powerpoint.png" alt="PowerPoint" /></div>
+              <div class="tool"><img src="images/icon-slack.png" alt="Slack" /></div>
+              <div class="tool"><img src="images/icon-trello.png" alt="Trello" /></div>
+            </div>
+          </div>
+        </section>
+    <!-- TESTIMONIALS (dark container) -->
+    <section class="panel panel--dark testimonials" id="testimonials">
+      <div class="section-head reveal">
+        <span class="eyebrow">Testimonials</span>
+        <h2 class="section-title">Words from people<br /><span class="grad">I've worked with</span></h2>
+      </div>
 
-<button class="finish-btn" onclick="finishWorkout()">Terminar sesión</button>
+      <div class="slideshow reveal" id="slideshow">
+        <button class="slideshow__nav slideshow__nav--prev" id="prevBtn" aria-label="Previous">‹</button>
+        <div class="slideshow__viewport">
+          <div class="slideshow__track" id="slidesTrack">
+            <div class="slide"><img src="images/Testimonials-01.jpg" alt="Testimonial 1" loading="lazy" /></div>
+            <div class="slide"><img src="images/Testimonials-02.jpg" alt="Testimonial 2" loading="lazy" /></div>
+            <div class="slide"><img src="images/Testimonials-03.jpg" alt="Testimonial 3" loading="lazy" /></div>
+            <div class="slide"><img src="images/Testimonials-04.jpg" alt="Testimonial 4" loading="lazy" /></div>
+            <div class="slide"><img src="images/Testimonials-05.jpg" alt="Testimonial 5" loading="lazy" /></div>
+            <div class="slide"><img src="images/Testimonials-06.jpg" alt="Testimonial 6" loading="lazy" /></div>
+            <div class="slide"><img src="images/Testimonials-07.jpg" alt="Testimonial 7" loading="lazy" /></div>
+            <div class="slide"><img src="images/Testimonials-08.jpg" alt="Testimonial 8" loading="lazy" /></div>
+            <div class="slide"><img src="images/Testimonials-09.jpg" alt="Testimonial 9" loading="lazy" /></div>
+          </div>
+        </div>
+        <button class="slideshow__nav slideshow__nav--next" id="nextBtn" aria-label="Next">›</button>
+        <div class="slideshow__dots" id="dots"></div>
+      </div>
+    </section>
 
-</div>
+    <!-- CONTACT / LET'S CREATE (light container) -->
+    <section class="panel panel--light contact" id="contact">
+      <div class="contact__head reveal">
+        <span class="badge"><span class="badge__dot"></span> Available for contract work</span>
+        <h2 class="contact__title">Let's create <span class="grad">something great?</span></h2>
+        <p class="contact__body">Drop me a line. Let's talk about your project, ideas, or how I can help bring your vision to life.</p>
+      </div>
 
-<div class="rest-overlay" id="rest-overlay">
-<div class="rest-label">Descanso</div>
-<div class="rest-time" id="rest-time">90</div>
-<div class="rest-label">segundos</div>
-<div class="rest-msg" id="rest-msg"></div>
-<button class="btn-pill" onclick="skipRest()">Saltar</button>
-</div>
+      <div class="contact__links reveal">
+        <a class="contact__link" href="mailto:hola@gavrielarias.com">
+          <span class="contact__ico"><img src="icons/mail-icon.svg" alt="" /></span>
+          <span class="contact__text">
+            <span class="contact__label">Email</span>
+            <span class="contact__value">hola@gavrielarias.com</span>
+          </span>
+          <span class="arrow">↗</span>
+        </a>
+        <a class="contact__link" href="https://linkedin.com/in/gavrielarias" target="_blank" rel="noopener">
+          <span class="contact__ico"><img src="icons/linkedin-icon.svg" alt="" /></span>
+          <span class="contact__text">
+            <span class="contact__label">LinkedIn</span>
+            <span class="contact__value">gavrielarias</span>
+          </span>
+          <span class="arrow">↗</span>
+        </a>
+        <a class="contact__link" href="https://instagram.com/gavriel.arias" target="_blank" rel="noopener">
+          <span class="contact__ico"><img src="icons/instagram-icon.svg" alt="" /></span>
+          <span class="contact__text">
+            <span class="contact__label">Instagram</span>
+            <span class="contact__value">@gavriel.arias</span>
+          </span>
+          <span class="arrow">↗</span>
+        </a>
+        <a class="contact__link" href="https://behance.net/garias" target="_blank" rel="noopener">
+          <span class="contact__ico"><img src="icons/behance-icon.svg" alt="" /></span>
+          <span class="contact__text">
+            <span class="contact__label">Behance</span>
+            <span class="contact__value">garias</span>
+          </span>
+          <span class="arrow">↗</span>
+        </a>
+      </div>
 
-<script>
-const DAYS={
-A:{name:'Empuje',muscles:'Pecho · Hombros · Tríceps',exercises:[
-{id:'a1',name:'Flexiones inclinadas',equip:'Pies en banca',sets:4,reps:'10–12',note:'Pecho superior',tempo:'',gif:'gifs/flexiones_inclinadas.gif'},
-{id:'a2',name:'Fondos en paralelas',equip:'Barras paralelas',sets:4,reps:'8–10',note:'Pecho + tríceps',tempo:'',gif:'gifs/fondos_en_paralelas.gif'},
-{id:'a3',name:'Flexiones diamante',equip:'Suelo',sets:3,reps:'10–12',note:'Tríceps énfasis',tempo:'',gif:'gifs/flexiones_diamante.gif'},
-{id:'a4',name:'Pike push-ups',equip:'Pies elevados en banca',sets:3,reps:'8–10',note:'Hombro anterior',tempo:'',gif:'gifs/pike_push_up.gif'},
-{id:'a5',name:'Dips en banco',equip:'Banca baja',sets:3,reps:'12–15',note:'Tríceps aislado',tempo:'',gif:'gifs/dips_en_banco.gif'},
-{id:'a6',name:'Flexiones explosivas',equip:'Suelo',sets:3,reps:'8',note:'Potencia · tempo 1-0-X',tempo:'1-0-X',gif:'gifs/flexiones_explosivas.gif'}
-]},
-B:{name:'Jalón',muscles:'Espalda · Bíceps',exercises:[
-{id:'b1',name:'Dominadas (pull-ups)',equip:'Barra alta',sets:4,reps:'6–8',note:'Espalda completa',tempo:'3-1-1'},
-{id:'b2',name:'Remo invertido',equip:'Barra baja',sets:4,reps:'10–12',note:'Espalda media · 3s abajo',tempo:'3-0-1'},
-{id:'b3',name:'Chin-ups (supinas)',equip:'Barra alta',sets:3,reps:'6–8',note:'Bíceps + espalda',tempo:''},
-{id:'b4',name:'Remo agarre estrecho',equip:'Barra baja',sets:3,reps:'10–12',note:'Bíceps énfasis',tempo:''},
-{id:'b5',name:'Hang activo',equip:'Barra alta',sets:3,reps:'20–30s',note:'Grip + dorsal',tempo:''},
-{id:'b6',name:'Curl con mochila',equip:'Mochila con peso',sets:3,reps:'12–15',note:'Bíceps aislado · 2s arriba',tempo:'2-0-2'}
-]},
-C:{name:'Piernas + Core',muscles:'Cuádriceps · Glúteos · Core',exercises:[
-{id:'c1',name:'Sentadilla búlgara',equip:'Pie trasero en banca',sets:4,reps:'10 c/pierna',note:'Cuád + glúteo · 3s abajo',tempo:'3-0-1'},
-{id:'c2',name:'Step-ups',equip:'Banca alta',sets:4,reps:'10 c/pierna',note:'Glúteo dominante',tempo:''},
-{id:'c3',name:'Sentadilla con pausa',equip:'Suelo',sets:3,reps:'12',note:'3s en el fondo — no rebotes',tempo:'1-3-1'},
-{id:'c4',name:'Hip thrust en banca',equip:'Banca',sets:4,reps:'12–15',note:'Glúteos · apretar arriba 1s',tempo:'1-1-1'},
-{id:'c5',name:'Elevación pantorrillas',equip:'Escalón',sets:4,reps:'15–20',note:'Pantorrillas · 2s arriba, 2s abajo',tempo:'2-0-2'},
-{id:'c6',name:'Elevación piernas colgado',equip:'Barra alta',sets:3,reps:'10–12',note:'Abdomen',tempo:''},
-{id:'c7',name:'Plancha lateral',equip:'Suelo',sets:3,reps:'30s c/lado',note:'Core estabilidad',tempo:''}
-]}
-};
+      <div class="contact__cal reveal">
+        <div style="width:100%;height:100%;overflow:scroll" id="my-cal-inline-15min"></div>
+      </div>
+    </section>
 
-const REST_MSGS=[
-'Ya hiciste tu parte. Ahora le toca a la insulina.',
-'No toques nada todavía. La bajada es progresiva, no inmediata.',
-'Cada unidad de Humalog está trabajando. Dale tiempo.',
-'Corregir de más ahora es lo único que sobra.',
-'La variabilidad baja cuando el sistema trabaja sin interferencias.',
-'Esperar no es no hacer nada — es hacer exactamente lo correcto.'
-];
+  </main>
 
-const WK='g_workout_v2',PK='g_progress_v2';
-let S={rest:90};
-let currentDay='A';
-let workoutState={};let progress={};
-let cardioInt=null,cardioSecs=1200;
-let restInt=null;
+  <footer class="footer">
+    <span>Gavriel Arias ©2026</span>
+  </footer>
 
-function load(){
-try{const w=localStorage.getItem(WK);if(w)workoutState=JSON.parse(w)}catch(e){}
-try{const p=localStorage.getItem(PK);if(p)progress=JSON.parse(p)}catch(e){}
-}
-function save(){
-try{localStorage.setItem(WK,JSON.stringify(workoutState));localStorage.setItem(PK,JSON.stringify(progress))}catch(e){}
-}
-
-function selectDay(d){
-currentDay=d;
-document.querySelectorAll('.day-btn').forEach(b=>b.classList.toggle('active',b.dataset.day===d));
-resetWarmup();renderDay();
-const day=DAYS[d];
-document.getElementById('day-name-title').textContent=day.name;
-document.getElementById('day-muscles').textContent=day.muscles;
-}
-
-function renderChips(){
-const day=DAYS[currentDay];
-document.getElementById('muscle-chips').innerHTML=day.muscles.split(' · ').map(m=>`<span class="chip">${m}</span>`).join('');
-}
-
-function updateSummary(){
-const day=DAYS[currentDay];
-if(!workoutState[currentDay])workoutState[currentDay]={};
-let total=0,done=0;
-day.exercises.forEach(ex=>{
-const st=workoutState[currentDay][ex.id]||Array(ex.sets).fill(false);
-total+=ex.sets;done+=st.filter(Boolean).length;
-});
-const pct=total?Math.round((done/total)*100):0;
-document.getElementById('sets-summary').textContent=done+' / '+total+' series completadas';
-document.getElementById('ring-label').textContent=pct+'%';
-const circ=188.5;
-document.getElementById('ring-fill').setAttribute('stroke-dashoffset',circ-(circ*pct/100));
-renderChips();
-}
-
-function renderDay(){
-const day=DAYS[currentDay];const el=document.getElementById('exercises');
-if(!workoutState[currentDay])workoutState[currentDay]={};
-el.innerHTML=day.exercises.map(ex=>{
-const st=workoutState[currentDay][ex.id]||Array(ex.sets).fill(false);
-const doneCount=st.filter(Boolean).length;
-const hist=progress[ex.id];
-let progHtml='';
-if(hist&&hist.length>1){
-const recent=hist.slice(-5);
-const maxDone=Math.max(...recent.map(h=>h.done),1);
-const bars=recent.map(h=>{
-const barH=Math.round((h.done/maxDone)*36)+2;
-const d=new Date(h.date);
-const lbl=(d.getMonth()+1)+'/'+(d.getDate());
-return`<div class="prog-bar-col"><div class="prog-bar-val">${h.done}</div><div class="prog-bar-inner" style="height:${barH}px"></div><div class="prog-bar-date">${lbl}</div></div>`}).join('');
-progHtml=`<div class="prog-chart"><div class="pc-title">Progresión (últimas ${recent.length})</div><div class="prog-bars">${bars}</div></div>`;
-}
-const lastSess=hist&&hist.length?'Última: '+hist[hist.length-1].done+'/'+hist[hist.length-1].total:'Primera sesión';
-const tempoHtml=ex.tempo?`<span class="tempo-badge">${ex.tempo}</span>`:'';
-const thumb=ex.gif?`<div class="ex-thumb"><img src="${ex.gif}" loading="lazy"></div>`:`<div class="ex-thumb fallback"><span class="fb-letter">${ex.name.charAt(0)}</span></div>`;
-return`<div class="ex-card">
-<div class="ex-top">
-${thumb}
-<div class="ex-info">
-<div class="ex-name">${ex.name}${tempoHtml}</div>
-<div class="ex-detail">${ex.equip} · ${ex.sets}×${ex.reps} · ${ex.note}</div>
-<div class="ex-prog"><div class="ex-prog-bar"><div class="ex-prog-fill" style="width:${(doneCount/ex.sets)*100}%"></div></div><span>${lastSess}</span></div>
-</div>
-</div>
-<div class="ex-sets">${st.map((done,i)=>`<button class="set-btn${done?' done':''}" onclick="toggleSet('${ex.id}',${i},${ex.sets})">${i+1}</button>`).join('')}</div>
-${hist&&hist.length>1?progHtml:''}</div>`}).join('');
-updateSummary();
-}
-
-function toggleSet(exId,idx,total){
-if(!workoutState[currentDay])workoutState[currentDay]={};
-if(!workoutState[currentDay][exId])workoutState[currentDay][exId]=Array(total).fill(false);
-workoutState[currentDay][exId][idx]=!workoutState[currentDay][exId][idx];
-save();renderDay();
-if(workoutState[currentDay][exId][idx])startRest();
-}
-
-let restMsgIdx=0;
-function startRest(){
-const ov=document.getElementById('rest-overlay');
-let secs=S.rest;
-document.getElementById('rest-time').textContent=secs;
-restMsgIdx=(restMsgIdx+1)%REST_MSGS.length;
-const msgEl=document.getElementById('rest-msg');
-if(msgEl)msgEl.textContent='';
-ov.classList.add('show');
-if(restInt)clearInterval(restInt);
-restInt=setInterval(()=>{
-secs--;document.getElementById('rest-time').textContent=secs;
-if(secs===Math.round(S.rest/2)&&msgEl)msgEl.textContent=REST_MSGS[restMsgIdx];
-if(secs<=0){skipRest();try{navigator.vibrate&&navigator.vibrate([200,100,200])}catch(e){}}
-},1000);
-}
-function skipRest(){if(restInt)clearInterval(restInt);restInt=null;document.getElementById('rest-overlay').classList.remove('show')}
-
-function startCardio(){
-if(cardioInt){clearInterval(cardioInt);cardioInt=null;document.getElementById('cardio-btn').textContent='Iniciar 20 min';cardioSecs=1200;document.getElementById('cardio-timer').textContent='20:00';return}
-cardioSecs=1200;
-document.getElementById('cardio-btn').textContent='Detener';
-cardioInt=setInterval(()=>{
-cardioSecs--;const m=Math.floor(cardioSecs/60),s=cardioSecs%60;
-document.getElementById('cardio-timer').textContent=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;
-if(cardioSecs<=0){
-clearInterval(cardioInt);cardioInt=null;
-document.getElementById('cardio-btn').textContent='Completado ✓';
-document.getElementById('post-prompt').classList.add('show');
-try{navigator.vibrate&&navigator.vibrate([300,100,300])}catch(e){}
-}
-},1000);
-}
-
-function finishWorkout(){
-const day=DAYS[currentDay];let totalSets=0,doneSets=0;
-day.exercises.forEach(ex=>{
-const st=workoutState[currentDay]?.[ex.id]||[];
-st.forEach(d=>{totalSets++;if(d)doneSets++});
-});
-day.exercises.forEach(ex=>{
-const st=workoutState[currentDay]?.[ex.id]||[];
-const done=st.filter(Boolean).length;
-if(!progress[ex.id])progress[ex.id]=[];
-progress[ex.id].push({date:new Date().toISOString(),done,total:ex.sets});
-if(progress[ex.id].length>30)progress[ex.id]=progress[ex.id].slice(-30);
-});
-workoutState[currentDay]={};save();renderDay();
-document.getElementById('post-prompt').classList.add('show');
-alert('Sesión '+day.name+' registrada: '+doneSets+'/'+totalSets+' series completadas.');
-}
-
-let warmupDone=[false,false,false];
-function toggleWU(i){warmupDone[i]=!warmupDone[i];const el=document.getElementById('wu'+i);el.classList.toggle('done',warmupDone[i]);el.textContent=warmupDone[i]?'✓':'';checkWarmup()}
-function checkWarmup(){const allDone=warmupDone.every(Boolean);const ex=document.getElementById('exercises');ex.classList.toggle('locked',!allDone);ex.style.opacity=allDone?'1':'0.35';ex.style.pointerEvents=allDone?'auto':'none'}
-function resetWarmup(){warmupDone=[false,false,false];[0,1,2].forEach(i=>{const el=document.getElementById('wu'+i);if(el){el.classList.remove('done');el.textContent=''}});checkWarmup();document.getElementById('post-prompt').classList.remove('show')}
-
-load();
-checkWarmup();
-selectDay('A');
-</script>
+  <script src="script.js"></script>
 </body>
 </html>
