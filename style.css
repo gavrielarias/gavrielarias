@@ -200,7 +200,8 @@ a { color: inherit; text-decoration: none; }
 .portrait {
   width: 100%; max-width: 320px; aspect-ratio: 3/4;
   border-radius: 180px; overflow: hidden; position: relative;
-  box-shadow: 0 0 0 1px var(--line-dark), 0 0 70px -18px rgba(195,255,0,.4);
+  box-shadow: 0 0 0 1px #c3ff00;
+}
 }
 .portrait img { width: 100%; height: 100%; object-fit: cover; }
 .hero__title {
