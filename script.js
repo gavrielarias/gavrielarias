@@ -107,9 +107,9 @@ if (track && slides.length) {
 
 Cal("init", "15min", { origin: "https://app.cal.com" });
 Cal.ns["15min"]("inline", {
-  elementOrSelector: "#my-cal-inline-15min",
+  elementOrSelector: "#let-s-connect",
   config: { "layout": "month_view", "useSlotsViewOnSmallScreen": "true" },
-  calLink: "gavrielarias/15min",
+  calLink: "gavrielarias/let-s-connect",
 });
 Cal.ns["15min"]("ui", {
   "cssVarsPerTheme": { "light": { "cal-brand": "#1f242f" }, "dark": { "cal-brand": "#fafafa" } },
