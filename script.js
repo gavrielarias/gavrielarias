@@ -127,10 +127,10 @@ if ('IntersectionObserver' in window && !reducedMotion.matches) {
   document.querySelectorAll('.section-heading, .service, .quote-carousel, .faq h2, .contact h2').forEach(el => observer.observe(el));
 }
 
-// Cal.com: initialize immediately, with a permanent
+// Cal.com: initialize automatically near the booking section, with a permanent
 // direct booking link outside the embed in case third-party scripts are blocked.
 const bookingStatus = document.getElementById('calendar-status');
-(function loadCalendar() {
+function loadCalendar() {
   const shell = document.getElementById('calendar-shell');
   bookingStatus.textContent = 'Loading available times…';
   shell.setAttribute('aria-busy', 'true');
@@ -185,5 +185,16 @@ const bookingStatus = document.getElementById('calendar-status');
       bookingStatus.textContent = 'If the calendar does not appear, open the booking page below.';
     }
   }, 15000);
-})();
+}
+if ('IntersectionObserver' in window) {
+  const calendarObserver = new IntersectionObserver(entries => {
+    if (entries.some(entry => entry.isIntersecting)) {
+      calendarObserver.disconnect();
+      loadCalendar();
+    }
+  }, { rootMargin: '600px' });
+  calendarObserver.observe(document.getElementById('calendar-shell'));
+} else {
+  loadCalendar();
+}
 document.getElementById('year').textContent = new Date().getFullYear();
