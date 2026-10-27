@@ -1,6 +1,24 @@
 /* Progressive enhancement: all content remains readable without JavaScript. */
 'use strict';
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+// Respect the OS default; a visitor can explicitly opt into motion on this site.
+const motionPreference = document.querySelector('.motion-preference');
+let allowMotion = false;
+try { allowMotion = localStorage.getItem('gavriel-motion') === 'on'; } catch {}
+function applyMotionPreference() {
+  if (allowMotion) document.documentElement.dataset.motion = 'on';
+  else delete document.documentElement.dataset.motion;
+  if (motionPreference) {
+    motionPreference.textContent = allowMotion ? 'Use reduced motion' : 'Enable animations';
+    motionPreference.setAttribute('aria-pressed', String(allowMotion));
+  }
+}
+applyMotionPreference();
+motionPreference?.addEventListener('click', () => {
+  allowMotion = !allowMotion;
+  try { localStorage.setItem('gavriel-motion', allowMotion ? 'on' : 'off'); } catch {}
+  applyMotionPreference();
+});
 
 // A normal-flow disclosure, deliberately not an overlay or scroll lock.
 const menuButton = document.querySelector('.menu-toggle');
@@ -198,3 +216,4 @@ if ('IntersectionObserver' in window) {
   loadCalendar();
 }
 document.getElementById('year').textContent = new Date().getFullYear();
+
