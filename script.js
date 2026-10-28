@@ -1,5 +1,7 @@
 /* Progressive enhancement: all content remains readable without JavaScript. */
 'use strict';
+const isSpanish = document.documentElement.lang === 'es';
+const uiText = (en, es) => isSpanish ? es : en;
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 // Respect the OS default; a visitor can explicitly opt into motion on this site.
 const motionPreference = document.querySelector('.motion-preference');
@@ -9,7 +11,7 @@ function applyMotionPreference() {
   if (allowMotion) document.documentElement.dataset.motion = 'on';
   else delete document.documentElement.dataset.motion;
   if (motionPreference) {
-    motionPreference.textContent = allowMotion ? 'Use reduced motion' : 'Enable animations';
+    motionPreference.textContent = allowMotion ? uiText('Use reduced motion', 'Reducir movimiento') : uiText('Enable animations', 'Activar animaciones');
     motionPreference.setAttribute('aria-pressed', String(allowMotion));
   }
 }
@@ -26,7 +28,7 @@ const mobileMenu = document.getElementById('mobile-menu');
 mobileMenu.inert = true;
 function setMenu(open, returnFocus = false) {
   menuButton.setAttribute('aria-expanded', String(open));
-  menuButton.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  menuButton.setAttribute('aria-label', open ? uiText('Close menu', 'Cerrar menú') : uiText('Open menu', 'Abrir menú'));
   mobileMenu.classList.toggle('is-open', open);
   mobileMenu.inert = !open;
   if (returnFocus) menuButton.focus({ preventScroll: true });
@@ -47,7 +49,7 @@ mobileMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', 
 document.addEventListener('keydown', event => {
   if (event.key === 'Escape' && menuButton.getAttribute('aria-expanded') === 'true') setMenu(false, true);
 });
-window.matchMedia('(min-width: 761px)').addEventListener('change', event => { if (event.matches) setMenu(false); });
+window.matchMedia('(min-width: 1041px)').addEventListener('change', event => { if (event.matches) setMenu(false); });
 
 // Exact duplicate groups prevent a seam. Duplicates are decorative and unfocusable.
 document.querySelectorAll('[data-marquee]').forEach(marquee => {
@@ -81,7 +83,7 @@ if ('IntersectionObserver' in window) {
 document.querySelector('.reel-play').addEventListener('click', () => {
   const iframe = document.createElement('iframe');
   iframe.src = 'https://www.youtube-nocookie.com/embed/9jNRsr2kPPM?autoplay=1&rel=0';
-  iframe.title = 'Gavriel Arias — Showreel';
+  iframe.title = uiText('Gavriel Arias — Showreel', 'Gavriel Arias — Reel');
   iframe.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen';
   iframe.allowFullscreen = true;
   iframe.referrerPolicy = 'strict-origin-when-cross-origin';
@@ -109,7 +111,7 @@ cards.forEach((card, i) => {
   const dot = document.createElement('button');
   dot.type = 'button';
   dot.className = 'quote-dot';
-  dot.setAttribute('aria-label', `Read testimonial by ${card.querySelector('strong').textContent}`);
+  dot.setAttribute('aria-label', `${uiText('Read testimonial by', 'Leer testimonio de')} ${card.querySelector('strong').textContent}`);
   dot.setAttribute('aria-controls', card.id);
   dot.addEventListener('click', () => showQuote(i));
   dots.appendChild(dot);
@@ -150,7 +152,7 @@ if ('IntersectionObserver' in window && !reducedMotion.matches) {
 const bookingStatus = document.getElementById('calendar-status');
 function loadCalendar() {
   const shell = document.getElementById('calendar-shell');
-  bookingStatus.textContent = 'Loading available times…';
+  bookingStatus.textContent = uiText("Loading available times…","Cargando horarios disponibles…");
   shell.setAttribute('aria-busy', 'true');
   (function (C, A, L) {
     const p = (a, ar) => { a.q.push(ar); };
@@ -162,7 +164,7 @@ function loadCalendar() {
         const script = d.createElement('script');
         script.src = A; script.async = true;
         script.addEventListener('error', () => {
-          bookingStatus.textContent = 'The calendar could not load. Please use the booking page link below.';
+          bookingStatus.textContent = uiText("The calendar could not load. Please use the booking page link below.","No se pudo cargar el calendario. Usa el enlace de reservas de abajo.");
           shell.removeAttribute('aria-busy');
         });
         d.head.appendChild(script); cal.loaded = true;
@@ -200,7 +202,7 @@ function loadCalendar() {
   window.setTimeout(() => {
     if (shell.hasAttribute('aria-busy')) {
       shell.removeAttribute('aria-busy');
-      bookingStatus.textContent = 'If the calendar does not appear, open the booking page below.';
+      bookingStatus.textContent = uiText("If the calendar does not appear, open the booking page below.","Si el calendario no aparece, abre la página de reservas de abajo.");
     }
   }, 15000);
 }
@@ -216,4 +218,5 @@ if ('IntersectionObserver' in window) {
   loadCalendar();
 }
 document.getElementById('year').textContent = new Date().getFullYear();
+
 

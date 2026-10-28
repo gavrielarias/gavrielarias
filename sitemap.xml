@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://www.gavrielarias.com/</loc></url>
-  <url><loc>https://www.gavrielarias.com/creative-production/</loc></url>
-  <url><loc>https://www.gavrielarias.com/agency-production-support/</loc></url>
+ <url><loc>https://www.gavrielarias.com/</loc></url>
+ <url><loc>https://www.gavrielarias.com/es/</loc></url>
+ <url><loc>https://www.gavrielarias.com/creative-production/</loc></url>
+ <url><loc>https://www.gavrielarias.com/es/produccion-creativa/</loc></url>
+ <url><loc>https://www.gavrielarias.com/agency-production-support/</loc></url>
+ <url><loc>https://www.gavrielarias.com/es/apoyo-en-produccion/</loc></url>
 </urlset>
