@@ -76,7 +76,7 @@ if ('IntersectionObserver' in window) {
       mediaObserver.unobserve(entry.target);
     }
   }), { rootMargin: '400px' });
-  document.querySelectorAll('.work-marquee, .tools-marquee, .quote-carousel').forEach(el => mediaObserver.observe(el));
+  document.querySelectorAll('.work-marquee, .tools-marquee, .logo-marquee, .quote-carousel').forEach(el => mediaObserver.observe(el));
 }
 
 // YouTube makes no request until the visitor chooses to play.
@@ -193,6 +193,11 @@ function loadCalendar() {
     cssVarsPerTheme: { light: { 'cal-brand': '#1f242f' }, dark: { 'cal-brand': '#fafafa' } },
     hideEventTypeDetails: false, layout: 'month_view'
   });
+  // Conversion event: a confirmed booking, reported once per page view.
+  let bookingTracked = false;
+  ['bookingSuccessful', 'bookingSuccessfulV2'].forEach(action => window.Cal.ns['let-s-connect']('on', {
+    action, callback: () => { if (!bookingTracked) { bookingTracked = true; window.siteTrack?.('book_call_completed', { location: 'contact' }); } }
+  }));
   window.Cal.ns['let-s-connect']('on', {
     action: 'linkReady', callback: () => {
       bookingStatus.textContent = ''; shell.removeAttribute('aria-busy');
@@ -218,5 +223,51 @@ if ('IntersectionObserver' in window) {
   loadCalendar();
 }
 document.getElementById('year').textContent = new Date().getFullYear();
+
+// Brief form: no backend. It composes the brief and opens WhatsApp or the visitor's
+// email app with it ready to send, so every first message arrives qualified.
+const briefForm = document.querySelector('[data-brief-form]');
+briefForm?.addEventListener('submit', event => {
+  event.preventDefault();
+  const required = [...briefForm.querySelectorAll('[required]')];
+  required.forEach(field => field.setAttribute('aria-invalid', String(!field.value.trim())));
+  const firstInvalid = required.find(field => !field.value.trim());
+  if (firstInvalid) { firstInvalid.focus(); briefForm.reportValidity(); return; }
+  const channel = event.submitter?.value === 'email' ? 'email' : 'whatsapp';
+  const field = name => briefForm.elements[name]?.value.trim() || '';
+  const lines = [
+    uiText('Hi Gavriel, I have a project:', 'Hola Gavriel, tengo un proyecto:'),
+    `${uiText('Name', 'Nombre')}: ${field('name')}`,
+    field('company') && `${uiText('Company', 'Empresa')}: ${field('company')}`,
+    `${uiText('Need', 'Necesito')}: ${field('type')}`,
+    field('date') && `${uiText('Launch date', 'Fecha de lanzamiento')}: ${field('date')}`,
+    field('budget') && `${uiText('Budget', 'Presupuesto')}: ${field('budget')}`,
+    field('details') && `${uiText('Details', 'Detalles')}: ${field('details')}`
+  ].filter(Boolean).join('\n');
+  window.siteTrack?.('brief_submitted', { channel, project_type: field('type'), budget: field('budget') || 'not_set' });
+  if (channel === 'email') {
+    const subject = encodeURIComponent(`${uiText('Project brief', 'Brief de proyecto')}: ${field('type')}`);
+    window.location.href = `mailto:hola@gavrielarias.com?subject=${subject}&body=${encodeURIComponent(lines)}`;
+  } else {
+    window.open(`https://wa.me/${briefForm.dataset.whatsapp}?text=${encodeURIComponent(lines)}`, '_blank', 'noopener');
+  }
+});
+briefForm?.querySelectorAll('[required]').forEach(field => field.addEventListener('input', () => {
+  if (field.value.trim()) field.removeAttribute('aria-invalid');
+}));
+
+// Mobile sticky call button: shown only between the hero and the contact section.
+const stickyCta = document.querySelector('.sticky-cta');
+if (stickyCta && 'IntersectionObserver' in window) {
+  const watched = new Map();
+  const stickyObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => watched.set(entry.target, entry.isIntersecting));
+    const visible = ![...watched.values()].some(Boolean);
+    stickyCta.classList.toggle('is-visible', visible);
+    stickyCta.inert = !visible;
+  });
+  stickyCta.inert = true;
+  [document.querySelector('.hero-shell'), document.getElementById('contact')].forEach(el => { watched.set(el, true); stickyObserver.observe(el); });
+}
 
 
