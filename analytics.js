@@ -4,7 +4,7 @@
 'use strict';
 const ANALYTICS = {
   ga4: '',        // Google Analytics 4 Measurement ID, e.g. 'G-XXXXXXXXXX'
-  clarity: '',    // Microsoft Clarity project ID, e.g. 'abcd1234ef'
+  clarity: 'zdt0afx8b1', // Microsoft Clarity project ID, e.g. 'abcd1234ef'
   linkedin: '',   // LinkedIn Insight Tag Partner ID, e.g. '1234567'
   vercel: false   // true after enabling Web Analytics in the Vercel project
 };
